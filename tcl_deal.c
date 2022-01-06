@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -75,7 +75,7 @@ static void create_cache_reset() {
 static int do_reset_commands(Tcl_Interp *interp) {
     if (resetCmds!=NULL && cachesize!=0) {
         /*
-         * Allow the resetCmds to cache data in the 
+         * Allow the resetCmds to cache data in the
          * next resetCmds
          */
         Tcl_Obj *oldCmds=resetCmds;
@@ -112,7 +112,7 @@ static void add_reset_cmd(Tcl_Interp *interp,Tcl_Obj *code)
     if (resetCmds==NULL) {
         create_cache_reset();
     }
-  
+
     Tcl_ListObjLength(interp,resetCmds,&length);
 
     Tcl_ListObjAppendElement(interp,resetCmds,code);
@@ -145,7 +145,7 @@ int tcl_deal_deck (TCLOBJ_PARAMS) TCLOBJ_DECL
 {
     static char *result="exit";
     int retval;
-  
+
     retval=do_reset_commands(interp);
     if (retval!=TCL_OK) {
         Tcl_SetResult(interp,result,TCL_STATIC);
@@ -260,9 +260,9 @@ int tcl_after_set(TCLOBJ_PARAMS) TCLOBJ_DECL
     if (objc!=2) {
         return TCL_ERROR;
     }
-    if (after_exp != 0) { 
+    if (after_exp != 0) {
         Tcl_DecrRefCount(after_exp);
-    } 
+    }
     Tcl_IncrRefCount(after_exp=Tcl_DuplicateObj(objv[1]));
 
     return TCL_OK;
@@ -312,7 +312,7 @@ int tcl_deal_loop(TCLOBJ_PARAMS) TCLOBJ_DECL
             return TCL_ERROR;
         }
         result=Tcl_GlobalEvalObj(interp,main_exp);
-        if (result==TCL_ERROR) { 
+        if (result==TCL_ERROR) {
             /* fprintf(stderr,"Error in eval loop: %s\n",Tcl_GetStringResult(interp)); */
             return result;
         }
@@ -541,7 +541,7 @@ int old_main(argc,argv)
     time_t for_seeding;
     Tcl_Obj *command;
     Tcl_Interp *interp=Tcl_CreateInterp();
-  
+
     int opt;
     int result;
     extern int optind;
@@ -741,7 +741,7 @@ int old_main(argc,argv)
     } else {
         sprintf(tcl_command_string,"deal_deck ; %s",writecmd);
     }
- 
+
     command=Tcl_NewStringObj(tcl_command_string,(int)strlen(tcl_command_string));
 
     Tcl_IncrRefCount(command);
