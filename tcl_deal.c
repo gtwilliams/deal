@@ -530,7 +530,7 @@ static void add_to_list(struct param_item **list, const char *item,
     last->next = new;
 }
 
-#define INSTALL_DIR "/home/garry/src/deal"
+#define INSTALL_DIR "/usr/share/deal"
 
 static void set_up_user_deal_directory(const char *d) {
     char *cmd = malloc(1024);
