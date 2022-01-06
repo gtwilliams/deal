@@ -70,7 +70,7 @@ static int entryCount=0;
  * If flags has KEYWORD_SET_DEFAULT, then makes this string
  * the default for this id.
  */
-int Keyword_setId(const char *keyword,int id,int flags) {
+long Keyword_setId(const char *keyword,long id,int flags) {
     Tcl_HashEntry *entry=NULL;
     int isNew=0;
     char *dupKey;
@@ -83,7 +83,7 @@ int Keyword_setId(const char *keyword,int id,int flags) {
 
     if (entry==NULL) { return KEYWORD_INVALID_ID; }
     if (!isNew) {
-        id=(int)Tcl_GetHashValue(entry);
+        id=(long)Tcl_GetHashValue(entry);
     } else {
         Tcl_SetHashValue(entry,id);
     }
@@ -101,14 +101,14 @@ int Keyword_setId(const char *keyword,int id,int flags) {
     return id;
 }
 
-int 
+long
 Keyword_getId(char *key) {
     Tcl_HashEntry *entry=Tcl_FindHashEntry(&keywordsTable,key);
     if (entry==NULL) { return KEYWORD_INVALID_ID; }
-    return (int)Tcl_GetHashValue(entry);
+    return (long)Tcl_GetHashValue(entry);
 }
 
-const char *Keyword_getKey(int id) {
+const char *Keyword_getKey(long id) {
     char *key;
     Tcl_HashEntry *entry=Tcl_FindHashEntry(&backwardsLookup,(char *)id);
     if (entry==NULL) {

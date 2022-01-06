@@ -293,9 +293,9 @@ void initializeHoldingType() {
   Tcl_RegisterObjType(&HoldingType);
 }
 
-static int spadeId=KEYWORD_INVALID_ID;
-/* static int aceId=KEYWORD_INVALID_ID; */
-static int northId=KEYWORD_INVALID_ID;
+static long spadeId=KEYWORD_INVALID_ID;
+/* static long aceId=KEYWORD_INVALID_ID; */
+static long northId=KEYWORD_INVALID_ID;
 
 /**
  * Procedure for walking through all holdings
@@ -338,7 +338,7 @@ static void initializeAllSuits() {
 
 static int tcl_type_assert(TCLOBJ_PARAMS) TCLOBJ_DECL
 {
-  int base=(int)cd;
+  long base=(long)cd;
   int value;
   if (objc!=2) {
     Tcl_WrongNumArgs(interp,1,objv,"<word>");

@@ -21,6 +21,7 @@
 
 #include <string.h>
 
+#include <unistd.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <time.h>
@@ -343,7 +344,7 @@ int tcl_deal_control(TCLOBJ_PARAMS) TCLOBJ_DECL
 {
     int i=2,value,result;
     Tcl_Obj *iffound,*ifnotfound;
-    int data;
+    long data;
     int found,nfound;
     char *logic; /* Either "if" of "unless" */
     int length;
@@ -355,7 +356,7 @@ int tcl_deal_control(TCLOBJ_PARAMS) TCLOBJ_DECL
         Tcl_IncrRefCount(logicObj[1]);
     }
 
-    data=(int)cd;  /* True if 'accept', false if 'reject' */
+    data = (long) cd;  /* True if 'accept', false if 'reject' */
     if (objc==1) {
         Tcl_SetObjResult(interp,logicObj[data ? 1 : 0]);
         return TCL_RETURN;
@@ -399,7 +400,6 @@ int tcl_deal_control(TCLOBJ_PARAMS) TCLOBJ_DECL
 
 DEAL31_API int *Deal_Init(Tcl_Interp *interp)
 {
-    int result;
     FormatFN compact=(struct formatter*)Tcl_Alloc(sizeof(struct formatter));
     FormatFN deffmt=(struct formatter*)Tcl_Alloc(sizeof(struct formatter));
 
@@ -455,22 +455,21 @@ DEAL31_API int *Deal_Init(Tcl_Interp *interp)
 
     Tcl_CreateObjCommand(interp,"deal_init_tcl",tcl_init,NULL,NULL);
 
-    result=Tcl_VarEval(interp,"source deal.tcl",NULL);
-    if (result==TCL_ERROR) {
+    if (Tcl_Eval(interp, "source deal.tcl") == TCL_ERROR) {
         tcl_error(interp);
     }
 
-    Tcl_VarEval(interp,"reset_deck",NULL);
+    Tcl_Eval(interp, "reset_deck");
 
     return TCL_OK;
 }
 
-static int executeScript(Tcl_Interp *interp, 
+static int executeScript(Tcl_Interp *interp,
                          const char *argv0,
                          int argc,
                          char *argv[],
                          const char *command) {
-    int i, result;
+    int i;
     Tcl_Obj *list = Tcl_NewListObj(0,NULL);
     Tcl_SetVar(interp,"argv0",argv0,TCL_GLOBAL_ONLY);
     Tcl_SetVar2Ex(interp,"argc",NULL,Tcl_NewIntObj(argc),TCL_GLOBAL_ONLY);
@@ -479,8 +478,54 @@ static int executeScript(Tcl_Interp *interp,
         Tcl_ListObjAppendElement(interp,list,Tcl_NewStringObj(argv[i],strlen(argv[i])));
     }
     Tcl_SetVar2Ex(interp,"argv",NULL,list, TCL_GLOBAL_ONLY);
-    result=Tcl_VarEval(interp,command,NULL);
-    return result;
+    return Tcl_Eval(interp, command);
+}
+
+/* -ansi says no strdup() */
+static const char *strdup(const char * s) {
+    char *dup;
+    if ((dup = malloc(strlen(s) + 1)) == NULL)
+	return NULL;
+
+    strcpy(dup, s);
+    return dup;
+}
+
+struct param_item {
+    int hand;
+    const char *item;
+    struct param_item *next;
+};
+
+static void add_to_list(struct param_item **list, const char *item,
+	int hand)
+{
+    struct param_item *new;
+    struct param_item *last;
+
+    if ((new = malloc(sizeof(struct param_item))) < 0) {
+	perror("add_to_list: malloc");
+	exit(1);
+    }
+
+    new->next = NULL;
+    new->hand = hand;
+
+    if ((new->item = strdup(item)) == NULL) {
+	perror("add_to_list: strdup");
+	exit(1);
+    }
+
+    if (*list == NULL) {
+	*list = new;
+	return;
+    }
+
+    last = *list;
+    while (last->next != NULL)
+	last = last->next;
+
+    last->next = new;
 }
 
 int old_main(argc,argv)
@@ -502,18 +547,17 @@ int old_main(argc,argv)
     extern int optind;
     extern char *optarg;
 
-    time(&for_seeding);
-#ifdef USE_RAND48
-    srand48(for_seeding ^ getpid());
-#else
-    srandom(for_seeding);
-#endif
+    struct param_item *eval_list   = NULL;
+    struct param_item *source_list = NULL;
+    struct param_item *input_list  = NULL;
+    struct param_item *stack_list  = NULL;
 
     init_name_tables();
-  
-    Deal_Init(interp);
 
-    while (-1!=(opt=getopt(argc,argv,"lve:S:N:E:W:i:ts:fo:VI:x:"))) {
+    time(&for_seeding);
+    for_seeding ^= getpid();
+
+    while (-1!=(opt=getopt(argc,argv,"lve:S:N:E:W:i:ts:fo:VI:x:p:"))) {
         switch (opt) {
         case 'l':
             writecmd="write_deal_compact";
@@ -525,47 +569,26 @@ int old_main(argc,argv)
             verbose=1;
             break;
         case 'e':
-            result=Tcl_VarEval(interp,optarg,NULL);
-            if (result==TCL_ERROR) {
-                tcl_error(interp);
-            }
+	    add_to_list(&eval_list, optarg, 0);
             break;
 
         case 'I':
-            result=Tcl_VarEval(interp,"deal::input ",optarg,NULL);
-            if (result==TCL_ERROR) {
-                tcl_error(interp);
-            }
+	    add_to_list(&input_list, optarg, 0);
             break;
 
         case 'S':
         case 'N':
         case 'E':
         case 'W':
-            {
-                int hand=hand_name_table[opt];
-                int tclret=Tcl_VarEval(interp,
-                                       handname[hand]," is ",optarg,NULL);
-
-                if (TCL_OK!=tclret) {
-                    fprintf(stderr,"Failure attempts to stack hand %s\n",optarg);
-                    Tcl_GlobalEval(interp,"puts stderr $errorInfo");
-                    exit(1);
-                }
-
-            }
+	    add_to_list(&stack_list, optarg, opt);
             break;
 
         case 's':
             for_seeding=atoi(optarg);
-#ifdef USE_RAND48
-            srand48(for_seeding);
-#else
-            srandom(for_seeding);
-#endif
-
             break;
+
         case 'x':
+	    Deal_Init(interp);
             sprintf(tcl_command_string,"source %s",optarg);
             result = executeScript(interp, optarg,argc-optind,argv+optind, tcl_command_string);
             if (result==TCL_ERROR) {
@@ -577,31 +600,140 @@ int old_main(argc,argv)
             Tcl_DeleteInterp(interp);
             exit(0);
         case 'i':
-            sprintf(tcl_command_string,"source %s",optarg);
-            result=Tcl_VarEval(interp,tcl_command_string,NULL);
-            if (result==TCL_ERROR) {
-                tcl_error(interp);
-            }
+	    add_to_list(&source_list, optarg, 0);
             break;
 
         case 't':
             printDistTable();
             exit(1);
+
+	case 'p':
+	    if (chdir(optarg) != 0) {
+		perror(optarg);
+	    }
+
+	    break;
+
         default:
-            fprintf(stderr,"usage:  %s [-v] [-s seed] [-i includeFile] [-I inputFormat] [count]\n",
+            fprintf(stderr,"usage:  %s [-v] [-s seed] "
+		    "[-i includeFile] [-I inputFormat] [count]\n",
                     argv[0]);
             exit(1);
         }
     }
-  
+
+#ifdef USE_RAND48
+    srand48(for_seeding);
+#else
+    srandom(for_seeding);
+#endif
+
+    Deal_Init(interp);
+
     argc-=optind-1;
     argv+=optind-1;
-  
+
     if (argc>1 && isdigit(*argv[1])) {
         count=atoi(argv[1]);
         argc--; argv++;
     }
 
+    /* process -e option list */
+    while (eval_list != NULL) {
+	struct param_item *last;
+
+	if (Tcl_Eval(interp, eval_list->item) == TCL_ERROR) {
+	    tcl_error(interp);
+	}
+
+	free((char *) eval_list->item);
+	last = eval_list;
+	eval_list = eval_list->next;
+	free(last);
+    }
+
+    /* process -I option list */
+    while (input_list != NULL) {
+	struct param_item *last;
+	char *cmd;
+
+	/* XXX length of "deal::input " is 12 */
+	if ((cmd = malloc(strlen(input_list->item) + 12 + 1)) == NULL)
+	{
+	    perror("malloc");
+	    exit(1);
+	}
+
+	strcpy(cmd, "deal::input ");
+	strcat(cmd, input_list->item);
+
+	if (Tcl_Eval(interp, cmd) == TCL_ERROR) {
+	    tcl_error(interp);
+	}
+
+	free(cmd);
+	free((char *) input_list->item);
+	last = input_list;
+	input_list = input_list->next;
+	free(last);
+    }
+
+    /* process -[NSEW] option list */
+    while (stack_list != NULL) {
+	struct param_item *last;
+	char *cmd;
+
+	/* XXX length of " is " is 4 */
+	if ((cmd = malloc(strlen(handname[
+			    hand_name_table[stack_list->hand]])
+			+ strlen(stack_list->item) + 4 + 1)) == NULL)
+	{
+	    perror("malloc");
+	    exit(1);
+	}
+
+	strcpy(cmd, handname[hand_name_table[stack_list->hand]]);
+	strcat(cmd, " is ");
+	strcat(cmd, stack_list->item);
+
+	if ((Tcl_Eval(interp, cmd)) == TCL_ERROR) {
+	    fprintf(stderr, "Failure attempts to stack hand %s\n",
+		    stack_list->item);
+	    Tcl_GlobalEval(interp, "puts stderr $errorInfo");
+	    exit(1);
+	}
+
+	free(cmd);
+	free((char *) stack_list->item);
+	last = stack_list;
+	stack_list = stack_list->next;
+	free(last);
+    }
+
+    /* process -i option list */
+    while (source_list != NULL) {
+	struct param_item *last;
+	char *cmd;
+
+	/* XXX length of "source " is 7 */
+	if ((cmd = malloc(strlen(source_list->item) + 7 + 1)) == NULL) {
+	    perror("malloc");
+	    exit(1);
+	}
+
+	strcpy(cmd, "source ");
+	strcat(cmd, source_list->item);
+
+	if ((Tcl_Eval(interp, cmd)) == TCL_ERROR) {
+	    tcl_error(interp);
+	}
+
+	free(cmd);
+	free((char *) source_list->item);
+	last = source_list;
+	source_list = source_list->next;
+	free(last);
+    }
 
     if (main_exp!=(Tcl_Obj *)0) {
         sprintf(tcl_command_string,"deal_loop %s",writecmd);
@@ -630,11 +762,18 @@ int old_main(argc,argv)
             fprintf(stderr,"Deal %d found after %d tries\n",i,count_deals);
         }
     }
-    result=Tcl_VarEval(interp,flushcmd,NULL);
-    if (result==TCL_ERROR) { tcl_error(interp); exit(1); }
-    if (after_exp) { 
-        result=Tcl_GlobalEvalObj(interp,after_exp); 
-        if (result==TCL_ERROR) { tcl_error(interp); exit(1); }
+
+    if (Tcl_Eval(interp, flushcmd) == TCL_ERROR) {
+	tcl_error(interp);
+	exit(1);
     }
+
+    if (after_exp) {
+        if (Tcl_GlobalEvalObj(interp, after_exp) == TCL_ERROR) {
+	    tcl_error(interp);
+	    exit(1);
+	}
+    }
+
     return 0;
 }

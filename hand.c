@@ -81,7 +81,7 @@ int tcl_other_hand(TCLOBJ_PARAMS) TCLOBJ_DECL
 {
     Tcl_Obj *result;
     int hand;
-    int rotation=(int)cd; /* 1 = LHO, 2 = partner, 3 = RHO */
+    long rotation=(long)cd; /* 1 = LHO, 2 = partner, 3 = RHO */
 
     if (objc!=2) {
         Tcl_WrongNumArgs(interp,1,objv,"<handname>");
@@ -117,7 +117,8 @@ int tcl_count_suit (TCLOBJ_PARAMS) TCLOBJ_DECL
         HandCmdID=-1;
     static char *usage="<handname> | hand <handspec>";
 
-    int suit,hand,length;
+    int hand,length;
+    long suit;
     int hArray[4],*hptr;
     
     if (doInit) {
@@ -165,7 +166,7 @@ int tcl_count_suit (TCLOBJ_PARAMS) TCLOBJ_DECL
         hptr=holdings[hand];
     }
 
-    suit=(int)cd;
+    suit=(long)cd;
 
     length=counttable[8191&hptr[suit]];
     
@@ -217,7 +218,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
         HandID=-1,
         VoidFlagID=-1;
      
-    int hand=(int)cd;
+    long hand=(long)cd;
     int suit;
     Tcl_Obj *voidObj=0;
     int argID;
@@ -510,7 +511,7 @@ int tcl_stack_hand(TCLOBJ_PARAMS) TCLOBJ_DECL
 
 int HandCmd_Init(Tcl_Interp *interp)
 {
-    int hand,suit;
+    long hand,suit;
 
     initializeLengths();
 

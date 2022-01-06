@@ -22,10 +22,10 @@
 #define KEYWORD_SET_DEFAULT 1
 #define KEYWORD_SET_NODUPLICATE 2
 
-int Keyword_getId(char *key);
+long Keyword_getId(char *key);
 int Keyword_alias(char *alias,char *oldKey,int flags);
 int Keyword_addKey(char *key);
-const char *Keyword_getKey(int id);
+const char *Keyword_getKey(long id);
 Tcl_Obj *Keyword_NewObj(int id);
 int Keyword_Init(Tcl_Interp *interp);
 int Keyword_getIdFromObj(Tcl_Interp *interp,Tcl_Obj *obj);

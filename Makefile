@@ -11,7 +11,7 @@ TCL_DIR=/usr
 
 #include Make.mac-osx
 #include Make.ubuntu
-include Make.debian
+include Make.fedora
 
 CC=gcc
 

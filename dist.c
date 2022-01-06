@@ -671,7 +671,7 @@ int tcl_shapeexpr_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
 {
     static Tcl_Obj *exprCmd=NULL;
 
-    int isClass=(int)cd;
+    long isClass=(long)cd;
     Tcl_Obj *cmdElts[2];
     Tcl_Obj *command;
     char *name;
