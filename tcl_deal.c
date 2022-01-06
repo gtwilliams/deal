@@ -22,10 +22,12 @@
 #include <string.h>
 
 #include <unistd.h>
+#include <pwd.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <time.h>
 #include <sys/types.h>
+#include <sys/stat.h>
 extern int getpid();
 
 #include "deal.h"
@@ -528,6 +530,64 @@ static void add_to_list(struct param_item **list, const char *item,
     last->next = new;
 }
 
+#define INSTALL_DIR "/home/garry/src/deal"
+
+static void set_up_user_deal_directory(const char *d) {
+    char *cmd = malloc(1024);
+    if (cmd == NULL) {
+        perror("set_up_user_deal_directory() malloc");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(cmd, "mkdir ");
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/deal.tcl ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp -r ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/lib ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp -r ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/ex ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp -r ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/format ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp -r ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/input ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    free(cmd);
+}
+
 int old_main(argc,argv)
      int argc;
      char *argv[];
@@ -551,6 +611,27 @@ int old_main(argc,argv)
     struct param_item *source_list = NULL;
     struct param_item *input_list  = NULL;
     struct param_item *stack_list  = NULL;
+
+    /* Change to user's deal directory. */
+    struct passwd *pw = getpwuid(getuid());
+    char *deal_path;
+    if ((deal_path = malloc(strlen(pw->pw_dir) + 6 + 1)) == NULL) {
+        perror("can't change to ~/.deal");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(deal_path, pw->pw_dir);
+    strcat(deal_path, "/.deal");
+    if (chdir(deal_path) < 0) {
+        perror("warning: can't change to ~/.deal directory");
+        set_up_user_deal_directory(deal_path);
+        if (chdir(deal_path) < 0) {
+            perror("can't change to ~/.deal");
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    free(deal_path);
 
     init_name_tables();
 
