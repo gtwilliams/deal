@@ -215,7 +215,6 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
         PatternID=-1,
         ShapeID=-1,
         HasID=-1,
-        HandID=-1,
         VoidFlagID=-1;
      
     long hand=(long)cd;
@@ -238,7 +237,6 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
         PatternID=Keyword_addKey("pattern");
         ShapeID=Keyword_addKey("shape");
         HasID=Keyword_addKey("has");
-        HandID=Keyword_addKey("hand");
         VoidFlagID=Keyword_addKey("-void");
         uninitialized=0;
         Tcl_IncrRefCount(stackHandCmd=Tcl_NewStringObj("::stack_hand",12));

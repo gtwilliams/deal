@@ -984,13 +984,11 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
     static int lengthCmd,
         disjointCmd,
         unionCmd,
-        randomCmd,
         encodeCmd,
         decodeCmd,
         subsetCmd,
         containedInCmd,
         matchesCmd,
-        lengthFlag,
         initKeywords=1;
     int cmd;
 
@@ -1000,14 +998,12 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
         disjointCmd=Keyword_addKey("disjoint");
         containedInCmd=Keyword_addKey("containedIn");
         unionCmd=Keyword_addKey("union");
-        randomCmd=Keyword_addKey("random");
         encodeCmd=Keyword_addKey("encode");
         decodeCmd=Keyword_addKey("decode");
         subsetCmd=Keyword_addKey("contains");
         matchesCmd=Keyword_addKey("matches");
 
         /* Flags for the list subcommand */
-        lengthFlag=Keyword_addKey("-length");
         initKeywords=0;
     }
 
