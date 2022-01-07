@@ -136,7 +136,6 @@ newsite:
 	cp $(SRCZIP) site
 	$(MAKE) xzip
 	cp $(EXEZIP) site
-	
 
 $(BINDIR): $(BINKIT) sitedoc documentation
 	rm -rf $(BINDIR)
