@@ -1,5 +1,3 @@
-# 
-#
 # This file is copyrighted under the GNU Public License.
 # See http://www.gnu.org/copyleft/gpl.html for further
 # details.
@@ -22,7 +20,7 @@ CC=gcc
 #
 # EXTRAS_OBJS= util.o
 #
-EXTRA_OBJS= 
+EXTRA_OBJS=
 
 # On system which don't have "random" and "srandom",
 # you might have to use the horrible "rand" for random
@@ -30,7 +28,7 @@ EXTRA_OBJS=
 #
 #EXTRA_CFLAGS = -Drandom=rand -Dsrandom=srand
 #
-#EXTRA_CFLAGS = 
+#EXTRA_CFLAGS =
 #EXTRA_CFLAGS = -DUSE_RAND48
 
 COMPILE.c= $(CC) $(CFLAGS) -c
@@ -41,7 +39,7 @@ CFLAGS= $(DEBUG_FLAGS) -I$(TCL_INCL) $(EXTRA_CFLAGS)
 OBJS=random.o additive.o hand.o deal.o formats.o tcl_deal.o maindeal.o \
 	stat.o counttable.o vector.o dist.o stringbox.o dealtypes.o \
 	keywords.o holdings.o tcl_dds.o dds.o ddsLookup.o \
-	$(EXTRA_OBJS) 
+	$(EXTRA_OBJS)
 SRCS=additive.c hand.c deal.c formats.c tcl_deal.c dist.c vector.c stat.c counttable.c stringbox.c dealtypes.c holdings.c keywords.c maindeal.c random.c dds.cpp ddsLookup.cpp getopt.c
 SRCKIT=additive.c hand.c deal.c formats.c tcl_deal.c dist.c vector.c stat.c makecounttable.c stringbox.c dealtypes.c holdings.c keywords.c maindeal.c random.c tcl_dds.c dds.cpp ddsLookup.cpp getopt.c
 HFILES=deck.h deal.h tcl_incl.h vector.h stat.h tcl_dist.h dist.h formats.h additive.h stringbox.h dealtypes.h holdings.h keywords.h ansidecl.h dds.h ddsInline.h ddsInterface.h Holding.h getopt.h ddsLookup.h
@@ -110,7 +108,7 @@ allzip: zip dmg
 CHANGES: docs/html/CHANGES.txt
 	cp docs/html/CHANGES.txt CHANGES
 
-zip: $(SRCZIP) 
+zip: $(SRCZIP)
 
 dmg: $(DMG)
 
@@ -159,7 +157,7 @@ $(SRCZIP): $(SRCDIR)
 
 $(EXEZIP): $(SRCDIR)
 	rm -f $(EXEZIP) $(SRCDIR)/deal
-	test -f deal.exe 
+	test -f deal.exe
 	test -f tcl85.dll
 	cp deal.exe $(SRCDIR)
 	cp tcl85.dll $(SRCDIR)
