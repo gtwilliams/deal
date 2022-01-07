@@ -45,6 +45,8 @@ extern int getpid();
 #include <stdlib.h>
 #include "tcl_incl.h"
 
+static void set_up_user_deal_directory(const char *d);
+
 typedef struct formatter {
     char *(*fn)();
 } *FormatFN;
@@ -530,64 +532,6 @@ static void add_to_list(struct param_item **list, const char *item,
     last->next = new;
 }
 
-#define INSTALL_DIR "/usr/share/deal"
-
-static void set_up_user_deal_directory(const char *d) {
-    char *cmd = malloc(1024);
-    if (cmd == NULL) {
-        perror("set_up_user_deal_directory() malloc");
-        exit(EXIT_FAILURE);
-    }
-
-    strcpy(cmd, "mkdir ");
-    strncat(cmd, d, 1024 - strlen(cmd));
-    fprintf(stderr, cmd);
-    fprintf(stderr, "\n");
-    system(cmd);
-
-    strcpy(cmd, "cp ");
-    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
-    strncat(cmd, "/deal.tcl ", 1024 - strlen(cmd));
-    strncat(cmd, d, 1024 - strlen(cmd));
-    fprintf(stderr, cmd);
-    fprintf(stderr, "\n");
-    system(cmd);
-
-    strcpy(cmd, "cp -r ");
-    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
-    strncat(cmd, "/lib ", 1024 - strlen(cmd));
-    strncat(cmd, d, 1024 - strlen(cmd));
-    fprintf(stderr, cmd);
-    fprintf(stderr, "\n");
-    system(cmd);
-
-    strcpy(cmd, "cp -r ");
-    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
-    strncat(cmd, "/ex ", 1024 - strlen(cmd));
-    strncat(cmd, d, 1024 - strlen(cmd));
-    fprintf(stderr, cmd);
-    fprintf(stderr, "\n");
-    system(cmd);
-
-    strcpy(cmd, "cp -r ");
-    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
-    strncat(cmd, "/format ", 1024 - strlen(cmd));
-    strncat(cmd, d, 1024 - strlen(cmd));
-    fprintf(stderr, cmd);
-    fprintf(stderr, "\n");
-    system(cmd);
-
-    strcpy(cmd, "cp -r ");
-    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
-    strncat(cmd, "/input ", 1024 - strlen(cmd));
-    strncat(cmd, d, 1024 - strlen(cmd));
-    fprintf(stderr, cmd);
-    fprintf(stderr, "\n");
-    system(cmd);
-
-    free(cmd);
-}
-
 int old_main(argc,argv)
      int argc;
      char *argv[];
@@ -858,3 +802,60 @@ int old_main(argc,argv)
 
     return 0;
 }
+
+#define INSTALL_DIR "/usr/share/deal"
+
+static void set_up_user_deal_directory(const char *d) {
+    char cmd[1024];
+    if (cmd == NULL) {
+        perror("set_up_user_deal_directory() malloc");
+        exit(EXIT_FAILURE);
+    }
+
+    strcpy(cmd, "mkdir -p ");
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/deal.tcl ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp -r ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/lib ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp -r ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/ex ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp -r ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/format ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+
+    strcpy(cmd, "cp -r ");
+    strncat(cmd, INSTALL_DIR, 1024 - strlen(cmd));
+    strncat(cmd, "/input ", 1024 - strlen(cmd));
+    strncat(cmd, d, 1024 - strlen(cmd));
+    fprintf(stderr, cmd);
+    fprintf(stderr, "\n");
+    system(cmd);
+}
+
