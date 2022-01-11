@@ -7,8 +7,14 @@ Summary: Bridge Hand Generator
 URL: https://bridge.thomasoandrews.com/deal/
 Source0: %{name}-%{version}.tar.gz
 # https://github.com/gtwilliams/deal.git
+
 # Original source is at:
 # https://bridge.thomasoandrews.com/deal/deal319.zip
+
+# The source in this package has been modified to build without
+# compiler errors.  It was also modified to change its working
+# directory to the installed directory, /usr/share/deal since the
+# program relies on the current directory to find some files.
 
 License: GPLv2+
 
@@ -26,6 +32,9 @@ practise.  Extensible via Tcl.
 
 %global debug_package %{nil}
 
+%define build_data %{buildroot}%{_datadir}/%{name}
+%define build_docs %{buildroot}%{_docdir}/%{name}
+
 %prep
 %autosetup
 
@@ -36,21 +45,22 @@ make
 %install
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man6
-mkdir -p %{buildroot}%{_datadir}/%{name}/input
-mkdir -p %{buildroot}%{_datadir}/%{name}/format
-mkdir -p %{buildroot}%{_datadir}/%{name}/lib
-mkdir -p %{buildroot}%{_datadir}/%{name}/ex
-mkdir -p %{buildroot}%{_docdir}/%{name}/html
-mkdir -p %{buildroot}%{_docdir}/%{name}/graphics
+mkdir -p %{build_data}/input
+mkdir -p %{build_data}/format
+mkdir -p %{build_data}/lib
+mkdir -p %{build_data}/ex
+mkdir -p %{build_docs}/html
+mkdir -p %{build_docs}/graphics
+
 install -p -m 0755 deal            %{buildroot}%{_bindir}
-install -p -m 0444 deal.6          %{buildroot}%{_mandir}/man6
-install -p -m 0444 deal.tcl        %{buildroot}%{_datadir}/%{name}
-install -p -m 0444 input/*         %{buildroot}%{_datadir}/%{name}/input
-install -p -m 0444 format/*        %{buildroot}%{_datadir}/%{name}/format
-install -p -m 0444 lib/*           %{buildroot}%{_datadir}/%{name}/lib
-install -p -m 0444 docs/html/*.*   %{buildroot}%{_docdir}/%{name}/html
-install -p -m 0444 docs/html/ex/*  %{buildroot}%{_datadir}/%{name}/ex
-install -p -m 0444 docs/graphics/* %{buildroot}%{_docdir}/%{name}/graphics
+install -p -m 0644 deal.6          %{buildroot}%{_mandir}/man6
+install -p -m 0644 deal.tcl        %{build_data}
+install -p -m 0644 input/*         %{build_data}/input
+install -p -m 0644 format/*        %{build_data}/format
+install -p -m 0644 lib/*           %{build_data}/lib
+install -p -m 0644 ex/*            %{build_data}/ex
+install -p -m 0644 docs/html/*.*   %{build_docs}/html
+install -p -m 0644 docs/graphics/* %{build_docs}/graphics
 
 %files
 %{_bindir}/deal
