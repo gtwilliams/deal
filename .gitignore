@@ -1,3 +1,5 @@
 counttable.c
 deal
 makecounttable
+*.swo
+*.swp
