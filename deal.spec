@@ -6,6 +6,9 @@ Release: 1%{?dist}
 Summary: Bridge Hand Generator
 URL: https://bridge.thomasoandrews.com/deal/
 Source0: %{name}-%{version}.tar.gz
+# https://github.com/gtwilliams/deal.git
+# Original source is at:
+# https://bridge.thomasoandrews.com/deal/deal319.zip
 
 License: GPLv2+
 
@@ -36,18 +39,25 @@ mkdir -p %{buildroot}%{_mandir}/man6
 mkdir -p %{buildroot}%{_datadir}/%{name}/input
 mkdir -p %{buildroot}%{_datadir}/%{name}/format
 mkdir -p %{buildroot}%{_datadir}/%{name}/lib
-install -p -m 0755 deal     %{buildroot}%{_bindir}
-install -p -m 0444 deal.6   %{buildroot}%{_mandir}/man6
-install -p -m 0444 deal.tcl %{buildroot}%{_datadir}/%{name}
-install -p -m 0444 input/*  %{buildroot}%{_datadir}/%{name}/input
-install -p -m 0444 format/* %{buildroot}%{_datadir}/%{name}/format
-install -p -m 0444 lib/*    %{buildroot}%{_datadir}/%{name}/lib
+mkdir -p %{buildroot}%{_datadir}/%{name}/ex
+mkdir -p %{buildroot}%{_docdir}/%{name}/html
+mkdir -p %{buildroot}%{_docdir}/%{name}/graphics
+install -p -m 0755 deal            %{buildroot}%{_bindir}
+install -p -m 0444 deal.6          %{buildroot}%{_mandir}/man6
+install -p -m 0444 deal.tcl        %{buildroot}%{_datadir}/%{name}
+install -p -m 0444 input/*         %{buildroot}%{_datadir}/%{name}/input
+install -p -m 0444 format/*        %{buildroot}%{_datadir}/%{name}/format
+install -p -m 0444 lib/*           %{buildroot}%{_datadir}/%{name}/lib
+install -p -m 0444 docs/html/*.*   %{buildroot}%{_docdir}/%{name}/html
+install -p -m 0444 docs/html/ex/*  %{buildroot}%{_datadir}/%{name}/ex
+install -p -m 0444 docs/graphics/* %{buildroot}%{_docdir}/%{name}/graphics
 
 %files
 %{_bindir}/deal
 %{_mandir}/man6/deal.6*
 %{_datadir}/%{name}/*
+%{_docdir}/%{name}/*
 
 %changelog
-* Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com>
-- Initial version of the package
+* Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com> - 3.1.9-1
+- Initial version of the package 3.1.9-1
