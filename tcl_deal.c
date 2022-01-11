@@ -45,8 +45,6 @@ extern int getpid();
 #include <stdlib.h>
 #include "tcl_incl.h"
 
-static void set_up_user_deal_directory(const char *d);
-
 typedef struct formatter {
     char *(*fn)();
 } *FormatFN;
@@ -559,7 +557,7 @@ int old_main(argc,argv)
     struct param_item *stack_list  = NULL;
 
     if (chdir(INSTALL_DIR) < 0) {
-        perror(sprintf("warning: can't change to %s directory", INSTALL_DIR));
+        perror("warning: can't change to /usr/share/deal directory");
     }
 
     init_name_tables();
