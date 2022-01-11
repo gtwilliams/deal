@@ -230,6 +230,6 @@ depends:
 	$(CC) $(CFLAGS) -M *.c *.cpp >Make.dep
 
 clean:
-	rm -rf deal $(OBJS) $(SRCDIR) $(SRCZIP) $(SRCGZIP) $(DOCZIP) $(DMG) $(EXEZIP) $(BINDIR) counttable.c makecounttable makecounttable.o html site
+	rm -rf deal $(OBJS) $(SRCDIR) $(SRCZIP) $(SRCGZIP) $(DOCZIP) $(DMG) $(EXEZIP) $(BINDIR) $(MANS) counttable.c makecounttable makecounttable.o html site
 
 include Make.dep
