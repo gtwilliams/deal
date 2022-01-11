@@ -1,0 +1,83 @@
+=pod
+
+=head1 NAME
+
+deal - bridge hand generator
+
+=head1 SYNOPSIS
+
+ deal [ -ltv ] [ -e expr ] [ -i condition file ] [ -I format ] [ -s seed ] [ -[NSEW] hand-spec ] [ count ]
+
+=head1 DESCRIPTION
+
+deal is a program to generate bridge hands.
+
+When deal is first run, it will create its configuration directory,
+F<~/.deal> and copy files from the deal system installation into that
+directory.  Users are free to make changes to their private
+configuration files.
+
+=head1 OPTIONS
+
+=over
+
+=item B<-l>
+
+Write deals in a "single-line" format.
+
+=item B<-t>
+
+Print distribution table and exit.  The distribution table is an
+ordered list of all possible hand patterns for a single hand.
+
+=item B<-v>
+
+Be verbose, print sample count.
+
+=item B<-e> I<expr>
+
+Evaluate the Tcl expression I<expr>.
+
+=item B<-i> I<condition-file>
+
+File that defines the hand type to generate or the output format.
+(Can be given multiple times.)
+
+=item B<-I> I<format>
+
+Read hands from stdin.  Formats available are: I<ddline>, I<giblib>,
+I<line>, I<pbn>, I<smartstack>.  You might deal, say, 10,000 hands
+which satisfy specific criteria, saving them to a file.  Then you  can
+use  that output for input with deal -I to find out which hands
+satisfy other constraints.
+
+=item B<-s> I<seed>
+
+Initialize random generator with I<seed>.
+
+=item B<-[NSEW]> I<hand-spec>
+
+Specifies the cards held by the specified  hand.  The  hand-spec
+should be of the form: "AK8532 - KQ72 A65".  Voids must be represented
+with a  '-'  character.  I<hand-spec> should be one argument, so the
+string should be quoted on the command line.
+
+=item I<count>
+
+Number of hands to generate, default is 10.
+
+=back
+
+=head1 SEE ALSO
+
+F</usr/share/doc/deal/html>, F</usr/share/deal>.
+
+=head1 AUTHOR
+
+deal was written by Thomas Andrews <deal@thomaso.best.vwh.net>,
+L<https://bridge.thomasoandrews.com/deal/>.
+
+This manual page was copied from Christoph Berg's (<cb@df7cb.de>)
+manual page from the Debian project.
+
+=cut
