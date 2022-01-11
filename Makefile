@@ -53,8 +53,14 @@ SOURCEKIT=$(SRCKIT) $(HFILES) $(EXAMPLES) $(BUILDFILES) $(OTHERFILES) $(EXTRAS) 
 BINKIT=$(EXAMPLES) $(OTHERFILES) $(TESTS) $(HTML)
 UUKIT=$(EXAMPLES) $(OTHERFILES) deal
 BINARY=./deal
+MANS = deal.6
 
-deal: $(OBJS)
+POD2MAN = /usr/bin/pod2man
+PFLAGS  = -c "Generate Bridge Hands"
+%.6: %.pod
+	$(POD2MAN) $(PFLAGS) -n$* $< >$@
+
+deal: $(OBJS) $(MANS)
 	g++ $(CFLAGS) $(OBJS) -o deal $(LDFLAGS)
 
 universal:
