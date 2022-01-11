@@ -207,20 +207,20 @@ tar:
 	mv Make.dep.saved Make.dep
 
 test: ./deal
-	$(BINARY) -I "line tests/input/sample.line" -i format/ddline 100 > test.out
+	$(BINARY) -I "line $$PWD/tests/input/sample.line" -i $$PWD/format/ddline 100 > test.out
 	if cmp test.out tests/output/sample.ddline ; then echo PASS; else echo FAIL  ; fi
 
 smalltest: ./deal
-	$(BINARY) -I "line tests/input/sample.line" -i format/ddline $(SMALLTESTCOUNT) > test.out
+	$(BINARY) -I "line $$PWD/tests/input/sample.line" -i $$PWD/format/ddline $(SMALLTESTCOUNT) > test.out
 	head -$(SMALLTESTCOUNT) tests/output/sample.ddline > correct.out
 	diff test.out correct.out
 	if cmp test.out correct.out ; then echo PASS; else echo FAIL  ; fi
 
 great88: ./deal
-	$(BINARY) -x bin/unit.tcl tests/1-great88.tcl | fgrep FAIL || echo "PASSED"
+	$(BINARY) -x $$PWD/bin/unit.tcl $$PWD/tests/2-great88.tcl | fgrep FAIL || echo "PASSED"
 
 alltests: ./deal
-	$(BINARY) -x bin/unit.tcl
+	$(BINARY) -x $$PWD/bin/unit.tcl
 
 html: documentation
 ftp: $(SRCZIP)
@@ -230,6 +230,10 @@ depends:
 	$(CC) $(CFLAGS) -M *.c *.cpp >Make.dep
 
 clean:
-	rm -rf deal $(OBJS) $(SRCDIR) $(SRCZIP) $(SRCGZIP) $(DOCZIP) $(DMG) $(EXEZIP) $(BINDIR) $(MANS) counttable.c makecounttable makecounttable.o html site
+	rm -rf deal $(OBJS) $(SRCDIR) $(SRCZIP) $(SRCGZIP) \
+		$(DOCZIP) $(DMG) $(EXEZIP) $(BINDIR) $(MANS) \
+		*.out \
+		counttable.c makecounttable makecounttable.o \
+		html site
 
 include Make.dep
