@@ -1,11 +1,10 @@
 CC=gcc
 #DEBUG_FLAGS=-ansi -Wall -g
 #CPPFLAGS = -fno-rtti -g
-DEBUG_FLAGS=-ansi -Wall -O3
-CPPFLAGS = -O3
+DEBUG_FLAGS=-ansi -Wall -O3 -fPIE
+CPPFLAGS = -O3 -fPIE
 
 # Fedora settings
 TCL_INCL=/usr/include/tcl
-TCL_LIB=/usr/local/lib
-LDFLAGS=  -L$(TCL_LIB) -ltcl -lm
+LDFLAGS= -pie -ltcl -lm
 
