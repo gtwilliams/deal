@@ -61,7 +61,8 @@ PFLAGS  = -c "Generate Bridge Hands"
 	$(POD2MAN) $(PFLAGS) -n$* $< >$@
 
 deal: $(OBJS) $(MANS)
-	g++ $(CFLAGS) $(OBJS) -o deal $(LDFLAGS)
+	g++ $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
+	strip -s $@
 
 universal:
 	$(MAKE) clean
