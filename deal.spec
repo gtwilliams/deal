@@ -39,7 +39,7 @@ practise.  Extensible via Tcl.
 
 %build
 touch Make.dep
-make
+%make_build
 
 %install
 mkdir -p %{buildroot}%{_bindir}
@@ -65,8 +65,8 @@ install -p -m 0644 docs/graphics/* %{build_docs}/graphics
 %{_bindir}/deal
 %{_mandir}/man6/deal.6*
 %{_datadir}/%{name}/*
-%{_docdir}/%{name}/*
+%doc %{_docdir}/%{name}/*
 
 %changelog
-* Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com> - 3.1.9-1
+* Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-1
 - Initial version of the package 3.1.9-1
