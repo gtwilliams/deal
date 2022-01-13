@@ -20,6 +20,9 @@ License: GPLv2+
 BuildRequires: gcc
 BuildRequires: g++
 BuildRequires: make
+BuildRequires: tcl-devel
+
+Requires: tcl
 
 %description
 This program generates bridge hands.  It can be told to generate only
