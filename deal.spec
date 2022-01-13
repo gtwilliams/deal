@@ -21,6 +21,7 @@ BuildRequires: gcc
 BuildRequires: g++
 BuildRequires: make
 BuildRequires: tcl-devel
+BuildRequires: perl-podlators
 
 Requires: tcl
 
