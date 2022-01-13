@@ -15,7 +15,7 @@ Source0: https://github.com/gtwilliams/deal/blob/master/deal-3.1.9.tar.gz
 # directory to the installed directory, /usr/share/deal since the
 # program relies on the current directory to find some files.
 
-License: GPLv2+
+License: GPL GPLv1+ GPLv2 GPLv2+
 
 BuildRequires: gcc
 BuildRequires: g++
@@ -35,8 +35,8 @@ practise.  Extensible via Tcl.
 
 %global debug_package %{nil}
 
-%define build_data %{buildroot}%{_datadir}/%{name}
-%define build_docs %{buildroot}%{_docdir}/%{name}
+%global build_data %{buildroot}%{_datadir}/%{name}
+%global build_docs %{buildroot}%{_docdir}/%{name}
 
 %prep
 %autosetup
