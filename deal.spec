@@ -64,8 +64,8 @@ install -p -m 0644 docs/graphics/* %{build_docs}/graphics
 %files
 %{_bindir}/deal
 %{_mandir}/man6/deal.6*
-%{_datadir}/%{name}/*
-%doc %{_docdir}/%{name}/*
+%{_datadir}/%{name}/
+%doc %{_docdir}/%{name}/
 
 %changelog
 * Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-1
