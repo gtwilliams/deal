@@ -3,3 +3,7 @@ deal
 makecounttable
 *.swo
 *.swp
+debugfiles.list
+debuglinks.list
+debugsources.list
+elfbins.list
