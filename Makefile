@@ -11,6 +11,9 @@ TCL_DIR=/usr
 #include Make.ubuntu
 include Make.fedora
 
+DEBUG_FLAGS += -fPIE -g
+CPPFLAGS += -fPIE -g
+
 CC=gcc
 
 
@@ -62,7 +65,6 @@ PFLAGS  = -c "Generate Bridge Hands"
 
 deal: $(OBJS) $(MANS)
 	g++ $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
-	strip -s $@
 
 universal:
 	$(MAKE) clean
