@@ -147,7 +147,6 @@ extern "C" int SolveBoard(struct deal dl, int target,
     int k, n, cardCount, found, totalTricks, tricks, last, checkRes;
     int g, upperbound, lowerbound, first, i, j, forb, ind, flag, noMoves;
     int seat, suit;
-    int mcurr;
     int noStartMoves;
     int seatRelFirst;
     int latestTrickSuit[4];
@@ -584,7 +583,6 @@ extern "C" int SolveBoard(struct deal dl, int target,
             /* All moves before bestMove in the move list shall be
                moved to the forbidden moves list, since none of them reached
                the target */
-            mcurr=movePly[iniDepth].current;
             for (k=0; k<=movePly[iniDepth].last; k++)
                 if ((bestMove[iniDepth].suit==movePly[iniDepth].move[k].suit)
                     &&(bestMove[iniDepth].rank==movePly[iniDepth].move[k].rank))
@@ -967,7 +965,6 @@ void InitSearch(struct pos * posPoint, int depth, struct moveType startMoves[], 
     int seat[3], suit[3], rank[3];
     struct moveType move;
     unsigned short int startMovesBitMap[4][4]; /* Indices are seat and suit */
-    const ContractInfo contract = Globals.getContract();
 
     for (h=0; h<=3; h++)
         for (s=0; s<=3; s++)
