@@ -5,7 +5,7 @@ Version: 3.1.9
 Release: 1%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/deal
-Source0: https://github.com/gtwilliams/deal/blob/master/deal-3.1.9.tar.gz
+Source0: https://github.com/gtwilliams/deal/archive/refs/tags/v3.1.9-1.tar.gz
 
 # Original source is at:
 # https://bridge.thomasoandrews.com/deal/deal319.zip
@@ -15,7 +15,7 @@ Source0: https://github.com/gtwilliams/deal/blob/master/deal-3.1.9.tar.gz
 # directory to the installed directory, /usr/share/deal since the
 # program relies on the current directory to find some files.
 
-License: GPL GPLv1+ GPLv2 GPLv2+
+License: GPLv2+
 
 BuildRequires: gcc
 BuildRequires: g++
@@ -33,8 +33,6 @@ output in various formats, like pbn for feeding to other bridge
 programs, deal itself, or split up into a file per player for
 practise.  Extensible via Tcl.
 
-%global debug_package %{nil}
-
 %global build_data %{buildroot}%{_datadir}/%{name}
 %global build_docs %{buildroot}%{_docdir}/%{name}
 
@@ -46,6 +44,10 @@ touch Make.dep
 %make_build
 
 %install
+# Original source has no install target in its Makefile.  The original
+# author didn't anticipate running the program from anywhere other
+# than the source directory after doing a make command.  Pretty crude.
+# We encode the install target here:
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man6
 mkdir -p %{build_data}/input
