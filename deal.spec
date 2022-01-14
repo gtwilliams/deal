@@ -50,22 +50,18 @@ touch Make.dep
 # We encode the install target here:
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man6
-mkdir -p %{build_data}/input
-mkdir -p %{build_data}/format
-mkdir -p %{build_data}/lib
-mkdir -p %{build_data}/ex
+mkdir -p %{build_data}
 mkdir -p %{build_docs}/html
-mkdir -p %{build_docs}/graphics
 
-install -p -m 0755 deal            %{buildroot}%{_bindir}
-install -p -m 0644 deal.6          %{buildroot}%{_mandir}/man6
-install -p -m 0644 deal.tcl        %{build_data}
-install -p -m 0644 input/*         %{build_data}/input
-install -p -m 0644 format/*        %{build_data}/format
-install -p -m 0644 lib/*           %{build_data}/lib
-install -p -m 0644 ex/*            %{build_data}/ex
-install -p -m 0644 docs/html/*.*   %{build_docs}/html
-install -p -m 0644 docs/graphics/* %{build_docs}/graphics
+install -p -m 0755 deal          %{buildroot}%{_bindir}
+install -p -m 0644 deal.6        %{buildroot}%{_mandir}/man6
+install -p -m 0644 deal.tcl      %{build_data}
+install -p -m 0644 docs/html/*.* %{build_docs}/html
+cp -a input         %{build_data}/
+cp -a format        %{build_data}/
+cp -a lib           %{build_data}/
+cp -a ex            %{build_data}/
+cp -a docs/graphics %{build_docs}/
 
 %files
 %{_bindir}/deal
