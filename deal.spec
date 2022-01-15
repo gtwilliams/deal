@@ -4,8 +4,8 @@ Name: deal
 Version: 3.1.9
 Release: 1%{?dist}
 Summary: Bridge Hand Generator
-URL: https://github.com/gtwilliams/deal
-Source0: https://github.com/gtwilliams/deal/archive/refs/tags/v3.1.9-1.tar.gz
+URL: https://github.com/gtwilliams/%{name}
+Source0: %{url}/archive/v%{version}-1/%{name}-%{version}.tar.gz
 
 # Original source is at:
 # https://bridge.thomasoandrews.com/deal/deal319.zip
