@@ -64,12 +64,14 @@ cp -a format        %{build_data}/
 cp -a lib           %{build_data}/
 cp -a ex            %{build_data}/
 cp -a docs/graphics %{build_docs}/
+cp -a GPL           %{build_docs}
 
 %files
 %{_bindir}/deal
 %{_mandir}/man6/deal.6*
 %{_datadir}/%{name}/
 %doc %{_docdir}/%{name}/
+%license %{_docdir}/%{name}/GPL
 
 %changelog
 * Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-1
