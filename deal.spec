@@ -63,7 +63,7 @@ cp -a input         %{build_data}/
 cp -a format        %{build_data}/
 cp -a lib           %{build_data}/
 cp -a ex            %{build_data}/
-cp -a docs/graphics %{build_docs}/
+cp -a docs/graphics %{build_docs}/html
 cp -a GPL           %{build_docs}
 
 %files
