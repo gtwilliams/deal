@@ -70,7 +70,7 @@ Number of hands to generate, default is 10.
 
 =head1 SEE ALSO
 
-L<file:///usr/share/doc/deal/html/index.html>, F</usr/share/deal>.
+L<HTML Documentation|file:///usr/share/doc/deal/html/index.html>, F</usr/share/deal>.
 
 =head1 AUTHOR
 
