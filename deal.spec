@@ -20,6 +20,7 @@ License: GPLv2+
 BuildRequires: gcc
 BuildRequires: g++
 BuildRequires: make
+
 BuildRequires: tcl-devel
 BuildRequires: perl-podlators
 
@@ -51,7 +52,7 @@ touch Make.dep
 # We encode the install target here:
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man6
-mkdir -p %{build_data}
+mkdir -p %{build_data}/ex
 mkdir -p %{build_docs}/html
 
 install -p -m 0755 deal     %{buildroot}%{_bindir}
@@ -62,8 +63,11 @@ cp -a docs/html %{build_docs}/
 cp -a input     %{build_data}/
 cp -a format    %{build_data}/
 cp -a lib       %{build_data}/
-cp -a ex        %{build_data}/
 cp -a GPL       %{build_docs}
+
+for f in %{build_docs}/html/ex/*.txt;do \
+    ln $f $(basename $f .txt).tcl; \
+done
 
 %files
 %{_bindir}/deal
