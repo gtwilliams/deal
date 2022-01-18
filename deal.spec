@@ -2,7 +2,7 @@
 
 Name: deal
 Version: 3.1.9
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -58,13 +58,12 @@ install -p -m 0755 deal     %{buildroot}%{_bindir}
 install -p -m 0644 deal.6   %{buildroot}%{_mandir}/man6
 install -p -m 0644 deal.tcl %{build_data}
 
-cp -a docs/html/*.* %{build_docs}/html
-cp -a input         %{build_data}/
-cp -a format        %{build_data}/
-cp -a lib           %{build_data}/
-cp -a ex            %{build_data}/
-cp -a docs/graphics %{build_docs}/html
-cp -a GPL           %{build_docs}
+cp -a docs/html %{build_docs}/html
+cp -a input     %{build_data}/
+cp -a format    %{build_data}/
+cp -a lib       %{build_data}/
+cp -a ex        %{build_data}/
+cp -a GPL       %{build_docs}
 
 %files
 %{_bindir}/deal
@@ -76,3 +75,8 @@ cp -a GPL           %{build_docs}
 %changelog
 * Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-1
 - Initial version of the package 3.1.9-1
+
+* Tue Jan 18 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-2
+- Copied https://bridge.thomasoandrews.com/deal Web site into our
+  source to fix many errors when using browser to view the files in
+  docs/html.
