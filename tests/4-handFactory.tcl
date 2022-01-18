@@ -1,4 +1,4 @@
-#./deal -x
+#/usr/bin/deal -x
 source lib/handFactory.tcl
 
 defvector honors 1 1 1 1 1

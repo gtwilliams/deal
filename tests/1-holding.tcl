@@ -1,4 +1,4 @@
-#!./deal -x
+#!/usr/bin/deal -x
 #
 # Test "holding contains ..."
 #
