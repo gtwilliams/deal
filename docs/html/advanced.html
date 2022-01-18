@@ -63,13 +63,13 @@ in this guide will require more <a href="ext-ref.html#tclptr">knowledge
 of Tcl</a> than others.
 <p>
 <img SRC="graphics/warning.gif" ALT="**Warning**">  It takes careful
-eyes, at least on the version of Netscape I am using, to distinguish 
+eyes, at least on the version of Netscape I am using, to distinguish
 between normal parentheses, <span class="code">()</span>, and curly
 parentheses, <span class="code">{}</span>.  Almost all of the parentheses in the script
 listings below are curly parentheses.
 <hr>
 <h2> Contents </h2>
-<UL> 
+<UL>
 <LI><a href="#vector">Vector additive functions</a>
 <LI><a href="#shapefunc">Shape functions</a>
 <LI><a href="#patternfunc">Pattern functions</a>
@@ -102,7 +102,7 @@ defvector Controls 2 1
 </pre>
 <p>
 Once these vectors are defined, we can use them as functions anywhere
-we used <span class="code">hcp</span> and <span class="code">controls</span>. 
+we used <span class="code">hcp</span> and <span class="code">controls</span>.
 <p>
 
 Now, considering the following case: Your partner, north, opens a weak
@@ -128,7 +128,7 @@ proc weak2 {hand suit} {
 </pre>
 You can call this by saying:
 <pre class="codesample">
-#... 
+#...
 main {
 	if {[weak2 north spades]} { accept }
 }
@@ -151,12 +151,12 @@ both Top3 and Top5, but a little cleverness allows us to roll
 this all up into one vector.
 <pre class="codesample">
 defvector weak2quality 2 2 2 1 1
-</div>
 
 You will see, if you think about it, that this vector evaluates
 to 4 or more precisely when the suit has the right quality for
 a weak two.  You then rewrite the weak2 function:
-<p>
+</pre>
+
 <pre class="codesample">
 defvector weak2quality 2 2 2 1 1
 
@@ -236,13 +236,13 @@ shapefunc opening_suit {
 	return clubs
 }
 </pre>
-This function returns the name of the suit in which you should open 
+This function returns the name of the suit in which you should open
 open the hand (at least according to some people) in Standard American
 bidding.
 		
 <p>
 Recently, a number of people have mentioned to me Bergen's "rule of
-20" for determining whether a hand is worth an opening bid. 
+20" for determining whether a hand is worth an opening bid.
 According to the rule, add your high card points to
 the sum of the lengths of your longest two suits.  If that adds up to
 20, open the hand.  We can write this as follows:
@@ -301,7 +301,7 @@ your own customizable format routines.
 <p>
 It is really fairly simple.  When <span class="code">Deal</span> accepts a hand,
 it calls the procedure named <span class="code">write_deal</span>.  When it is finished
-dealing the number of hands requested, it calls a procedure named 
+dealing the number of hands requested, it calls a procedure named
 <span class="code">flush_deal</span>.
 <p>
 To change the output format, we simply redefine these procedures.
@@ -352,7 +352,7 @@ proc write_deal {} {
 	puts "============================="
 }
 </pre>
-Okay, what does this expression, 
+Okay, what does this expression,
 <span class="code">[north&nbsp;-void&nbsp;---&nbsp;spades]</span>, do?
 The expression <span class="code">[north&nbsp;spades]</span> returns the spade holding
 of the north hand in a simple string form.  If the suit is void,
@@ -451,35 +451,35 @@ proc okputhand {hand} {
 }
 </pre>
 
-<span class="code">write_deal</span> just calls the routine <span class="code">okputhand</span> for each 
+<span class="code">write_deal</span> just calls the routine <span class="code">okputhand</span> for each
 hand, then writes out the contents of the entire string box, <span class="code">okbox</span>,
 followed by the seperator string of hyphens.  Note that we convert
 a string box to a normal string just by using its name alone, without
 arguments, as in <span class="code">[okbox]</span>.  We can also convert a string with trailing
-whitespace removed from lines, by saying <span class="code">[okbox compact]</span>. 
+whitespace removed from lines, by saying <span class="code">[okbox compact]</span>.
 In fact, we probably should have used the <span class="code">compact</span> modifier,
 since there is so much trailing white space in this format.
 <p>
-The <span class="code">okputhand</span> procedure first clears the sub-box associated 
+The <span class="code">okputhand</span> procedure first clears the sub-box associated
 that hand, then writes out the contents of the hand one suit at a time
 to that same sub-box.
 <p>
 The output looks like:
 <pre class="codesample">
-                              North S KT6                             
-                                    H J97                             
-                                    D T8543                           
-                                    C T5                              
-               West                               East                
-               S J75                              S Q983              
-               H T86                              H A52               
-               D AKJ7                             D Q9                
-               C AQ8                              C KJ64              
-                                                                      
-                              South S A42                             
-                                    H KQ43                            
-                                    D 62                              
-                                    C 9732                            
+                              North S KT6
+                                    H J97
+                                    D T8543
+                                    C T5
+               West                               East
+               S J75                              S Q983
+               H T86                              H A52
+               D AKJ7                             D Q9
+               C AQ8                              C KJ64
+
+                              South S A42
+                                    H KQ43
+                                    D 62
+                                    C 9732
 -----------------------------
 </pre>
 
@@ -498,7 +498,7 @@ Documentation not yet written.
 <img style="border:0;width:40px;height:56px" alt="Silhouette" src="graphics/StampSm.gif"></a><td>
 Thomas Andrews
 (<a href="mailto:deal&#64;thomasoandrews.com">deal&#64;thomasoandrews.com</a>)
-Copyright 1996-2010.  Deal is covered by the 
+Copyright 1996-2010.  Deal is covered by the
 <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License.</a>
 <p>
 <a href="graphics/falling.jpg"><em>Plane Dealing</em></a> graphic
