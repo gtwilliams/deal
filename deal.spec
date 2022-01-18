@@ -73,10 +73,11 @@ cp -a GPL       %{build_docs}
 %license %{_docdir}/%{name}/GPL
 
 %changelog
-* Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-1
-- Initial version of the package 3.1.9-1
-
 * Tue Jan 18 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-2
 - Copied https://bridge.thomasoandrews.com/deal Web site into our
   source to fix many errors when using browser to view the files in
   docs/html.
+
+* Mon Jan 10 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-1
+- Initial version of the package 3.1.9-1
+
