@@ -53,14 +53,36 @@ Covering: <UL>
 <hr>
 <h2> Prologue </h2>
 First things first, you will need to <a href="downloading.html">download
-Deal and build it</a>.  The rest of this tutorial assumes you have
-already done this.
+Deal and build it</a>.  Or you need to have installed deal from a
+Fedora repository.  It is not packaged officially yet, but is
+available in a COPR repository,
+<a href="https://copr.fedorainfracloud.org/coprs/gtwilliams/deal/">
+    gtwilliams/deal
+</a>
+<pre>
+    sudo dnf copr enable gtwilliams/deal
+    sudo dnf install deal
+</pre>
+
 <p>
-<img SRC="graphics/warning.gif" ALT="**Warning**">  It takes careful eyes, at least on the version of Netscape I am
-using, to distinguish between normal parentheses, <span class="code">()</span>, and curly
-parentheses, <span class="code">{}</span>.  Almost all of the parentheses in the script
+The Fedora package is built from a fork of the original source (above)
+and that is <a href="https://github.com/gtwilliams/deal">here</a>
+</p>
+<p>
+Deal only works from the directory where you did your installation,
+because it looks there for files that Deal uses.  But, if you
+installed the Fedora package, deal will work from any directory.
+</p>
+<p>
+The rest of this tutorial assumes you have already done one of these.
+</p>
+<p>
+<img SRC="graphics/warning.gif" ALT="**Warning**">
+It takes careful eyes to distinguish between normal parentheses,
+<span class="code">()</span>, and curly parentheses,
+<span class="code">{}</span>.  Almost all of the parentheses in the script
 listings below are curly parentheses.
-<p>Deal only works from the directory where you did your installation, because it looks there for files that Deal uses.
+</p>
 <h2> <a href="#basic">Basic Dealing - The Command Line </a></h2>
 <UL>
 <LI> <a href="#basicbasic">Dealing hands</a>
@@ -172,7 +194,7 @@ For example, suppose you wish to deal 8 hands for practice bidding
 with partner.  In that case, you would use the "practice" format:
 <pre class="codesample">
 $ deal -i format/practice 8 > out.all
-$ cat out.east
+$ cat ~/out.east
                               east hands
 ============================================================================
      *1*                 *2*                 *3*                 *4*
@@ -195,11 +217,16 @@ The <span class="code">-i</span> flag tells <strong>Deal</strong> to include the
 in this case, the file named <span class="code">format/practice</span>.  This file redefines
 the output format.  At the end of this run, you should get five files:
 <span class="code">out.north</span>, <span class="code">out.east</span>, <span class="code">out.south</span>,
-<span class="code">out.west</span>, and <span class="code">out.all</span>. 
+<span class="code">out.west</span>, and <span
+    class="code">out.all</span>.
+<p>If you installed the Fedora package,
+the four hand files will be placed in your home directory.  The
+<span class="code">out.all</span> file will be in the current
+directory, of course.
 <p>
 Now you can print out these files, pass them out amongst four people,
-and practice your bidding, using <span class="code">out.all</span> at the end to make
-a double dummy assessment of the auction results.
+and practice your bidding, using <span class="code">out.all</span>
+at the end to make a double dummy assessment of the auction results.
 <p>
 What if you only have two people, and you want to practice uninterrupted
 auctions?  You could print out the north and south hands, and practice
@@ -218,7 +245,7 @@ as of this writing:
 <DD> This script set the formatting routine to a null routine.
 	Not useful, so far, but useful, for example, when doing
 	statistical analysis.
-<DT> <span class="code">numeric</span> 
+<DT> <span class="code">numeric</span>
 <DD> This formatter writes the deal as a line which looks something
 	like:
 <pre class="codesample">
@@ -365,7 +392,7 @@ redirected to a file without obscuring these messages.  <p>
 
 <h4> Using formats with your script </h4>
 
-If we wanted to use another output format with this script, we could do so 
+If we wanted to use another output format with this script, we could do so
 on the command line, as follows:
 <pre class="codesample">
 $ deal -i format/practice -i onespade
@@ -430,7 +457,7 @@ main {
 </pre>
 
 Notice, we do our deck-stacking outside of the evaluation loop.
-Remember, the <span class="code">main</span> expression is responsible for evaluating the deals 
+Remember, the <span class="code">main</span> expression is responsible for evaluating the deals
 <em>after</em> <strong>Deal</strong> finishes dealing the hands.
 We obviously want the stacking instruction to occur before
 dealing occurs, so the stacking command must be outside the main
@@ -438,7 +465,7 @@ evaluation.
 <p>
 <h3><a name="routines">A partial list of routines</a></h3>
 For evaluation routines, we have seen the <span class="code">hcp</span> and <span class="code">spades</span>
-routines, as well as the "accept" and "reject" directives. 
+routines, as well as the "accept" and "reject" directives.
 Obviously, there are also routines called <span class="code">hearts</span>,
 <span class="code"> diamonds</span>, and <span class="code">clubs</span> which count their respective
 suits.  The following functions are also built-ins:
@@ -454,7 +481,7 @@ one doubleton, and no five-card major.  It returns false (0) otherwise.
 <dt> <span class="code">semibalanced</span> <dd>  Returns true (1) if the hand passed
 has no shortness and no six-card or longer suit, and false (0) otherwise.
 </dl>
-The three functions, <span class="code">controls</span>, <span class="code">hcp</span>, and <span class="code">losers</span>, 
+The three functions, <span class="code">controls</span>, <span class="code">hcp</span>, and <span class="code">losers</span>,
 all have the property that we can compute them one suit at a time, and
 sum the result for the entire hand.  The implementation takes advantage
 of this and allows the user to request these values for specific suits:
@@ -466,7 +493,7 @@ main {
 This script accepts a deal if south has ten or more points in hearts
 and spades.  <span class="code">controls</span> and <span class="code">losers</span> can be used similarly.
 Any function of this sort we will call "additive." We will see later that
-we can define a <a href="advanced.html#vector">wide class of interesting 
+we can define a <a href="advanced.html#vector">wide class of interesting
 additive functions.</a>
 <p>
 The functions <span class="code">balanced</span> and <span class="code">semi_balanced</span> are entirely
@@ -484,7 +511,7 @@ values and a 5-card major.
 Our script , which we will call <span class="code">jacobytest</span> might look something like:
 
 <pre class="codesample">
-# In deal 3.1, you don't need this next line, but deal 3.1 does - 
+# In deal 3.1, you don't need this next line, but deal 3.1 does -
 # without this line, the "balanced" routine is not defined.
 
 main {
@@ -600,7 +627,7 @@ Or check out the <a href="commands.html">index of all deal commands.</a>
 <img style="border:0;width:40px;height:56px" alt="Silhouette" src="graphics/StampSm.gif"></a><td>
 Thomas Andrews
 (<a href="mailto:deal&#64;thomasoandrews.com">deal&#64;thomasoandrews.com</a>)
-Copyright 1996-2010.  Deal is covered by the 
+Copyright 1996-2010.  Deal is covered by the
 <a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License.</a>
 <p>
 <a href="graphics/falling.jpg"><em>Plane Dealing</em></a> graphic
