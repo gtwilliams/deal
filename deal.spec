@@ -66,7 +66,10 @@ cp -a lib       %{build_data}/
 cp -a GPL       %{build_docs}
 
 for f in %{build_docs}/html/ex/*.txt;do \
-    ln $f $(basename $f .txt).tcl; \
+    ( \
+        cd %{build_data}/ex ; \
+        ln -s ../../doc/%{name}/html/ex/$(basename $f) $(basename $f .txt).tcl; \
+    ) \
 done
 
 %files
