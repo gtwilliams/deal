@@ -7,12 +7,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -40,7 +40,7 @@ if {[catch {set hands}]} {
 
 # create file handles for writing
 foreach hand $hands {
-	set ofile($hand) [open "$output.$hand" "w"]
+	set ofile($hand) [open "~/$output.$hand" "w"]
 	stringbox box.$hand 7 80
 	for {set i 0; set j 0} {$i<4} {incr i ; incr j 20} {
 		box.$hand subbox box.$hand.$i 0 $j 7 20
@@ -81,7 +81,6 @@ proc flush_writing {} {
 	}
     }
 }
-		
 
 proc flush_deal {} {
        global ofile
@@ -108,7 +107,6 @@ proc write_deal {} {
 	} else {
 		incr practicecolumn
 	}
-       
 
         puts "Deal: $practicecount"
 	old_write_deal
