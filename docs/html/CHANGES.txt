@@ -1,3 +1,14 @@
+Changes in Deal 3.1.11 (forked from original source)
+
+   * Modified C code to use type long for tcl interface to handle
+     64-bit addresses
+   * Changed to call chdir() at start-up time to make CWD be
+     /usr/share/deal
+   * Replaced all doc/html with Web site files
+   * Added deal.spec for Fedora packaging
+   * Corrected FSF address in many files
+   * Changed documentation to use "deal" instead of "./deal"
+
 Changes in Deal 3.1.10
 
    * Updated links to Bo Haglund's DDS site
