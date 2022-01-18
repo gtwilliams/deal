@@ -58,7 +58,7 @@ install -p -m 0755 deal     %{buildroot}%{_bindir}
 install -p -m 0644 deal.6   %{buildroot}%{_mandir}/man6
 install -p -m 0644 deal.tcl %{build_data}
 
-cp -a docs/html %{build_docs}/html
+cp -a docs/html %{build_docs}/html/
 cp -a input     %{build_data}/
 cp -a format    %{build_data}/
 cp -a lib       %{build_data}/
