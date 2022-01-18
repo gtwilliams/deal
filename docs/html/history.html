@@ -14,19 +14,28 @@
 
 <link rev="made" href="mailto:thomaso@centerline.com (Thomas Andrews)">
 
-<?php analytics(); ?>
+<!-- Google analytics -->
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-5586620-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
 </head>
 
 <body>
-<div class="toplevel back"><A href="/bridge/deal/">Back to <em>Deal Top Page</em></A></div>
+<div class="toplevel back"><A href="./">Back to <em>Deal Top Page</em></A></div>
 
 
 <table class="toplevel">
 
 <TR>
 <td valign="middle"><img
-style="width:300px; height:73px"
- SRC="graphics/deal30.gif" ALT="Plane Dealing image"></td>
+ SRC="graphics/falling_small.jpg" ALT="Plane Dealing image"></td>
 <td valign="middle"><div class="header"><h2>Deal 3.1</h2>
 <h3>A brief history</h3> </div></td>
 </tr>
@@ -107,7 +116,18 @@ While <strong>Deal</strong> is a labor of love for me, it makes it easier
 to love the project if I get feedback which shows people are using <strong>
 Deal</strong>.  Even if you tried <strong>Deal</strong> and did not like
 it, please let me know.
-<?php include("sig.htmlf"); ?>
+<hr>
+<table><tr><td><a href="../" class="image">
+<img style="border:0;width:40px;height:56px" alt="Silhouette" src="graphics/StampSm.gif"></a><td>
+Thomas Andrews
+(<a href="mailto:deal&#64;thomasoandrews.com">deal&#64;thomasoandrews.com</a>)
+Copyright 1996-2010.  Deal is covered by the 
+<a href="http://www.gnu.org/copyleft/gpl.html">GNU General Public License.</a>
+<p>
+<a href="graphics/falling.jpg"><em>Plane Dealing</em></a> graphic
+above created using
+<a href="http://www.povray.org/">POV-Ray.</a>
+</tr></table>
 </div>
 </body>
 </html>

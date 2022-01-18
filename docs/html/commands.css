@@ -49,7 +49,6 @@ pre.example {
 
 #commandsbox {
    position: absolute;
-   z-index:0;
    top: 0;
    left: 250px;
 }
