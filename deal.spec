@@ -1,8 +1,8 @@
 # Copyright (c) 2022 Garry T. Williams
 
 Name: deal
-Version: 3.1.9
-Release: 2%{?dist}
+Version: 3.1.11
+Release: 1%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -80,6 +80,12 @@ done
 %license %{_docdir}/%{name}/GPL
 
 %changelog
+* Tue Jan 18 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-1
+- Removed chdir() on start-up.  Now special directory names get
+  prepended with installation path.
+- The version is .11 because the actual code from the original source
+  is really .10.  It was just named .9.
+
 * Tue Jan 18 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.9-2
 - Copied https://bridge.thomasoandrews.com/deal Web site into our
   source to fix many errors when using browser to view the files in
