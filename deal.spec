@@ -18,7 +18,7 @@ Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 License: GPLv2+
 
 BuildRequires: gcc
-BuildRequires: g++
+BuildRequires: gcc-c++
 BuildRequires: make
 
 BuildRequires: tcl-devel
