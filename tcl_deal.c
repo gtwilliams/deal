@@ -45,6 +45,8 @@ extern int getpid();
 #include <stdlib.h>
 #include "tcl_incl.h"
 
+#define INSTALL_DIR "/usr/share/deal"
+
 typedef struct formatter {
     char *(*fn)();
 } *FormatFN;
@@ -402,6 +404,8 @@ int tcl_deal_control(TCLOBJ_PARAMS) TCLOBJ_DECL
 
 DEAL31_API int *Deal_Init(Tcl_Interp *interp)
 {
+    char *dealtcl;
+
     FormatFN compact=(struct formatter*)Tcl_Alloc(sizeof(struct formatter));
     FormatFN deffmt=(struct formatter*)Tcl_Alloc(sizeof(struct formatter));
 
@@ -457,9 +461,20 @@ DEAL31_API int *Deal_Init(Tcl_Interp *interp)
 
     Tcl_CreateObjCommand(interp,"deal_init_tcl",tcl_init,NULL,NULL);
 
-    if (Tcl_Eval(interp, "source deal.tcl") == TCL_ERROR) {
+    if ((dealtcl = malloc(15 + sizeof(INSTALL_DIR) + 2)) == NULL) {
+        perror("malloc");
+        exit(1);
+    }
+
+    strcpy(dealtcl, "source ");
+    strcat(dealtcl, INSTALL_DIR);
+    strcat(dealtcl, "/deal.tcl");
+
+    if (Tcl_Eval(interp, dealtcl) == TCL_ERROR) {
         tcl_error(interp);
     }
+
+    free(dealtcl);
 
     Tcl_Eval(interp, "reset_deck");
 
@@ -530,8 +545,6 @@ static void add_to_list(struct param_item **list, const char *item,
     last->next = new;
 }
 
-#define INSTALL_DIR "/usr/share/deal"
-
 int old_main(argc,argv)
      int argc;
      char *argv[];
@@ -555,10 +568,6 @@ int old_main(argc,argv)
     struct param_item *source_list = NULL;
     struct param_item *input_list  = NULL;
     struct param_item *stack_list  = NULL;
-
-    if (chdir(INSTALL_DIR) < 0) {
-        perror("warning: can't change to /usr/share/deal directory");
-    }
 
     init_name_tables();
 
@@ -722,15 +731,37 @@ int old_main(argc,argv)
     while (source_list != NULL) {
 	struct param_item *last;
 	char *cmd;
+        size_t n = strlen(source_list->item) + 7 + 1;
 
-	/* XXX length of "source " is 7 */
-	if ((cmd = malloc(strlen(source_list->item) + 7 + 1)) == NULL) {
-	    perror("malloc");
-	    exit(1);
-	}
+        /* if -i specifies special files, we need to prepend the
+         * installation directory path onto the user's specification
+         * before calling the interpreter.  Othewise, assume the user
+         * specified the file as it is. */
+        if (strncmp(source_list->item, "ex/",     3) == 0 ||
+            strncmp(source_list->item, "format/", 7) == 0 ||
+            strncmp(source_list->item, "input/",  6) == 0 ||
+            strncmp(source_list->item, "lib/",    4) == 0)
+        {
+            n += sizeof(INSTALL_DIR) + 1;
+            if ((cmd = malloc(n)) == NULL) {
+                perror("malloc");
+                exit(1);
+            }
+            strcpy(cmd, "source ");
+            strcat(cmd, INSTALL_DIR);
+            strcat(cmd, "/");
+            strcat(cmd, source_list->item);
+        }
 
-	strcpy(cmd, "source ");
-	strcat(cmd, source_list->item);
+        else {
+            if ((cmd = malloc(n)) == NULL) {
+                perror("malloc");
+                exit(1);
+            }
+
+            strcpy(cmd, "source ");
+            strcat(cmd, source_list->item);
+        }
 
 	if ((Tcl_Eval(interp, cmd)) == TCL_ERROR) {
 	    tcl_error(interp);

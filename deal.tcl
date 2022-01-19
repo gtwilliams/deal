@@ -30,11 +30,14 @@ if {[string first "Windows" $tcl_platform(os)]>=0} {
 
 catch { deal_init_tcl }
 
-source lib/features.tcl
+# We hard code the installation directory.  This will crater on
+# Windows or Mac.
+
+source /usr/share/deal/lib/features.tcl
 
 # If set to non-zero, and your terminal supports UTF-8, deal's default output format will write 
 #the deal with unicode suit symbols.
 set deal::unicode 0
 
 # Edit this line to make your default format any format
-source format/default
+source /usr/share/deal/format/default
