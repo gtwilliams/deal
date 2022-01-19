@@ -43,7 +43,7 @@ practise.  Extensible via Tcl.
 %build
 touch Make.dep
 %set_build_flags
-%make_build
+%make_build DATA_DIR=%{_datadir}/%{name}/
 
 %install
 # Original source has no install target in its Makefile.  The original

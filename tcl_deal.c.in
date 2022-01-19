@@ -45,7 +45,7 @@ extern int getpid();
 #include <stdlib.h>
 #include "tcl_incl.h"
 
-#define INSTALL_DIR "/usr/share/deal"
+#define INSTALL_DIR "@DATA_DIR@"
 
 typedef struct formatter {
     char *(*fn)();
@@ -461,14 +461,14 @@ DEAL31_API int *Deal_Init(Tcl_Interp *interp)
 
     Tcl_CreateObjCommand(interp,"deal_init_tcl",tcl_init,NULL,NULL);
 
-    if ((dealtcl = malloc(15 + sizeof(INSTALL_DIR) + 2)) == NULL) {
+    if ((dealtcl = malloc(15 + sizeof(INSTALL_DIR) + 1)) == NULL) {
         perror("malloc");
         exit(1);
     }
 
     strcpy(dealtcl, "source ");
     strcat(dealtcl, INSTALL_DIR);
-    strcat(dealtcl, "/deal.tcl");
+    strcat(dealtcl, "deal.tcl");
 
     if (Tcl_Eval(interp, dealtcl) == TCL_ERROR) {
         tcl_error(interp);
@@ -742,15 +742,13 @@ int old_main(argc,argv)
             strncmp(source_list->item, "input/",  6) == 0 ||
             strncmp(source_list->item, "lib/",    4) == 0)
         {
-            n += sizeof(INSTALL_DIR) + 1;
+            n += sizeof(INSTALL_DIR);
             if ((cmd = malloc(n)) == NULL) {
                 perror("malloc");
                 exit(1);
             }
             strcpy(cmd, "source ");
             strcat(cmd, INSTALL_DIR);
-            strcat(cmd, "/");
-            strcat(cmd, source_list->item);
         }
 
         else {
@@ -760,8 +758,9 @@ int old_main(argc,argv)
             }
 
             strcpy(cmd, "source ");
-            strcat(cmd, source_list->item);
         }
+
+        strcat(cmd, source_list->item);
 
 	if ((Tcl_Eval(interp, cmd)) == TCL_ERROR) {
 	    tcl_error(interp);

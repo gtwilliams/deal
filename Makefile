@@ -63,8 +63,14 @@ PFLAGS  = -c "Generate Bridge Hands"
 %.6: %.pod
 	$(POD2MAN) $(PFLAGS) -n$* $< >$@
 
-deal: $(OBJS) $(MANS)
+deal: $(OBJS) $(MANS) deal.tcl
 	g++ $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
+
+tcl_deal.c: tcl_deal.c.in
+	sed -e 's|@DATA_DIR@|$(DATA_DIR)|' $< >$@
+
+deal.tcl: deal.tcl.in
+	sed -e 's|@DATA_DIR@|$(DATA_DIR)|' $< >$@
 
 universal:
 	$(MAKE) clean
@@ -235,7 +241,7 @@ depends:
 clean:
 	rm -rf deal $(OBJS) $(SRCDIR) $(SRCZIP) $(SRCGZIP) \
 		$(DOCZIP) $(DMG) $(EXEZIP) $(BINDIR) $(MANS) \
-		*.out \
+		*.out tcl_deal.c deal.tcl \
 		counttable.c makecounttable makecounttable.o \
 		html site
 
