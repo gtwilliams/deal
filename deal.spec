@@ -11,9 +11,8 @@ Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 # https://bridge.thomasoandrews.com/deal/deal319.zip
 
 # The source in this package has been modified to build without
-# compiler errors.  It was also modified to change its working
-# directory to the installed directory, /usr/share/deal since the
-# program relies on the current directory to find some files.
+# compiler errors.  It was also modified to find certain files in the
+# installation directory instead of looking in the current directory.
 
 License: GPLv2+
 
