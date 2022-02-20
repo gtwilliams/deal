@@ -9,4 +9,4 @@ has been added.  The start-up code now includes a chdir() to the
 directory path will load successfully.  The compiler options have been
 changed to include -fPIE and -pie (ld) to make rpmlint happy.
 
-[^1]https://bridge.thomasoandrews.com/deal/
+[^1]:https://bridge.thomasoandrews.com/deal/
