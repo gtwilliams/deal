@@ -42,7 +42,6 @@ practise.  Extensible via Tcl.
 
 %build
 touch Make.dep
-%set_build_flags
 %make_build DATA_DIR=%{_datadir}/%{name}/
 
 %install
@@ -80,6 +79,9 @@ done
 %license %{_docdir}/%{name}/GPL
 
 %changelog
+* Sun Feb 20 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-2
+- Do not overwrite compiler flags in our Makefile.
+
 * Tue Jan 18 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-1
 - Removed chdir() on start-up.  Now special directory names get
   prepended with installation path.
