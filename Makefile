@@ -36,7 +36,7 @@ EXTRA_OBJS=
 
 COMPILE.c= $(CC) $(CFLAGS) -c
 
-CFLAGS= $(DEBUG_FLAGS) -I$(TCL_INCL) $(EXTRA_CFLAGS)
+CFLAGS += $(DEBUG_FLAGS) -I$(TCL_INCL) $(EXTRA_CFLAGS)
 
 
 OBJS=random.o additive.o hand.o deal.o formats.o tcl_deal.o maindeal.o \
