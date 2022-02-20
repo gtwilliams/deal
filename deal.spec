@@ -62,6 +62,7 @@ install -p -m 0644 deal.tcl %{build_data}
 cp -a input  %{build_data}/
 cp -a format %{build_data}/
 cp -a lib    %{build_data}/
+cp -a GPL    %{build_docs}
 
 for f in %{build_docs}/html/ex/*.txt;do \
     ( \
@@ -79,7 +80,8 @@ done
 
 %changelog
 * Sun Feb 20 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-2
-- Do not overwrite compiler flags in our Makefile.
+- Do not overwrite compiler flags in our Makefile.  Remove superfluous
+  file copy.
 
 * Tue Jan 18 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-1
 - Removed chdir() on start-up.  Now special directory names get
