@@ -80,8 +80,7 @@ done
 
 %changelog
 * Sun Feb 20 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-2
-- Do not overwrite compiler flags in our Makefile.  Remove superfluous
-  file copy.
+- Do not overwrite compiler flags in our Makefile.
 
 * Tue Jan 18 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-1
 - Removed chdir() on start-up.  Now special directory names get
