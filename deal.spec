@@ -2,7 +2,7 @@
 
 Name: deal
 Version: 3.1.11
-Release: 3%{?dist}
+Release: 4%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -14,7 +14,7 @@ Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 # compiler errors.  It was also modified to find certain files in the
 # installation directory instead of looking in the current directory.
 
-License: GPLv2+
+License: GPLv2+ and GPL+ and BSD
 
 BuildRequires: gcc
 BuildRequires: gcc-c++
@@ -76,6 +76,11 @@ done
 %license GPL
 
 %changelog
+* Mon Feb 21 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-4
+- Remove private getopt.[ch] files and replace with C library
+  versions.
+- Update license tag to reflect all licenses in source code.
+
 * Mon Feb 21 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-3
 - Remove superfluous file copies.
 
