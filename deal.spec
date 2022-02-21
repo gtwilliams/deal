@@ -2,7 +2,7 @@
 
 Name: deal
 Version: 3.1.11
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -52,17 +52,14 @@ touch Make.dep
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man6
 mkdir -p %{build_data}/ex
-mkdir -p %{build_docs}/html
 
 install -p -m 0755 deal     %{buildroot}%{_bindir}
 install -p -m 0644 deal.6   %{buildroot}%{_mandir}/man6
 install -p -m 0644 deal.tcl %{build_data}
 
-cp -a docs/html %{build_docs}/
-cp -a input     %{build_data}/
-cp -a format    %{build_data}/
-cp -a lib       %{build_data}/
-cp -a GPL       %{build_docs}
+cp -a input  %{build_data}/
+cp -a format %{build_data}/
+cp -a lib    %{build_data}/
 
 for f in %{build_docs}/html/ex/*.txt;do \
     ( \
@@ -75,10 +72,13 @@ done
 %{_bindir}/deal
 %{_mandir}/man6/deal.6*
 %{_datadir}/%{name}/
-%doc %{_docdir}/%{name}/
-%license %{_docdir}/%{name}/GPL
+%doc docs/html
+%license GPL
 
 %changelog
+* Mon Feb 21 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-3
+- Remove superfluous file copies.
+
 * Sun Feb 20 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-2
 - Do not overwrite compiler flags in our Makefile.
 
