@@ -2,7 +2,7 @@
 
 Name: deal
 Version: 3.1.11
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
