@@ -2,7 +2,7 @@
 
 Name: deal
 Version: 3.1.11
-Release: 4%{?dist}
+Release: 5%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -15,6 +15,9 @@ Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
 # installation directory instead of looking in the current directory.
 
 License: GPLv2+ and GPL+ and BSD
+# GPL+ applies only to ansidecl.h.  BSD applies only to random.c.
+# GPLv2+ applies to all other files.  Some are marked explicitly but
+# others fall under the blanket statement in the file LICENSE.
 
 BuildRequires: gcc
 BuildRequires: gcc-c++
@@ -52,14 +55,16 @@ touch Make.dep
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_mandir}/man6
 mkdir -p %{build_data}/ex
+mkdir -p %{build_docs}/html
 
 install -p -m 0755 deal     %{buildroot}%{_bindir}
 install -p -m 0644 deal.6   %{buildroot}%{_mandir}/man6
 install -p -m 0644 deal.tcl %{build_data}
 
-cp -a input  %{build_data}/
-cp -a format %{build_data}/
-cp -a lib    %{build_data}/
+cp -a input     %{build_data}/
+cp -a format    %{build_data}/
+cp -a lib       %{build_data}/
+cp -a docs/html %{build_docs}/
 
 for f in %{build_docs}/html/ex/*.txt;do \
     ( \
@@ -72,10 +77,15 @@ done
 %{_bindir}/deal
 %{_mandir}/man6/deal.6*
 %{_datadir}/%{name}/
-%doc docs/html
-%license GPL
+%{_docdir}/%{name}/
+%license GPL LICENSE
 
 %changelog
+* Sat Feb 26 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-5
+- Correct installation of symlinks.
+- Add comments in spec documenting which files are under which
+  licenses.
+
 * Mon Feb 21 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-4
 - Remove private getopt.[ch] files and replace with C library
   versions.
