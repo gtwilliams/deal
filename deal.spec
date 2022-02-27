@@ -89,7 +89,7 @@ make test
 
 %changelog
 * Sun Feb 27 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-6
-- Add %%check.
+- Add %%check.  Small clean-up.
 
 * Sat Feb 26 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-6
 - Properly dedup ex directory files.
