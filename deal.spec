@@ -2,7 +2,7 @@
 
 Name: deal
 Version: 3.1.11
-Release: 5%{?dist}
+Release: 6%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -64,13 +64,18 @@ install -p -m 0644 deal.tcl %{build_data}
 cp -a input     %{build_data}/
 cp -a format    %{build_data}/
 cp -a lib       %{build_data}/
+cp -a ex        %{build_data}/
 cp -a docs/html %{build_docs}/
 
-for f in %{build_docs}/html/ex/*.txt;do \
-    ( \
-        cd %{build_data}/ex ; \
-        ln -s ../../doc/%{name}/html/ex/$(basename $f) $(basename $f .txt).tcl; \
-    ) \
+# Dedup deal/ex and doc/deal/html/ex.  All actual files are in deal/ex
+# and some files in doc/deal/html/ex are now symlinks to files in
+# deal/ex.
+for f in %{build_data}/ex/*.tcl;do \
+    if [ -f %{build_docs}/html/ex/$(basename $f .tcl).txt ] && \
+       cmp $f %{build_docs}/html/ex/$(basename $f .tcl).txt ; then \
+        cd %{build_docs}/html/ex ; \
+        ln -fs ../../../../%{name}/ex/$(basename $f) $(basename $f .tcl).txt ; \
+    fi ; \
 done
 
 %files
@@ -81,6 +86,9 @@ done
 %license GPL LICENSE
 
 %changelog
+* Sat Feb 26 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-6
+- Properly dedup ex directory files.
+
 * Sat Feb 26 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-5
 - Correct installation of symlinks.
 - Add comments in spec documenting which files are under which
