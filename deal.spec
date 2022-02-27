@@ -70,10 +70,10 @@ cp -a docs/html %{build_docs}/
 # Dedup deal/ex and doc/deal/html/ex.  All actual files are in deal/ex
 # and some files in doc/deal/html/ex are now symlinks to files in
 # deal/ex.
+cd %{build_docs}/html/ex ; \
 for f in %{build_data}/ex/*.tcl;do \
     if [ -f %{build_docs}/html/ex/$(basename $f .tcl).txt ] && \
        cmp $f %{build_docs}/html/ex/$(basename $f .tcl).txt ; then \
-        cd %{build_docs}/html/ex ; \
         ln -fs ../../../../%{name}/ex/$(basename $f) $(basename $f .tcl).txt ; \
     fi ; \
 done
