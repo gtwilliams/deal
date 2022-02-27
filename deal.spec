@@ -2,7 +2,7 @@
 
 Name: deal
 Version: 3.1.11
-Release: 6%{?dist}
+Release: 7%{?dist}
 Summary: Bridge Hand Generator
 URL: https://github.com/gtwilliams/%{name}
 Source0: %{url}/archive/v%{version}/%{name}-%{version}.tar.gz
@@ -26,15 +26,13 @@ BuildRequires: make
 BuildRequires: tcl-devel
 BuildRequires: perl-podlators
 
-Requires: tcl
-
 %description
 This program generates bridge hands.  It can be told to generate only
 hands satisfying conditions like being balanced, having a range of
 HCPs, controls, or other user-definable properties.  Hands can be
 output in various formats, like pbn for feeding to other bridge
 programs, deal itself, or split up into a file per player for
-practise.  Extensible via Tcl.
+practice.  Extensible via Tcl.
 
 %global build_data %{buildroot}%{_datadir}/%{name}
 %global build_docs %{buildroot}%{_docdir}/%{name}
@@ -72,11 +70,15 @@ cp -a docs/html %{build_docs}/
 # deal/ex.
 cd %{build_docs}/html/ex ; \
 for f in %{build_data}/ex/*.tcl;do \
-    if [ -f %{build_docs}/html/ex/$(basename $f .tcl).txt ] && \
-       cmp $f %{build_docs}/html/ex/$(basename $f .tcl).txt ; then \
-        ln -fs ../../../../%{name}/ex/$(basename $f) $(basename $f .tcl).txt ; \
+    BASE=$(basename $f .tcl) ; \
+    if [ -f %{build_docs}/html/ex/${BASE}.txt ] && \
+       cmp $f %{build_docs}/html/ex/${BASE}.txt 2>&1 >/dev/null ; then \
+        ln -fs ../../../../%{name}/ex/$(basename $f) ${BASE}.txt ; \
     fi ; \
 done
+
+%check
+make test
 
 %files
 %{_bindir}/deal
@@ -86,6 +88,9 @@ done
 %license GPL LICENSE
 
 %changelog
+* Sun Feb 27 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-6
+- Add %%check.
+
 * Sat Feb 26 2022 Garry T. Williams <gtwilliams@gmail.com> 3.1.11-6
 - Properly dedup ex directory files.
 
