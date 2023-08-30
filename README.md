@@ -1,4 +1,13 @@
 # deal
+
+<a href="https://repology.org/project/deal/versions">
+    <img
+      src="https://repology.org/badge/vertical-allrepos/deal.svg?columns=2"
+      alt="Distribution packaging status for deal"
+      align="right"
+    >
+</a>
+
 Thomas Andrews' deal 3.1.9 Forked
 
 This repository contains changes to the original deal sources[^1] that
