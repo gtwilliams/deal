@@ -50,8 +50,8 @@
   fprintf(stderr,"%s\n",Tcl_GetVar2(interp,"errorInfo",NULL,0)); \
   exit(1);
 
-void Tcl_AllocDelete((ClientData data));
-void Tcl_ObjDelete((ClientData data));
+void Tcl_AllocDelete(ClientData data);
+void Tcl_ObjDelete(ClientData data);
 
 #ifdef _WINDOWS
 #define DEAL31_API __declspec(dllexport)
