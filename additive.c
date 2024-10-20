@@ -146,7 +146,7 @@ int tcl_count_additive( TCLOBJ_PARAMS ) TCLOBJ_DECL
                 total += AddFuncCall(addfunc,globalDeal.hand[hand].suit[suit]);
             }
         }
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(total));
+        Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(total));
         return TCL_OK;
     }
 
@@ -168,7 +168,7 @@ int tcl_count_additive( TCLOBJ_PARAMS ) TCLOBJ_DECL
         for (suit=0; suit<4; suit++) {
             total += AddFuncCall(addfunc,hnum[suit]);
         }
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(total));
+        Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(total));
         return TCL_OK;
     }
 
@@ -184,7 +184,7 @@ int tcl_count_additive( TCLOBJ_PARAMS ) TCLOBJ_DECL
             }
             total += AddFuncCall(addfunc,holding);
         }
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(total));
+        Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(total));
         return TCL_OK;
     }
 

@@ -24,7 +24,7 @@
 
 #ifdef __STDC__
 #define  TCL_PARAMS ClientData cd,Tcl_Interp *interp,int argc, CONST84 char *argv[]
-#define TCLOBJ_PARAMS ClientData cd,Tcl_Interp *interp,int objc,Tcl_Obj * CONST objv[]
+#define TCLOBJ_PARAMS ClientData cd,Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj * CONST objv[]
 #define  TCL_DECL
 #define  TCLOBJ_DECL
 #else
@@ -50,8 +50,8 @@
   fprintf(stderr,"%s\n",Tcl_GetVar2(interp,"errorInfo",NULL,0)); \
   exit(1);
 
-void Tcl_AllocDelete _ANSI_ARGS_((ClientData data));
-void Tcl_ObjDelete _ANSI_ARGS_((ClientData data));
+void Tcl_AllocDelete((ClientData data));
+void Tcl_ObjDelete((ClientData data));
 
 #ifdef _WINDOWS
 #define DEAL31_API __declspec(dllexport)
@@ -59,12 +59,12 @@ void Tcl_ObjDelete _ANSI_ARGS_((ClientData data));
 #define DEAL31_API
 #endif
 #if (TCL_MAJOR_VERSION<8 || (TCL_MAJOR_VERSION==8 && TCL_MINOR_VERSION==0))
-static int __dummyLength;
+static Tcl_Size __dummyLength;
 #define Tcl_GetString(obj) Tcl_GetStringFromObj(obj,&__dummyLength)
 #endif
 
 #if (TCL_MINOR_VERSION==0)
-int My_EvalObjv _ANSI_ARGS_((Tcl_Interp *,int,Tcl_Obj **,int));
+int My_EvalObjv((Tcl_Interp *,Tcl_Size objc,Tcl_Obj **,int));
 #define Tcl_EvalObjv(interp,objc,objv,dummy) My_EvalObjv(interp,objc,objv,dummy)
 #endif
 

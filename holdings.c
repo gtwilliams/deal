@@ -176,11 +176,11 @@ static Tcl_Obj *getIntObj(int val) {
     static Tcl_Obj *cached[8192];
     if (val<8192 && val>=0) {
         if (cached[val]==NULL) {
-            Tcl_IncrRefCount(cached[val]=Tcl_NewIntObj(val));
+            Tcl_IncrRefCount(cached[val]=Tcl_NewSizeIntObj(val));
         }
         return cached[val];
     } else { 
-        return Tcl_NewIntObj(val);
+        return Tcl_NewSizeIntObj(val);
     }
 }
 
@@ -221,7 +221,7 @@ integerAggregator(
         if (NULL==objv[i]) {
             return TCL_ERROR;
         }
-        retval=Tcl_GetIntFromObj(interp,objv[i],&val);
+        retval=Tcl_getSizeIntFromObj(interp,objv[i],&val);
         if (retval!=TCL_OK) {
             Tcl_SetResult(interp,
                           "Error in holdingProc integer aggregator: not an integer\n",
@@ -1052,7 +1052,7 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
             Tcl_WrongNumArgs(interp,2,objv,"<integer>");
             return TCL_ERROR;
         }
-        result=Tcl_GetIntFromObj(interp,objv[2],&num);
+        result=Tcl_getSizeIntFromObj(interp,objv[2],&num);
         if (result!=TCL_OK) { 
             return result;
         }

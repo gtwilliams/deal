@@ -278,7 +278,7 @@ int tcl_seed_deal(TCLOBJ_PARAMS) TCLOBJ_DECL
     if (objc!=2) {
         return TCL_ERROR;
     }
-    result=Tcl_GetIntFromObj(interp,objv[1],&value);
+    result=Tcl_getSizeIntFromObj(interp,objv[1],&value);
     if (result==TCL_OK) {
 #ifdef USE_RAND48
         srand48(value);
@@ -323,7 +323,7 @@ int tcl_deal_loop(TCLOBJ_PARAMS) TCLOBJ_DECL
         if (result==TCL_RETURN) {
             Tcl_Obj *output=Tcl_GetObjResult(interp);
             int value;
-            if (Tcl_GetIntFromObj(interp,output,&value)!=TCL_ERROR && value>0) {
+            if (Tcl_getSizeIntFromObj(interp,output,&value)!=TCL_ERROR && value>0) {
                 break;
             }
         }

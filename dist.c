@@ -38,7 +38,7 @@ static Tcl_Obj* lengthObjs[14];
 static void  InitializeLengths() {
     int i;
     for (i=0; i<=13; i++) {
-        Tcl_IncrRefCount(lengthObjs[i]=Tcl_NewIntObj(i));
+        Tcl_IncrRefCount(lengthObjs[i]=Tcl_NewSizeIntObj(i));
     }
 }
 
@@ -264,10 +264,10 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
                 return TCL_ERROR;
             }
 
-            Tcl_GetIntFromObj(interp,objv[2],&s);
-            Tcl_GetIntFromObj(interp,objv[3],&h);
-            Tcl_GetIntFromObj(interp,objv[4],&d);
-            Tcl_GetIntFromObj(interp,objv[5],&c);
+            Tcl_getSizeIntFromObj(interp,objv[2],&s);
+            Tcl_getSizeIntFromObj(interp,objv[3],&h);
+            Tcl_getSizeIntFromObj(interp,objv[4],&d);
+            Tcl_getSizeIntFromObj(interp,objv[5],&c);
         } else if (subCmd==shapeSubCmd) {
             int retval;
             Tcl_Obj **objv2=NULL;
@@ -282,10 +282,10 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
                               TCL_STATIC);
                 return TCL_ERROR;
             }
-            Tcl_GetIntFromObj(interp,objv2[0],&s);
-            Tcl_GetIntFromObj(interp,objv2[1],&h);
-            Tcl_GetIntFromObj(interp,objv2[2],&d);
-            Tcl_GetIntFromObj(interp,objv2[3],&c);
+            Tcl_getSizeIntFromObj(interp,objv2[0],&s);
+            Tcl_getSizeIntFromObj(interp,objv2[1],&h);
+            Tcl_getSizeIntFromObj(interp,objv2[2],&d);
+            Tcl_getSizeIntFromObj(interp,objv2[3],&c);
 
         } else {
             char *command=Tcl_GetString(objv[0]);
@@ -442,10 +442,10 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
                 return TCL_ERROR;
             }
 
-            Tcl_GetIntFromObj(interp,objv[2],&s);
-            Tcl_GetIntFromObj(interp,objv[3],&h);
-            Tcl_GetIntFromObj(interp,objv[4],&d);
-            Tcl_GetIntFromObj(interp,objv[5],&c);
+            Tcl_getSizeIntFromObj(interp,objv[2],&s);
+            Tcl_getSizeIntFromObj(interp,objv[3],&h);
+            Tcl_getSizeIntFromObj(interp,objv[4],&d);
+            Tcl_getSizeIntFromObj(interp,objv[5],&c);
 
         } else if (subCmdId==shapeSubCmd) {
             int retval;
@@ -463,10 +463,10 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
                 return TCL_ERROR;
             }
 
-            Tcl_GetIntFromObj(interp,objv2[0],&s);
-            Tcl_GetIntFromObj(interp,objv2[1],&h);
-            Tcl_GetIntFromObj(interp,objv2[2],&d);
-            Tcl_GetIntFromObj(interp,objv2[3],&c);
+            Tcl_getSizeIntFromObj(interp,objv2[0],&s);
+            Tcl_getSizeIntFromObj(interp,objv2[1],&h);
+            Tcl_getSizeIntFromObj(interp,objv2[2],&d);
+            Tcl_getSizeIntFromObj(interp,objv2[3],&c);
 
         } else {
 

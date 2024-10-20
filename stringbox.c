@@ -248,8 +248,8 @@ static int tcl_string_box(TCLOBJ_PARAMS)
                              " write row column string\"",NULL);
             return TCL_ERROR;
         }
-        if  (Tcl_GetIntFromObj(interp,objv[2],&row)!=TCL_OK ||
-             Tcl_GetIntFromObj(interp,objv[3],&col)!=TCL_OK) {
+        if  (Tcl_getSizeIntFromObj(interp,objv[2],&row)!=TCL_OK ||
+             Tcl_getSizeIntFromObj(interp,objv[3],&col)!=TCL_OK) {
             Tcl_AppendResult(interp,"\nbad row or column arguments: row=\"",
                              Tcl_GetString(objv[2]),
                              "\", column=\"",
@@ -300,7 +300,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
             return TCL_ERROR;
         }
     
-        if (Tcl_GetIntFromObj(interp,objv[3],&rowloc) != TCL_OK) {
+        if (Tcl_getSizeIntFromObj(interp,objv[3],&rowloc) != TCL_OK) {
             if (rowloc<0) {
                 Tcl_AppendResult(interp,"Illegal row location \"",
                                  Tcl_GetString(objv[3]),"\" passed to subbox routine",NULL);
@@ -308,7 +308,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
             return TCL_ERROR;
         }
     
-        if (Tcl_GetIntFromObj(interp,objv[4],&columnloc) != TCL_OK) {
+        if (Tcl_getSizeIntFromObj(interp,objv[4],&columnloc) != TCL_OK) {
             if (columnloc<0) {
                 Tcl_AppendResult(interp,"Illegal column location \"",
                                  Tcl_GetString(objv[4]),"\" passed to subbox routine",NULL);
@@ -316,11 +316,11 @@ static int tcl_string_box(TCLOBJ_PARAMS)
             return TCL_ERROR;
         }
         if (objc==7) {
-            if ((Tcl_GetIntFromObj(interp,objv[5],&rows) != TCL_OK)) {
+            if ((Tcl_getSizeIntFromObj(interp,objv[5],&rows) != TCL_OK)) {
                 return TCL_ERROR;
             }
     
-            if ((Tcl_GetIntFromObj(interp,objv[6],&columns) != TCL_OK)) {
+            if ((Tcl_getSizeIntFromObj(interp,objv[6],&columns) != TCL_OK)) {
                 return TCL_ERROR;
             }
         }
@@ -378,13 +378,13 @@ int tcl_create_string_box(TCLOBJ_PARAMS)
         return TCL_ERROR;
     }
     
-    if ((Tcl_GetIntFromObj(interp,objv[2],&rows) != TCL_OK) || (rows<=0)) {
+    if ((Tcl_getSizeIntFromObj(interp,objv[2],&rows) != TCL_OK) || (rows<=0)) {
         Tcl_AddErrorInfo(interp,
                          "\n (reading value of <rows>)");
         return TCL_ERROR;
     }
 
-    if (Tcl_GetIntFromObj(interp,objv[3],&columns) != TCL_OK || (columns<=0)) {
+    if (Tcl_getSizeIntFromObj(interp,objv[3],&columns) != TCL_OK || (columns<=0)) {
         Tcl_AddErrorInfo(interp,
                          "\n (reading value of <columns>)");
         return TCL_ERROR;

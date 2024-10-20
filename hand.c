@@ -47,7 +47,7 @@
 
 
 #if (TCL_MINOR_VERSION==0)
-int My_EvalObjv(Tcl_Interp *interp,int objc,Tcl_Obj **objv,int dummy)
+int My_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
 {
     Tcl_Obj *list=Tcl_NewListObj(objc,objv);
 
@@ -174,7 +174,7 @@ int tcl_count_suit (TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_OK;
 }
 
-Tcl_Obj *tcl_hand_holdings(Tcl_Interp *interp,int *hArray)
+Tcl_Obj *tcl_hand_holdings(Tcl_Interp *interp,Tcl_Size *hArray)
 {
     Tcl_Obj *holdingObjs[4];
     Tcl_Obj *list;
@@ -420,7 +420,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
             }
         }
 
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(count));
+        Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(count));
         return TCL_OK;
     }
 

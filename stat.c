@@ -270,7 +270,7 @@ int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
                return TCL_ERROR;
             }
 
-            if (TCL_ERROR==Tcl_GetIntFromObj(interp,list[0],&count)) {
+            if (TCL_ERROR==Tcl_getSizeIntFromObj(interp,list[0],&count)) {
                Tcl_AppendResult(interp,"Invalid serialized stat: first element not an integer");
                 return TCL_ERROR; 
             }
