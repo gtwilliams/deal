@@ -176,7 +176,7 @@ int tcl_count_additive( TCLOBJ_PARAMS ) TCLOBJ_DECL
         int total=0;
         for (i=2; i<objc; i++) {
             int holding=getHoldingNumFromObj(interp,objv[i]);
-            if (holding<0) { 
+            if (holding<0) {
                 Tcl_AppendResult(interp,"invalid holding ",
                                  Tcl_GetString(objv[i]),NULL);
 
@@ -198,7 +198,7 @@ int tcl_count_additive( TCLOBJ_PARAMS ) TCLOBJ_DECL
 
 }
 
-void *tcl_create_additive(interp,name,func,data,freefunc) 
+void *tcl_create_additive(interp,name,func,data,freefunc)
      Tcl_Interp *interp;
      char *name;
      int (*func) PROTO((int /* holding */, void * /* data */));

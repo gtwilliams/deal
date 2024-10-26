@@ -117,7 +117,7 @@ class RelativeRanksFinder {
  protected:
     inline void compute(const holding_t ind,const holding_t topBitRank) {
         int seat, suit;
-    
+
         relative[ind] = relative[ind^topBitRank];
 
         for (suit=0; suit<=3; suit++) {
@@ -166,7 +166,7 @@ struct moveType {
 };
 
 struct movePlyType {
-    struct moveType move[14];             
+    struct moveType move[14];
     int current;
     int last;
 };
@@ -192,7 +192,7 @@ struct nodeCardsType {
 struct posStackItem {
     int first;                 /* Seat that leads the trick for each ply*/
     int high;                  /* Seat that is presently winning the trick */
-    struct moveType move;      /* Presently winning move */              
+    struct moveType move;      /* Presently winning move */
     holding_t winRanks[4];  /* Cards that win by rank, index by suit */
 };
 
@@ -293,13 +293,13 @@ struct pos {
         for (ss=0; ss<=3; ss++) {
             stack[depth].winRanks[ss] = getTopCards(aggr[ss],(int)cp->leastWin[ss]);
         }
-    
+
     }
 
 };
 
 struct posSearchType {
-    struct winCardType * posSearchPoint; 
+    struct winCardType * posSearchPoint;
     LONGLONG suitLengths;
     struct posSearchType * left;
     struct posSearchType * right;
@@ -313,7 +313,7 @@ struct winCardType {
     struct winCardType * prevWin;
     struct winCardType * nextWin;
     struct winCardType * next;
-}; 
+};
 
 
 struct evalType {
@@ -337,7 +337,7 @@ struct ContractInfo {
     int trump;
     int _firstSuit;
     const int *_nextSuit;
-  
+
 
     inline void initialize(int trumpContract,int trump) {
         this->trumpContract = trumpContract;
@@ -421,7 +421,7 @@ extern struct pos lookAheadPos;
 extern struct movePlyType movePly[50];
 extern struct posSearchType * posSearch;
 extern struct searchType searchData;
-extern struct moveType forbiddenMoves[14];  /* Initial depth moves that will be 
+extern struct moveType forbiddenMoves[14];  /* Initial depth moves that will be
 					       excluded from the search */
 extern struct moveType initialMoves[4];
 extern struct moveType highMove;
@@ -440,7 +440,7 @@ extern int c1[50], c2[50], c3[50], c4[50], c5[50], c6[50], c7[50],
 extern int nodeTypeStore[4];            /* Look-up table for determining if
                                            node is MAXNODE or MINNODE */
 #if 0
-extern int lho[4], rho[4], partner[4];                                        
+extern int lho[4], rho[4], partner[4];
 #endif
 extern int nodes;                       /* Number of nodes searched */
 extern int no[50];                      /* Number of nodes searched on each
@@ -468,7 +468,7 @@ extern int nodeSetSizeLimit;
 extern int winSetSizeLimit;
 extern int lenSetSizeLimit;
 extern int estTricks[4];
-extern int recInd; 
+extern int recInd;
 extern int suppressTTlog;
 extern unsigned char suitChar[4];
 extern unsigned char rankChar[15];
@@ -494,30 +494,30 @@ void UpdateSecondBest(struct pos * posPoint, int suit);
 inline int WinningMove(const struct moveType &mvp1,const struct moveType &mvp2);
 inline unsigned short int CountOnes(unsigned short int b);
 int AdjustMoveList(void);
-int QuickTricks(struct pos * posPoint, int seat, 
+int QuickTricks(struct pos * posPoint, int seat,
                 int depth, int target, int *result);
-int LaterTricksMIN(struct pos *posPoint, int seat, int depth, int target); 
+int LaterTricksMIN(struct pos *posPoint, int seat, int depth, int target);
 int LaterTricksMAX(struct pos *posPoint, int seat, int depth, int target);
 struct nodeCardsType * CheckSOP(struct pos * posPoint, struct nodeCardsType
                                 * nodep, int target, int tricks, int * result, int *value);
 struct nodeCardsType * UpdateSOP(struct pos * posPoint, struct nodeCardsType
-                                 * nodep);  
+                                 * nodep);
 struct nodeCardsType * FindSOP(struct pos * posPoint,
-                               struct winCardType * nodeP, int firstSeat, 
-                               int target, int tricks, int * valp);  
-struct nodeCardsType * BuildPath(struct pos * posPoint, 
+                               struct winCardType * nodeP, int firstSeat,
+                               int target, int tricks, int * valp);
+struct nodeCardsType * BuildPath(struct pos * posPoint,
                                  struct posSearchType *nodep, int * result);
 void BuildSOP(struct pos * posPoint, int tricks, int firstSeat, int target,
               int depth, int scoreFlag, int score);
 struct posSearchType * SearchLenAndInsert(struct posSearchType
-                                          * rootp, LONGLONG key, int insertNode, int *result);  
+                                          * rootp, LONGLONG key, int insertNode, int *result);
 void Undo(struct pos * posPoint, int depth);
 int CheckDeal(struct moveType * cardp);
 inline int InvBitMapRank(holding_t bitMap);
 int InvWinMask(int mask);
 void ReceiveTTstore(struct pos *posPoint, struct nodeCardsType * cardsP, int target, int depth);
-int NextMove(struct pos *posPoint, int depth); 
-int DumpInput(int errCode, struct deal dl, int target, int solutions, int mode); 
+int NextMove(struct pos *posPoint, int depth);
+int DumpInput(int errCode, struct deal dl, int target, int solutions, int mode);
 void Wipe(void);
 void AddNodeSet(void);
 void AddLenSet(void);

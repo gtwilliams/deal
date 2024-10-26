@@ -11,7 +11,7 @@
  *     card in the holding
  *
  *  getTopCards(holding_t h,int n) - returns a holding consisting of the top n cards
- *     in holding h   
+ *     in holding h
  *
  * Your application must call initializeDDSLookup() to use these lookup tables
  */
@@ -55,7 +55,7 @@ inline void initializeDDSLookup() {
             holding_t rest = holding & (~highestBitRank);
             topCardsLookup[0][holding] = 0;
             for (n=1; n<14; n++) {
-                topCardsLookup[n][holding] = 
+                topCardsLookup[n][holding] =
                     highestBitRank | topCardsLookup[n-1][rest];
             }
         }

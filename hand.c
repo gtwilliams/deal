@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -22,12 +22,12 @@
  *    whogets - returns the name of the holder of a specific card
  *
  *    north,east,south,west,hand - rather complicated; see below
- * 
+ *
  *    hcp, controls, losers
  *
  *    spades,hearts,diamonds,clubs - returns suit counts
  *
- *    
+ *
  */
 #include <tcl.h>
 
@@ -60,7 +60,7 @@ int My_EvalObjv(Tcl_Interp *interp,int objc,Tcl_Obj **objv,int dummy)
 int tcl_deal_to_whom (TCLOBJ_PARAMS) TCLOBJ_DECL
 {
     int card;
-  
+
     if (objc!=2) {
         Tcl_WrongNumArgs(interp,1,objv,"<cardname>");
         return TCL_ERROR;
@@ -68,11 +68,11 @@ int tcl_deal_to_whom (TCLOBJ_PARAMS) TCLOBJ_DECL
 
     card=card_num(Tcl_GetString(objv[1]));
     if (card>=52||card<0) {
-        Tcl_AppendResult(interp,Tcl_GetString(objv[0]), ": ", 
+        Tcl_AppendResult(interp,Tcl_GetString(objv[0]), ": ",
                          Tcl_GetString(objv[1])," is not a valid card name",NULL);
         return TCL_ERROR;
     }
-  
+
     Tcl_SetObjResult(interp,getHandKeywordObj(interp,to_whom(card)));
     return TCL_OK;
 }
@@ -120,13 +120,13 @@ int tcl_count_suit (TCLOBJ_PARAMS) TCLOBJ_DECL
     int hand,length;
     long suit;
     int hArray[4],*hptr;
-    
+
     if (doInit) {
         HandCmdID=Keyword_addKey("hand");
         doInit=0;
     }
 
-    if (objc<2) { 
+    if (objc<2) {
         Tcl_WrongNumArgs(interp,1,objv,usage);
         return TCL_ERROR;
     }
@@ -169,7 +169,7 @@ int tcl_count_suit (TCLOBJ_PARAMS) TCLOBJ_DECL
     suit=(long)cd;
 
     length=counttable[8191&hptr[suit]];
-    
+
     Tcl_SetObjResult(interp,getLengthObj(length));
     return TCL_OK;
 }
@@ -209,14 +209,14 @@ Tcl_Obj *tcl_hand_holdings(Tcl_Interp *interp,int *hArray)
  */
 static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
 {
-    static int uninitialized=1, 
+    static int uninitialized=1,
         IsID=-1,
         GetsID=-1,
         PatternID=-1,
         ShapeID=-1,
         HasID=-1,
         VoidFlagID=-1;
-     
+
     long hand=(long)cd;
     int suit;
     Tcl_Obj *voidObj=0;
@@ -272,7 +272,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
             holdingsPtr=globalDeal.hand[hand].suit;
         } else {
             retval=getHandHoldingsFromObj(interp,handObj,hnums);
-            if (retval!=TCL_OK) { 
+            if (retval!=TCL_OK) {
                 Tcl_AddErrorInfo(interp,"Error extracting holding from hand object");
                 return retval;
             }
@@ -376,7 +376,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
     if (argID==PatternID || argID==ShapeID) {
         int i,j,temp,d[4];
         Tcl_Obj *s=Tcl_NewListObj(0,NULL);
-   
+
         if (objc>2) {
             Tcl_WrongNumArgs(interp,usageStart,objv0,0);
             return TCL_ERROR;
@@ -438,9 +438,9 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
                          "[<suit>]",NULL);
         return TCL_ERROR;
     }
-  
+
     return TCL_ERROR;
-  
+
 }
 
 int tcl_stack_cards(TCLOBJ_PARAMS) TCLOBJ_DECL
@@ -521,7 +521,7 @@ int HandCmd_Init(Tcl_Interp *interp)
         Tcl_CreateObjCommand(interp,suitname[suit], tcl_count_suit,
                              (ClientData)suit, NULL);
     }
-  
+
     for (hand=NORTH; hand<=WEST; hand++) {
         /* Put hand number in client data to allow use of "rename" by user */
         Tcl_CreateObjCommand(interp,handname[hand],tcl_hand_cmd,(ClientData)hand,NULL);

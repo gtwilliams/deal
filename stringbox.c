@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -150,7 +150,7 @@ static StringBox newStringBox(rows,columns)
     for (i=0; i<rows; i++) {
         result->strings[i]=parent->start+i*columns;
     }
-      
+
     result->parent=parent;
 
     clearStringBox(result);
@@ -167,30 +167,30 @@ static StringBox subStringBox(interp,parentbox,rowloc,columnloc,rows,columns)
     StringBoxBase parent;
     StringBox result;
     int i;
-  
+
     if (rows<=0 || columns<=0 || rowloc< 0 || columnloc<0) {
         goto error;
     }
-  
+
     if (rows+rowloc>parentbox->rows || rows+columnloc>parentbox->columns) {
         goto error;
     }
-  
+
     parent=parentbox->parent;
     parent->refcount++;
-  
+
     result=(StringBox)Tcl_Alloc(sizeof(struct string_box));
-  
+
     result->rows=rows;
     result->columns=columns;
     result->strings=(Char **)Tcl_Alloc(rows*sizeof(Char **));
-  
+
     for (i=0; i<rows; i++) {
         result->strings[i]=parentbox->strings[rowloc+i]+columnloc;
     }
-  
+
     result->parent=parent;
-  
+
     clearStringBox(result);
     return result;
  error:
@@ -243,7 +243,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
     if ('w'==(*command) && strcmp(command,"write")==0) {
         int row, col;
         if (objc!=5) {
-            Tcl_AppendResult(interp, "wrong # args: should be \"", 
+            Tcl_AppendResult(interp, "wrong # args: should be \"",
                              Tcl_GetString(objv[0]),
                              " write row column string\"",NULL);
             return TCL_ERROR;
@@ -260,7 +260,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
         return writeStringBox(interp,box,row,col,Tcl_GetUnicode(objv[4]));
 
     }
-  
+
     if (*command=='c' && strcmp(command,"clear")==0) {
         clearStringBox(box);
         return TCL_OK;
@@ -268,7 +268,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 
     if (*command=='r' && strcmp(command,"rows")==0) {
         if (objc!=2) {
-            Tcl_AppendResult(interp, "wrong # args: should be \"", 
+            Tcl_AppendResult(interp, "wrong # args: should be \"",
                              Tcl_GetString(objv[0]),
                              " ",command,"\"", NULL);
             return TCL_ERROR;
@@ -279,7 +279,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 
     if (*command=='c' && strcmp(command,"columns")==0) {
         if (objc!=2) {
-            Tcl_AppendResult(interp, "wrong # args: should be \"", 
+            Tcl_AppendResult(interp, "wrong # args: should be \"",
                              Tcl_GetString(objv[0]),
                              " ",command,"\"", NULL);
             return TCL_ERROR;
@@ -291,23 +291,23 @@ static int tcl_string_box(TCLOBJ_PARAMS)
     if (*command=='s' && strcmp(command,"subbox")==0) {
         StringBox subbox;
         int rows=0,columns=0,rowloc=0,columnloc=0;
-    
+
         if (objc!=7 && objc!=5) {
-            Tcl_AppendResult(interp, "wrong # args: should be \"", 
+            Tcl_AppendResult(interp, "wrong # args: should be \"",
                              Tcl_GetString(objv[0]),
                              " subbox name rowloc columnloc [ rows columns ]\"",
                              (Char *)NULL);
             return TCL_ERROR;
         }
-    
+
         if (Tcl_GetIntFromObj(interp,objv[3],&rowloc) != TCL_OK) {
             if (rowloc<0) {
                 Tcl_AppendResult(interp,"Illegal row location \"",
                                  Tcl_GetString(objv[3]),"\" passed to subbox routine",NULL);
-            }     
+            }
             return TCL_ERROR;
         }
-    
+
         if (Tcl_GetIntFromObj(interp,objv[4],&columnloc) != TCL_OK) {
             if (columnloc<0) {
                 Tcl_AppendResult(interp,"Illegal column location \"",
@@ -319,7 +319,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
             if ((Tcl_GetIntFromObj(interp,objv[5],&rows) != TCL_OK)) {
                 return TCL_ERROR;
             }
-    
+
             if ((Tcl_GetIntFromObj(interp,objv[6],&columns) != TCL_OK)) {
                 return TCL_ERROR;
             }
@@ -359,7 +359,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
         return TCL_OK;
     }
 
-    Tcl_AppendResult(interp, "unknown stringbox operation: \"", 
+    Tcl_AppendResult(interp, "unknown stringbox operation: \"",
                      Tcl_GetString(objv[0]), " ",
                      command," ...\"",NULL);
     return TCL_ERROR;
@@ -370,14 +370,14 @@ int tcl_create_string_box(TCLOBJ_PARAMS)
 {
     int rows,columns;
     StringBox box;
-   
+
     if (objc!=4) {
-        Tcl_AppendResult(interp, "wrong # args: should be \"", 
+        Tcl_AppendResult(interp, "wrong # args: should be \"",
                          Tcl_GetString(objv[0]),
                          " name rows columns\"",(Char *)NULL);
         return TCL_ERROR;
     }
-    
+
     if ((Tcl_GetIntFromObj(interp,objv[2],&rows) != TCL_OK) || (rows<=0)) {
         Tcl_AddErrorInfo(interp,
                          "\n (reading value of <rows>)");

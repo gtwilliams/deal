@@ -55,7 +55,7 @@ struct futureTricks {
 
 #include <string.h>
 
-EXTERN_C int SolveBoard(struct deal dl, 
+EXTERN_C int SolveBoard(struct deal dl,
                         int target, int solutions, int mode, struct futureTricks *futp);
 
 EXTERN_C void DDSInitStart();

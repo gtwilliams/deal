@@ -21,7 +21,7 @@ static int parse_diagram(Tcl_Interp *interp,Tcl_Obj *diagram, struct deal *aDeal
         suitHoldings[suit]=0;
         for (hand=0; hand<4; hand++) {
             aDeal->remaining.cards[hand][suit]=0;
-        } 
+        }
     }
 
     retval = Tcl_ListObjGetElements(interp,diagram,&length,&hands);
@@ -87,7 +87,7 @@ static int tcl_dds(TCLOBJ_PARAMS) TCLOBJ_DECL
         GoalFlagID=-1,
         NoReuseFlagID=-1,
         ReuseFlagID=-1,
-        LeaderFlagID=-1, 
+        LeaderFlagID=-1,
         TrickFlagID=-1;
 
     int goal=-1;
@@ -141,7 +141,7 @@ static int tcl_dds(TCLOBJ_PARAMS) TCLOBJ_DECL
             } else {
                 return TCL_ERROR;
             }
-      
+
             if (id == DiagramFlagID) {
                 if (diagram!=NULL) {
                     return TCL_ERROR;
@@ -166,7 +166,7 @@ static int tcl_dds(TCLOBJ_PARAMS) TCLOBJ_DECL
                     Tcl_AppendResult(interp,"No additional tricks after an incomplete trick",NULL);
                 }
 
-                if (TCL_ERROR == Tcl_ListObjGetElements(interp,arg,&cardsPlayedToTrick,&cards) || 
+                if (TCL_ERROR == Tcl_ListObjGetElements(interp,arg,&cardsPlayedToTrick,&cards) ||
                     cardsPlayedToTrick>4) {
                     Tcl_AppendResult(interp,"Invalid -trick argument: ",Tcl_GetString(arg),NULL);
                     return TCL_ERROR;
@@ -243,7 +243,7 @@ static int tcl_dds(TCLOBJ_PARAMS) TCLOBJ_DECL
         }
     }
     handLength = handLength - totalTricksPlayed;
- 
+
     if (goal>0) {
         if ((d.first + cardsPlayedToTrick + declarer)&1) {
             playerGoal = (handLength + 1)-goal; /* Goal passed to DDS */
@@ -266,7 +266,7 @@ static int tcl_dds(TCLOBJ_PARAMS) TCLOBJ_DECL
     status = SolveBoard(d,playerGoal,1,mode,&futp);
     LastTrump = d.trump;
     CountCalls++;
-  
+
     if (status != 1) {
         Tcl_SetObjResult(interp,Tcl_NewIntObj(status));
         Tcl_AppendResult(interp,": dds failed due to error status from double dummy solver",NULL);
@@ -317,7 +317,7 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS) TCLOBJ_DECL
     d.trump=4; /* notrump */
     d.first=WEST; /* west */
     finish_deal();
-  
+
     if (objc > 2) {
         d.trump = getDenomNumFromObj(interp,objv[2]);
         if (d.trump==-1) {
@@ -353,9 +353,9 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS) TCLOBJ_DECL
             d.remaining.cards[ddsHand][suit] = globalDeal.hand[hand].suit[suit];
         }
     }
- 
+
     if (d.trump != LastTrump) {
-        if (CountCalls == 0) { 
+        if (CountCalls == 0) {
             mode = 0;
         } else {
             mode = 1;
@@ -367,7 +367,7 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS) TCLOBJ_DECL
     status = SolveBoard(d,leaderGoal,1,mode,&futp);
     LastTrump = d.trump;
     CountCalls++;
-  
+
     if (status != 1) {
         Tcl_SetObjResult(interp,Tcl_NewIntObj(status));
         Tcl_AppendResult(interp,"dds failed due to error status from double dummy solver",NULL);

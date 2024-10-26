@@ -9,12 +9,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -30,12 +30,12 @@
  *     1 0 1 0 1 0 0 1 0 0 0 0 0
  *
  * the "counttable" is just a lookup table which holds
- * the number of bits set, that is, the number of cards 
+ * the number of bits set, that is, the number of cards
  * held in the suit.  This table has 2^13=8192 entries, so instead
  * of shipping a 33k file with the source kit, I ship
  * this smaller source file which creates the source file on the
  * fly.
- * 
+ *
  * This sort of table could also be used to compute losers in
  * a suit or HCP in a suit.  In the case of HCP, just examine
  * the table in "deal.c", in the hcp_count function.
@@ -50,7 +50,7 @@ void make_counttable()
         for (j=0; j<13; j++) {
             if (i & (1<<j)) {counttable[i]++;}
         }
-    }   
+    }
 }
 
 int main() {
