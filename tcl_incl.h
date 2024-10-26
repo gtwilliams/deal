@@ -18,20 +18,16 @@
 #ifndef __TCL_INCL__
 #include <tcl.h>
 
-#ifndef CONST84
-#define CONST84
-#endif
-
 #ifdef __STDC__
-#define  TCL_PARAMS ClientData cd,Tcl_Interp *interp,int argc, CONST84 char *argv[]
-#define TCLOBJ_PARAMS ClientData cd,Tcl_Interp *interp,int objc,Tcl_Obj * CONST objv[]
+#define  TCL_PARAMS ClientData cd,Tcl_Interp *interp,int argc, char *argv[]
+#define TCLOBJ_PARAMS ClientData cd,Tcl_Interp *interp,int objc,Tcl_Obj * const objv[]
 #define  TCL_DECL
 #define  TCLOBJ_DECL
 #else
 #define TCL_PARAMS cd,interp,argc,argv
 #define TCLOBJ_PARAMS cd,interp,objc,objv
 #define TCL_DECL ClientData cd; Tcl_Interp *interp; int argc; char *argv[];
-#define  TCLOBJ_DECL ClientData cd; Tcl_Interp *interp; int objc; Tcl_Obj * CONST objv[];
+#define  TCLOBJ_DECL ClientData cd; Tcl_Interp *interp; int objc; Tcl_Obj * const objv[];
 /*int free();*/
 #endif
 

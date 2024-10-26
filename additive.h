@@ -22,4 +22,4 @@ extern void *tcl_create_additive _ANSI_ARGS_((Tcl_Interp *,
 			int (*)_ANSI_ARGS_((int holding,void* data)),
 			void * data, Tcl_CmdDeleteProc));
 extern int tcl_count_additive
-	PROTO((ClientData ,Tcl_Interp *, int, Tcl_Obj * CONST *));
+	PROTO((ClientData ,Tcl_Interp *, int, Tcl_Obj * const *));

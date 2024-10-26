@@ -79,7 +79,7 @@ int tcl_vector_define PROTO((TCL_PARAMS));
 int tcl_vector_define ( TCL_PARAMS ) TCL_DECL
 {
     int i;
-    CONST84 char *name=argv[1];
+    char *name=argv[1];
     LazyVectorData vec;
     if (argc<=1) {
         Tcl_AppendResult(interp,"usage: ",argv[0],

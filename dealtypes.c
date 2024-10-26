@@ -489,7 +489,7 @@ int getCardRankNumFromObj(Tcl_Interp *interp, Tcl_Obj *rank) {
   return rank->internalRep.longValue;
 }
 
-int getHandHoldingsFromObjv(Tcl_Interp *interp,Tcl_Obj * CONST *objv,int *retHoldings)
+int getHandHoldingsFromObjv(Tcl_Interp *interp,Tcl_Obj * const *objv,int *retHoldings)
 {
   int cards=0,suit;
   for (suit=0; suit<4; suit++) {
@@ -526,7 +526,7 @@ getHandHoldingsFromObj(Tcl_Interp *interp, Tcl_Obj *obj, int *retHoldings)
   return getHandHoldingsFromObjv(interp,objv,retHoldings);
 }
 
-Tcl_Obj * CONST *getAllSuitObjs() {
+Tcl_Obj * const *getAllSuitObjs() {
   return AllSuits;
 }
 

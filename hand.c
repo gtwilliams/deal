@@ -222,7 +222,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
     Tcl_Obj *voidObj=0;
     int argID;
     int retval;
-    Tcl_Obj * CONST *objv0=objv; /* saved due to potential increment of objv */
+    Tcl_Obj * const *objv0=objv; /* saved due to potential increment of objv */
     int usageStart=1;      /* set to 2 if this is of type hand <hand> ... */
 
     Tcl_Obj *handObj=NULL;
@@ -320,7 +320,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
 
     if (argID==GetsID) {
         int card,holdings[4],suit;
-        Tcl_Obj* CONST *suits=getAllSuitObjs();
+        Tcl_Obj* const *suits=getAllSuitObjs();
         Tcl_Obj* stackcmd[4];
         stackcmd[0]=stackCardsCmd;
         stackcmd[1]=getHandKeywordObj(interp,hand);

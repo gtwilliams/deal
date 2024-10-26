@@ -142,7 +142,7 @@ extern int atoi(const char*);
  * in a list or whatever.
  */
 typedef struct _aggregation {
-    int (*fn)(Tcl_Interp *interp,int objc, Tcl_Obj **objv,Tcl_Obj * CONST *suitnames);
+    int (*fn)(Tcl_Interp *interp,int objc, Tcl_Obj **objv,Tcl_Obj * const *suitnames);
 } Aggregator;
 
 /*
@@ -210,7 +210,7 @@ integerAggregator(
                   Tcl_Interp *interp,
                   int objc,
                   Tcl_Obj **objv,
-                  Tcl_Obj * CONST *suits
+                  Tcl_Obj * const *suits
                   )
 {
     int i;
@@ -243,7 +243,7 @@ doubleAggregator(
                  Tcl_Interp *interp,
                  int objc,
                  Tcl_Obj **objv,
-                 Tcl_Obj * CONST *suits
+                 Tcl_Obj * const *suits
                  )
 {
     int i;
@@ -273,7 +273,7 @@ stringAggregator(
                  Tcl_Interp *interp,
                  int objc,
                  Tcl_Obj **objv,
-                 Tcl_Obj * CONST *suits
+                 Tcl_Obj * const *suits
                  )
 {
     int i;
@@ -296,7 +296,7 @@ booleanAggregator(
                   Tcl_Interp *interp,
                   int objc,
                   Tcl_Obj **objv,
-                  Tcl_Obj * CONST *suits
+                  Tcl_Obj * const *suits
                   )
 {
     int i;
@@ -690,7 +690,7 @@ evalHoldingNums(
                 HoldingProcedure procedure,
                 int count,
                 int *holdings,
-                Tcl_Obj * CONST *suits
+                Tcl_Obj * const *suits
                 )
 {
     int i;
@@ -828,9 +828,9 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
         int subsetHoldings[4];
         int *hnum;
         int countHoldings;
-        Tcl_Obj * CONST *allSuits;
+        Tcl_Obj * const *allSuits;
         Tcl_Obj *chosenSuits[4];
-        Tcl_Obj * CONST *suits;
+        Tcl_Obj * const *suits;
 
         if (objc<3 || objc>7) {
             Tcl_WrongNumArgs(interp,2,objv,"hand <hand> [<suit> ...]");

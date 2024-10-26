@@ -730,7 +730,7 @@ int tcl_shapeclass_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
 int tcl_shapeclass_define_binary ( TCL_PARAMS ) TCL_DECL
 {
     DistSet set;
-    CONST84 char *s;
+    char *s;
     int i;
     if (argc!=3) { return TCL_ERROR; }
 

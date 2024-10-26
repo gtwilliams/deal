@@ -529,7 +529,7 @@ int tcl_correlate_command (TCLOBJ_PARAMS) TCLOBJ_DECL
 
 int tcl_sdev_define ( TCL_PARAMS ) TCL_DECL
 {
-    CONST84 char *name=argv[1];
+    char *name=argv[1];
     SDev *sd;
     argc--; argv++;
     sd=sdevNew();
