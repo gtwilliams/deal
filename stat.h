@@ -32,19 +32,19 @@ typedef struct {
     double sumx,sumy,sumxx,sumyy,sumxy;
 } Correlation;
 
-double sdev PROTO((SDev *));
-double sdevAverage PROTO((SDev *));
-void sdevReset PROTO((SDev *));
-void sdevAddData PROTO((SDev *,double,double));
-SDev *sdevNew PROTO(());
-void sdevFree PROTO((ClientData));
+double sdev(SDev *);
+double sdevAverage(SDev *);
+void sdevReset(SDev *);
+void sdevAddData(SDev *,double,double);
+SDev *sdevNew();
+void sdevFree(ClientData);
 int tcl_rand_cmd (TCLOBJ_PARAMS);
 int tcl_sdev_define(TCL_PARAMS);
 int tcl_correlation_define(TCLOBJ_PARAMS);
 
 
-Correlation *correlationNew PROTO(());
-void corrAddData PROTO((Correlation *,double,double,double));
-double corrResult PROTO((Correlation *corr));
-void corrReset PROTO((Correlation *));
-void correlationFree PROTO((ClientData));
+Correlation *correlationNew();
+void corrAddData(Correlation *,double,double,double);
+double corrResult(Correlation *corr);
+void corrReset(Correlation *);
+void correlationFree(ClientData);

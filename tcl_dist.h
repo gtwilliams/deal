@@ -17,5 +17,5 @@
  */
 
 #include "tcl_incl.h"
-extern int Dist_Init PROTO((Tcl_Interp *));
-extern void printDistTable PROTO((void));
+extern int Dist_Init(Tcl_Interp *);
+extern void printDistTable(void);

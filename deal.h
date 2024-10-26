@@ -67,7 +67,7 @@ char *format_deal_verbose();
 
 int start_deal();
 void finish_deal();
-void deal_hand PROTO((int /*hand*/));
+void deal_hand (int /*hand*/);
 /*
  * Lookup tables which key on characters to return
  * the associated hand, suit, and card numbers
@@ -78,28 +78,28 @@ extern int card_name_table[256];
 
 void init_name_tables();
 
-int Dist_Init PROTO((Tcl_Interp *));
-int Vector_Init PROTO((Tcl_Interp *));
-int HandCmd_Init PROTO((Tcl_Interp *));
-int DealControl_Init PROTO((Tcl_Interp *));
-int DDS_Init PROTO((Tcl_Interp *));
+int Dist_Init(Tcl_Interp *);
+int Vector_Init(Tcl_Interp *);
+int HandCmd_Init(Tcl_Interp *);
+int DealControl_Init(Tcl_Interp *);
+int DDS_Init(Tcl_Interp *);
 
-int count_controls PROTO((int /* holding */, void */* dummy */));
-int count_hcp PROTO((int /* holding */, void */* dummy */));
-int count_losers PROTO((int /* holding */, void * /* dummy */));
+int count_controls(int /* holding */, void * /* dummy */);
+int count_hcp(int /* holding */, void * /* dummy */);
+int count_losers(int /* holding */, void * /* dummy */);
 
-int put_card PROTO((int, int));
-int put_hand PROTO((int, char *));
-int put_holdings PROTO((int, int*));
-int put_holding PROTO((int hand, int suit, int card));
+int put_card(int, int);
+int put_hand(int, char *);
+int put_holdings(int, int*);
+int put_holding(int hand, int suit, int card);
 
 extern int count_deals;
 extern int verbose;
 
-int card_num PROTO((char *));
-int card_rank  PROTO((char *));
-void rotate_deal PROTO((int));
-void get_stacked_cards PROTO((int,int*));
+int card_num(char *);
+int card_rank(char *);
+void rotate_deal(int);
+void get_stacked_cards(int,int*);
 
 struct deck_stacker {
     int card[52];  /* What card is in the position */
@@ -118,7 +118,7 @@ struct deck {
     int finished[4];
 };
 
-int to_whom PROTO ((int card));
+int to_whom(int card);
 extern struct deck_stacker stacker;
 extern struct deck complete_deal;
 
@@ -129,7 +129,7 @@ extern struct deck complete_deal;
 
 #endif
 
-void __srandom PROTO((unsigned));
+void __srandom(unsigned);
 long __random();
 
 #define srandom __srandom

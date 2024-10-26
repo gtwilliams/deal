@@ -17,5 +17,5 @@
  */
 
 #include "deal.h"
-Tcl_Obj *tcl_format_hand PROTO((int */*holdingArray*/,Tcl_Obj * /*voidstring*/));
-Tcl_Obj *tcl_format_suit PROTO((int holding,Tcl_Obj * /*voidstring*/));
+Tcl_Obj *tcl_format_hand(int * /*holdingArray*/,Tcl_Obj * /*voidstring*/);
+Tcl_Obj *tcl_format_suit(int holding,Tcl_Obj * /*voidstring*/);

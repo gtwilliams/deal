@@ -62,7 +62,7 @@
 
 /* Data structure for holding information about an additive function */
 typedef struct additivecounter {
-    int (*func) PROTO((int /* holding */, void * /* data */));
+    int (*func) (int /* holding */, void * /* data */);
     void *data;
     Tcl_CmdDeleteProc *freefunc;
 } *AdditiveFunction;
@@ -71,11 +71,11 @@ typedef struct additivecounter {
     (addfunc)->func(holding,(addfunc)->data)
 
 static AdditiveFunction newAdditiveFunction(func,data,freefunc)
-     int (*func) PROTO((int /* holding */, void * /* data */));
+     int (*func) (int /* holding */, void * /* data */);
      Tcl_CmdDeleteProc *freefunc;
      void *data;
 {
-    AdditiveFunction result=(AdditiveFunction) 
+    AdditiveFunction result=(AdditiveFunction)
         Tcl_Alloc(sizeof(struct additivecounter));
     if (result==NULL) { return NULL; }
 
@@ -139,7 +139,7 @@ int tcl_count_additive( TCLOBJ_PARAMS ) TCLOBJ_DECL
                 suit=getSuitNumFromObj(interp,objv[i]);
                 if (suit==NOSUIT) {
                     char *badparam=Tcl_GetString(objv[i]);
-                    Tcl_AppendResult(interp,Tcl_GetString(objv[0]),": Got ", badparam, 
+                    Tcl_AppendResult(interp,Tcl_GetString(objv[0]),": Got ", badparam,
                                      " when expecting a suit name",NULL);
                     return TCL_ERROR;
                 }
@@ -201,7 +201,7 @@ int tcl_count_additive( TCLOBJ_PARAMS ) TCLOBJ_DECL
 void *tcl_create_additive(interp,name,func,data,freefunc)
      Tcl_Interp *interp;
      char *name;
-     int (*func) PROTO((int /* holding */, void * /* data */));
+     int (*func) (int /* holding */, void * /* data */);
      void *data;
      Tcl_CmdDeleteProc freefunc;
 {

@@ -22,14 +22,14 @@ typedef struct lazy_vector_data {
   int value[13];
 } *LazyVectorData;
 
-LazyVectorData newLazyVector PROTO( () );
+LazyVectorData newLazyVector();
 
 typedef int *VectorTable;
 
 #define VectorTableLookup(table,holding) \
 	table[1+((8191&holding)>>(table[0]))]
 
-int vectorCount PROTO( (VectorTable,int,int) );
+int vectorCount(VectorTable,int,int);
 
 
 /*

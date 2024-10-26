@@ -73,8 +73,8 @@ LazyVectorData newLazyVector() {
 }
 
 
-int tcl_vector_lazy PROTO((TCLOBJ_PARAMS));
-int tcl_vector_define PROTO((TCL_PARAMS));
+int tcl_vector_lazy(TCLOBJ_PARAMS);
+int tcl_vector_define(TCL_PARAMS);
 
 int tcl_vector_define ( TCL_PARAMS ) TCL_DECL
 {

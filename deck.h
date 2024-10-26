@@ -56,12 +56,6 @@ extern char *suitname[];
 extern char *handname[];
 
 
-#if defined(__STDC__)
-#define PROTO(params) params
-#else
-#define PROTO(params) ()
-#endif
-
 #endif
 
 #ifdef HPUX
