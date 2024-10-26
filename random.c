@@ -25,7 +25,6 @@
  * It was reworked for the GNU C Library by Roland McGrath.
  */
 
-#include "ansidecl.h"
 #include <errno.h>
 #include <limits.h>
 #include <stddef.h>
