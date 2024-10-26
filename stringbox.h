@@ -18,5 +18,5 @@
 
 #include "tcl_incl.h"
 
-extern int Stringbox_Init _ANSI_ARGS_((Tcl_Interp *));
+extern int Stringbox_Init(Tcl_Interp *);
 

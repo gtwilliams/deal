@@ -46,8 +46,8 @@
   fprintf(stderr,"%s\n",Tcl_GetVar2(interp,"errorInfo",NULL,0)); \
   exit(1);
 
-void Tcl_AllocDelete _ANSI_ARGS_((ClientData data));
-void Tcl_ObjDelete _ANSI_ARGS_((ClientData data));
+void Tcl_AllocDelete(ClientData data);
+void Tcl_ObjDelete(ClientData data);
 
 #ifdef _WINDOWS
 #define DEAL31_API __declspec(dllexport)
@@ -60,7 +60,7 @@ static int __dummyLength;
 #endif
 
 #if (TCL_MINOR_VERSION==0)
-int My_EvalObjv _ANSI_ARGS_((Tcl_Interp *,int,Tcl_Obj **,int));
+int My_EvalObjv(Tcl_Interp *,int,Tcl_Obj **,int);
 #define Tcl_EvalObjv(interp,objc,objv,dummy) My_EvalObjv(interp,objc,objv,dummy)
 #endif
 

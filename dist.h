@@ -51,9 +51,9 @@ typedef struct _DistTable {
     DistTableEntry entry[DIST_COUNT];
 } DistTable;
 
-extern void computeDistTable _ANSI_ARGS_(());
-extern DistSet newDistSet _ANSI_ARGS_((int));
-extern DistFunc newDistFunc _ANSI_ARGS_((int));
+extern void computeDistTable();
+extern DistSet newDistSet(int);
+extern DistFunc newDistFunc(int);
 
 #define DSElt(s,i) ((s)->array2[(i)])
 #define DSAdd(s,i) Tcl_SetBooleanObj((s)->array2[(i)],1)
