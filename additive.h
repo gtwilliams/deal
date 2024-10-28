@@ -17,7 +17,6 @@
  */
 
 #include "tcl_incl.h"
-<<<<<<< HEAD
 extern void *tcl_create_additive (Tcl_Interp *,
 			char *name,
 			int (*)(int holding,void* data),
