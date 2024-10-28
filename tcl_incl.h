@@ -18,18 +18,8 @@
 #ifndef __TCL_INCL__
 #include <tcl.h>
 
-#ifdef __STDC__
 #define  TCL_PARAMS ClientData cd,Tcl_Interp *interp,int argc, const char *argv[]
 #define TCLOBJ_PARAMS ClientData cd,Tcl_Interp *interp,int objc,Tcl_Obj * const objv[]
-#define  TCL_DECL
-#define  TCLOBJ_DECL
-#else
-#define TCL_PARAMS cd,interp,argc,argv
-#define TCLOBJ_PARAMS cd,interp,objc,objv
-#define TCL_DECL ClientData cd; Tcl_Interp *interp; int argc; char *argv[];
-#define  TCLOBJ_DECL ClientData cd; Tcl_Interp *interp; int objc; Tcl_Obj * const objv[];
-/*int free();*/
-#endif
 
 #define USAGE(s) argv[0]," usage:\n\t",argv[0]," ",s
 #define OBJUSAGE(s) Tcl_GetString(objv[0])," usage:\n\t",Tcl_GetString(objv[0])," ",s
