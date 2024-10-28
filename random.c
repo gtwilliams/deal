@@ -25,13 +25,12 @@
  * It was reworked for the GNU C Library by Roland McGrath.
  */
 
-#include "ansidecl.h"
 #include <errno.h>
 #include <limits.h>
 #include <stddef.h>
-#include <stdlib.h>  
+#include <stdlib.h>
 
-long int DEFUN_VOID(__random);
+long int __random();
 
 
 /* An improved random number generation package.  In addition to the standard
@@ -176,7 +175,7 @@ static long int *end_ptr = &randtbl[sizeof(randtbl) / sizeof(randtbl[0])];
    introduced by the L.C.R.N.G.  Note that the initialization of randtbl[]
    for default usage relies on values produced by this routine.  */
 void
-DEFUN(__srandom, (x), unsigned int x)
+__srandom(unsigned int x)
 {
     state[0] = x;
     if (rand_type != TYPE_0)
@@ -202,11 +201,10 @@ DEFUN(__srandom, (x), unsigned int x)
    Note: The first thing we do is save the current state, if any, just like
    setstate so that it doesn't matter when initstate is called.
    Returns a pointer to the old state.  */
-PTR
-DEFUN(__initstate, (seed, arg_state, n),
-      unsigned int seed AND PTR arg_state AND size_t n)
+void *
+__initstate(unsigned int seed, void * arg_state, size_t n)
 {
-    PTR ostate = (PTR) &state[-1];
+    void * ostate = (void *) &state[-1];
 
     if (rand_type == TYPE_0)
         state[-1] = rand_type;
@@ -268,13 +266,13 @@ DEFUN(__initstate, (seed, arg_state, n),
    to the order in which things are done, it is OK to call setstate with the
    same state as the current state
    Returns a pointer to the old state information.  */
-PTR
-DEFUN(__setstate, (arg_state), PTR arg_state)
+void *
+__setstate(void * arg_state)
 {
     register long int *new_state = (long int *) arg_state;
     register int type = new_state[0] % MAX_TYPES;
     register int rear = new_state[0] / MAX_TYPES;
-    PTR ostate = (PTR) &state[-1];
+    void * ostate = (void *) &state[-1];
 
     if (rand_type == TYPE_0)
         state[-1] = rand_type;
@@ -321,8 +319,8 @@ DEFUN(__setstate, (arg_state), PTR arg_state)
    rear pointers can't wrap on the same call by not testing the rear
    pointer if the front one has wrapped.  Returns a 31-bit random number.  */
 
-long int DEFUN_VOID(__random)  
-/* long int random(void) */  
+long int __random()
+/* long int random(void) */
 /* Use this one if your system complains about the DEFUN_VOID statement */
 {
     if (rand_type == TYPE_0)

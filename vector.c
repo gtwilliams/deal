@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -73,13 +73,13 @@ LazyVectorData newLazyVector() {
 }
 
 
-int tcl_vector_lazy PROTO((TCLOBJ_PARAMS));
-int tcl_vector_define PROTO((TCL_PARAMS));
+int tcl_vector_lazy(TCLOBJ_PARAMS);
+int tcl_vector_define(TCL_PARAMS);
 
-int tcl_vector_define ( TCL_PARAMS ) TCL_DECL
+int tcl_vector_define ( TCL_PARAMS )
 {
     int i;
-    CONST84 char *name=argv[1];
+    const char *name=argv[1];
     LazyVectorData vec;
     if (argc<=1) {
         Tcl_AppendResult(interp,"usage: ",argv[0],
@@ -106,7 +106,7 @@ static int vector_eval(int holding,void *data)
     return VectorTableLookup(vec,holding);
 }
 
-int tcl_vector_lazy( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_vector_lazy( TCLOBJ_PARAMS )
 {
     LazyVectorData lazyvec=(LazyVectorData)cd;
     int num=lazyvec->num;
@@ -119,7 +119,7 @@ int tcl_vector_lazy( TCLOBJ_PARAMS ) TCLOBJ_DECL
     table=(int *)Tcl_Alloc(sizeof(int)*(1+(1 << num)));
     table[0]=13-num;
     tb=table+1;
-  
+
     for (i=0; i< (1<<num); i++) {
         tb[i]=0;
     }

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -22,7 +22,7 @@
  *
  * The user simply defines a procedure, say:
  *
- * holdingProc solidsuit {A K Q J len} { 
+ * holdingProc solidsuit {A K Q J len} {
  *     expr {($len>=7)&&$A&&$K&&$Q&&($J||($len>=8))}
  * }
  *
@@ -142,7 +142,7 @@ extern int atoi(const char*);
  * in a list or whatever.
  */
 typedef struct _aggregation {
-    int (*fn)(Tcl_Interp *interp,int objc, Tcl_Obj **objv,Tcl_Obj * CONST *suitnames);
+    int (*fn)(Tcl_Interp *interp,int objc, Tcl_Obj **objv,Tcl_Obj * const *suitnames);
 } Aggregator;
 
 /*
@@ -179,7 +179,7 @@ static Tcl_Obj *getIntObj(int val) {
             Tcl_IncrRefCount(cached[val]=Tcl_NewSizeIntObj(val));
         }
         return cached[val];
-    } else { 
+    } else {
         return Tcl_NewSizeIntObj(val);
     }
 }
@@ -205,12 +205,12 @@ static const char *tclNamespace="SlowHoldingProcedures";
 /*
  * Add up result values across several suits as integer values
  */
-static int 
+static int
 integerAggregator(
                   Tcl_Interp *interp,
                   int objc,
                   Tcl_Obj **objv,
-                  Tcl_Obj * CONST *suits
+                  Tcl_Obj * const *suits
                   )
 {
     int i;
@@ -238,12 +238,12 @@ integerAggregator(
 /*
  * doubleAggregator adds the results up as double values
  */
-static int 
+static int
 doubleAggregator(
                  Tcl_Interp *interp,
                  int objc,
                  Tcl_Obj **objv,
-                 Tcl_Obj * CONST *suits
+                 Tcl_Obj * const *suits
                  )
 {
     int i;
@@ -268,12 +268,12 @@ doubleAggregator(
 /*
  * The string aggregator creates a list of the resulting values
  */
-static int 
+static int
 stringAggregator(
                  Tcl_Interp *interp,
                  int objc,
                  Tcl_Obj **objv,
-                 Tcl_Obj * CONST *suits
+                 Tcl_Obj * const *suits
                  )
 {
     int i;
@@ -296,7 +296,7 @@ booleanAggregator(
                   Tcl_Interp *interp,
                   int objc,
                   Tcl_Obj **objv,
-                  Tcl_Obj * CONST *suits
+                  Tcl_Obj * const *suits
                   )
 {
     int i;
@@ -369,7 +369,7 @@ static HoldingProcedure allocateHoldingProcedure() {
 /**
  * If holdingProc was called as:
  *
- *   holdingProc foo { a k q ... } { ... } 
+ *   holdingProc foo { a k q ... } { ... }
  *
  * this routine defines a procedure:
  *
@@ -392,9 +392,9 @@ defSlowHoldingProc(
     int length;
     Tcl_Obj *objv[4];
     int retval;
-        
+
     char *name=Tcl_GetStringFromObj(nameObj,&length);
-        
+
     char *slowName;
 
     if (name==NULL) {
@@ -519,14 +519,14 @@ evalHoldingProcedure(
             case LENGTH_ARGUMENT:
                 objv[i]=getIntObj(counttable[holdingBits&8191]);
                 break;
-        
+
             case STRING_ARGUMENT:
                 {
-          
+
                     int stringSpots=(lookupIndex>>procedure->sigBitCount);
                     int fakeHolding=
                         (lookupIndex<<(13-procedure->sigBitCount))+((1<<stringSpots)-1);
-          
+
                     objv[i]=Tcl_NewHoldingObj(fakeHolding);
                 }
                 break;
@@ -683,14 +683,14 @@ newHoldingProcedure(
 /*
  * Evaluate a set of holdings passed in an array
  * of integers.
- */ 
-static int 
+ */
+static int
 evalHoldingNums(
                 Tcl_Interp *interp,
                 HoldingProcedure procedure,
                 int count,
                 int *holdings,
-                Tcl_Obj * CONST *suits
+                Tcl_Obj * const *suits
                 )
 {
     int i;
@@ -711,7 +711,7 @@ evalHoldingNums(
      */
     for (i=0; i<count; i++) {
         int holding=holdings[i];
-        if (holding<0) { 
+        if (holding<0) {
             retval = TCL_ERROR;
             goto finish;
         }
@@ -742,8 +742,8 @@ evalHoldingNums(
 
 }
 
-static int 
-IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int
+IDealHoldingProcedure(TCLOBJ_PARAMS)
 {
     static int subCmdInit=1,
         holdingSubCmdID=-1,
@@ -760,7 +760,7 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
         subCmdInit=0;
     }
 
-        
+
 
     if (objc>7 || objc<=1) {
         goto usage;
@@ -769,7 +769,7 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
     if (NOSEAT!=(hand=getHandNumFromObj(interp,objv[1]))) {
         FINISH(hand);
         if (objc==2) {
-            return 
+            return
                 evalHoldingNums(interp,
                                 procedure,
                                 4,globalDeal.hand[hand].suit,
@@ -779,7 +779,7 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
             for (i=2; i<objc; i++) {
                 int suit=getSuitNumFromObj(interp,objv[i]);
 
-                if (suit==NOSUIT) { 
+                if (suit==NOSUIT) {
                     Tcl_AppendResult(interp,
                                      "Expected suit name, got ",
                                      Tcl_GetString(objv[i]),
@@ -808,8 +808,8 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
             int fakeHolding=(holding<<(13-procedure->sigBitCount))+((1<<spots)-1);
             newObjv[1]=evalHoldingProcedure(interp,procedure,fakeHolding);
             newObjv[0]=Tcl_NewHoldingObj(fakeHolding);
-            if (newObjv[1]==NULL) { 
-                Tcl_AddErrorInfo(interp,"evalHoldingProcedure returned NULL"); 
+            if (newObjv[1]==NULL) {
+                Tcl_AddErrorInfo(interp,"evalHoldingProcedure returned NULL");
                 return TCL_ERROR;
             }
             if (newObjv[0]==NULL) {
@@ -828,9 +828,9 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
         int subsetHoldings[4];
         int *hnum;
         int countHoldings;
-        Tcl_Obj * CONST *allSuits;
+        Tcl_Obj * const *allSuits;
         Tcl_Obj *chosenSuits[4];
-        Tcl_Obj * CONST *suits;
+        Tcl_Obj * const *suits;
 
         if (objc<3 || objc>7) {
             Tcl_WrongNumArgs(interp,2,objv,"hand <hand> [<suit> ...]");
@@ -852,7 +852,7 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
             countHoldings = 0;
             for (i=3; i<objc; i++) {
                 int suit=getSuitNumFromObj(interp,objv[i]);
-                if (suit==NOSUIT) { 
+                if (suit==NOSUIT) {
                     Tcl_AppendResult(interp,
                                      "Expected suit name, got ",
                                      Tcl_GetString(objv[i]),
@@ -873,7 +873,7 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
     if (subCmd==holdingSubCmdID) {
         int hnum;
 
-        if (objc!=3) { 
+        if (objc!=3) {
             Tcl_WrongNumArgs(interp,2,objv,"<holding>");
             return TCL_ERROR;
         }
@@ -901,8 +901,8 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
     }
 }
 
-static int 
-IDeal_DefHoldingProc(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int
+IDeal_DefHoldingProc(TCLOBJ_PARAMS)
 {
     static int initKeywords=1,
         doubleFlag=-1,
@@ -928,7 +928,7 @@ IDeal_DefHoldingProc(TCLOBJ_PARAMS) TCLOBJ_DECL
     if (objc!=4 && objc!=5) {
         goto usage;
     }
-  
+
     nameObj=objv[1];
     name=Tcl_GetString(nameObj);
     if (*name=='-') {
@@ -961,7 +961,7 @@ IDeal_DefHoldingProc(TCLOBJ_PARAMS) TCLOBJ_DECL
     if (procedure==NULL) {
         return TCL_ERROR;
     }
-  
+
     procedure->aggregator=(Aggregator *)aggr;
     name=Tcl_GetStringFromObj(nameObj,&len);
     Tcl_CreateObjCommand(interp,name,IDealHoldingProcedure,
@@ -979,7 +979,7 @@ IDeal_DefHoldingProc(TCLOBJ_PARAMS) TCLOBJ_DECL
  * This routine implements the "holding" command, which implements
  * various subcommands for processing Deal holding objects.
  */
-static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int IDeal_HoldingCmd(TCLOBJ_PARAMS)
 {
     static int lengthCmd,
         disjointCmd,
@@ -1024,7 +1024,7 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
 
         holding=getHoldingNumFromObj(interp,objv[2]);
 
-        if (holding<0) { 
+        if (holding<0) {
             return TCL_ERROR;
         }
 
@@ -1044,7 +1044,7 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
         Tcl_SetObjResult(interp,getIntObj(holding));
         return TCL_OK;
     }
-        
+
     if (cmd==decodeCmd) {
         int result,num;
         Tcl_Obj *obj;
@@ -1053,7 +1053,7 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
             return TCL_ERROR;
         }
         result=Tcl_getSizeIntFromObj(interp,objv[2],&num);
-        if (result!=TCL_OK) { 
+        if (result!=TCL_OK) {
             return result;
         }
 
@@ -1099,14 +1099,14 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
         }
         holding=getHoldingNumFromObj(interp,objv[2]);
         if (holding<0) { return TCL_ERROR; }
-    
+
         subset = 0;
         for (i=3;i<objc;i++) {
             subset |= getHoldingNumFromObj(interp,objv[i]);
             if (subset<0||subset>8191) { return TCL_ERROR; }
         }
 
-        if ((subset&holding)!=holding) { 
+        if ((subset&holding)!=holding) {
             Tcl_SetObjResult(interp,getIntObj(0));
             return TCL_OK;
         }
@@ -1132,14 +1132,14 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
         for (i=3;i<objc;i++) {
             subset=getHoldingNumFromObj(interp,objv[i]);
             if (subset<0||subset>8191) { return TCL_ERROR; }
-            if ((subset&holding)!=subset) { 
+            if ((subset&holding)!=subset) {
                 Tcl_SetObjResult(interp,getIntObj(0));
                 return TCL_OK;
             }
         }
         Tcl_SetObjResult(interp,getIntObj(1));
         return TCL_OK;
-        
+
     }
 
     /*
@@ -1164,7 +1164,7 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
         return TCL_OK;
     }
 
-    /* 
+    /*
      * Determines whether a holding pattern matches a holding:
      *      holding matches AKxxx AK843     => 1  (true)
      *      holding matches AKxxx AKJ92     => 0  (false)
@@ -1194,7 +1194,7 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
         if (pattern==-1) {
             return TCL_ERROR;
         }
- 
+
         holding = getHoldingNumFromObj(interp,objv[3]);
         if (holding==-1) {
             return TCL_ERROR;
@@ -1202,7 +1202,7 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
 
         result = match_holding_pattern(bottomHighCard,pattern,holding);
         Tcl_SetObjResult(interp,getIntObj(result));
-       
+
         return TCL_OK;
         /*
           The *lowest spot* that is not a spot in the x should be the

@@ -123,7 +123,7 @@ static void add_reset_cmd(Tcl_Interp *interp,Tcl_Obj *code)
     cachesize++;
 }
 
-static int add_reset_cmds(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int add_reset_cmds(TCLOBJ_PARAMS)
 {
     int i=1;
     while (i<objc) {
@@ -132,20 +132,20 @@ static int add_reset_cmds(TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_reset_deck (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_reset_deck (TCLOBJ_PARAMS)
 {
     reset_deck();
     return TCL_OK;
 }
 
-int tcl_finish_deal (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_finish_deal (TCLOBJ_PARAMS)
 {
     finish_deal();
     return TCL_OK;
 }
 
 
-int tcl_deal_deck (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_deal_deck (TCLOBJ_PARAMS)
 {
     static char *result="exit";
     int retval;
@@ -164,7 +164,7 @@ int tcl_deal_deck (TCLOBJ_PARAMS) TCLOBJ_DECL
     return retval;
 }
 
-int tcl_format_deal (TCL_PARAMS) TCL_DECL
+int tcl_format_deal (TCL_PARAMS)
 {
     FormatFN fmt=(FormatFN)cd;
     char *format;
@@ -180,7 +180,7 @@ int tcl_format_deal (TCL_PARAMS) TCL_DECL
     }
 }
 
-int tcl_write_deal (TCL_PARAMS) TCL_DECL
+int tcl_write_deal (TCL_PARAMS)
 {
     FormatFN fmt=(FormatFN)cd;
     char *format;
@@ -201,12 +201,12 @@ int tcl_write_deal (TCL_PARAMS) TCL_DECL
     }
 }
 
-int tcl_flush_deal (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_flush_deal (TCLOBJ_PARAMS)
 {
     return TCL_OK;    /* Default write flushing routing */
 }
 
-int tcl_rotate_deal (TCL_PARAMS) TCL_DECL
+int tcl_rotate_deal (TCL_PARAMS)
 {
     if (argc!=2) {
         Tcl_AppendResult(interp,
@@ -217,7 +217,7 @@ int tcl_rotate_deal (TCL_PARAMS) TCL_DECL
     return TCL_OK;
 }
 
-int tcl_stacked_cards (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_stacked_cards (TCLOBJ_PARAMS)
 {
     Tcl_Obj *holdings[4];
     int handnum, suit;
@@ -242,7 +242,7 @@ int tcl_stacked_cards (TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_rand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_rand_cmd( TCLOBJ_PARAMS )
 {
     long res,tclres,modulus;
     res=random();
@@ -259,7 +259,7 @@ int tcl_rand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_after_set(TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_after_set(TCLOBJ_PARAMS)
 {
     if (objc!=2) {
         return TCL_ERROR;
@@ -272,7 +272,7 @@ int tcl_after_set(TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_seed_deal(TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_seed_deal(TCLOBJ_PARAMS)
 {
     int result,value;
     if (objc!=2) {
@@ -290,7 +290,7 @@ int tcl_seed_deal(TCLOBJ_PARAMS) TCLOBJ_DECL
 }
 
 
-int tcl_main_set(TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_main_set(TCLOBJ_PARAMS)
 {
     if (objc!=2) {
         return TCL_ERROR;
@@ -300,7 +300,7 @@ int tcl_main_set(TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_deal_loop(TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_deal_loop(TCLOBJ_PARAMS)
 {
     int result;
     if (objc!=2) {
@@ -336,7 +336,7 @@ int tcl_deal_loop(TCLOBJ_PARAMS) TCLOBJ_DECL
 
 static Tcl_Obj *logicObj[2]={ NULL, NULL};
 
-static int tcl_init(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int tcl_init(TCLOBJ_PARAMS)
 {
     return Tcl_Init(interp);
 }
@@ -344,7 +344,7 @@ static int tcl_init(TCLOBJ_PARAMS) TCLOBJ_DECL
 /*
  * implements the 'accept' and 'reject' commands
  */
-int tcl_deal_control(TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_deal_control(TCLOBJ_PARAMS)
 {
     int i=2,value,result;
     Tcl_Obj *iffound,*ifnotfound;

@@ -8,12 +8,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -76,7 +76,7 @@ int reset_deck() {
     return TCL_OK;
 }
 
-void get_distribution_hand(hand) 
+void get_distribution_hand(hand)
      int hand;
 {
     int suit;
@@ -88,7 +88,7 @@ void get_distribution_hand(hand)
 
 int count_deals=0;
 
-void old_reset_deal(dealp) 
+void old_reset_deal(dealp)
      struct deck *dealp;
 {
     int card, hand;
@@ -100,7 +100,7 @@ void old_reset_deal(dealp)
         dealp->whom[card]=NOSEAT;
         dealp->where[card]=card;
     }
- 
+
     for (hand=0; hand<4; hand++) {
         dealp->handcount[hand]=0;
         dealp->finished[hand]=0;
@@ -146,7 +146,7 @@ static void assert_deck(dealp)
     }
 }
 #endif
-  
+
 /* This amounts to a swap command, with lots of record keeping added
    to keep "where" and "card" as inverses */
 void deal_put(dealp,card,whom)
@@ -242,7 +242,7 @@ void finish_deal() {
     }
 }
 
-int to_whom(card) 
+int to_whom(card)
      int card;
 {
     int where;
@@ -258,7 +258,7 @@ int to_whom(card)
  int deal_deck ()
  {
  int card,hand,count;
-    
+
  start_deal();
 
  finish_deal();
@@ -326,7 +326,7 @@ char *format_deal_compact ()
             *(s1[complete_deal.whom[where]]++)=cards[denom];
         }
     }
-    for (hand=0; hand<4; hand++) 
+    for (hand=0; hand<4; hand++)
         {
             *(s1[hand])=0;
         }
@@ -384,7 +384,7 @@ char *format_deal_verbose()
     return result;
 
 }
-  
+
 
 int hand_name_table[256];
 int suit_name_table[256];
@@ -415,12 +415,12 @@ void init_name_tables()
 }
 
 
-int count_controls(holding,dummy) 
+int count_controls(holding,dummy)
      int holding; void *dummy;
 {
     /*
      *
-     * Since holdings contains a 13-bit 
+     * Since holdings contains a 13-bit
      * representation of the holdings in the suit,
      * controls can be computed by taking holdings[hand][suit] >> 11
      *
@@ -428,7 +428,7 @@ int count_controls(holding,dummy)
     return ((8191&holding)>>11);
 }
 
-int count_hcp(h,dummy) 
+int count_hcp(h,dummy)
      int h;
      void *dummy;
 {
@@ -522,7 +522,7 @@ int put_holding(int hand,int suit, int holding)
 {
     int card;
     for (card=12; card>=0; card--) {
-        if (holding&1) { 
+        if (holding&1) {
             if (TCL_ERROR==put_card(hand,CARD(card,suit))) {
                 return TCL_ERROR;
             }

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -67,13 +67,13 @@ static void  InitializeLengths() {
  int s,h,d;
  {
  *
- * 
+ *
  * int f1=s, f2=s+h+1, f3=s+h+d+2;
  *            (f3 choose 3) + (f2 choose 2) + (f1 choose 1)
- * return f3*(f3-1)*(f3-2)/6+f2*(f2-1)/2+f1; 
+ * return f3*(f3-1)*(f3-2)/6+f2*(f2-1)/2+f1;
 
  * I've pretabulated the (x choose 2) and (x choose 3) functions
- for even easier lookup; this function is suitable for inlining. 
+ for even easier lookup; this function is suitable for inlining.
  static choose2tab[]={0, 1, 3,  6, 10, 15, 21, 28,  36,  45,  55,  66,  78,
  91};
  static choose3tab[]={0, 1, 4, 10, 20, 35, 56, 84, 120, 165, 220, 286, 364,
@@ -125,7 +125,7 @@ static void deleteDistFunc(ClientData data)
 {
     int i;
     DistFunc d=(DistFunc) data;
-  
+
     for (i=0; i<DIST_COUNT; i++) {
         Tcl_Obj *obj=d->array2[i];
         if (obj != (Tcl_Obj*) NULL) {
@@ -152,7 +152,7 @@ DistFunc newDistFunc(n)
     }
     return func;
 }
-    
+
 DistSet newDistSet(n)
      int n;
 {
@@ -166,8 +166,8 @@ DistSet newDistSet(n)
             for (d=0; d<=13-s-h; d++, index2++) {
                 set->array2[index2] = NULL;
             }
-        } 
-    } 
+        }
+    }
     set->shapesList=NULL;
     return set;
 }
@@ -183,7 +183,7 @@ void deleteDistSet(ClientData cd) {
     Tcl_Free((char*)set);
 }
 
-int tcl_shapefunc_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
 {
     static int handSubCmd=-1,compileSubCmd=-1, evalSubCmd=-1, shapeSubCmd, subCmdInit=1;
     int hand;
@@ -240,7 +240,7 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
         }
 
         if (subCmd==handSubCmd) {
-        
+
             int retval,suit,holding[4],lengths[4];
 
             if (objc!=3) {
@@ -249,7 +249,7 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
             }
 
             retval=getHandHoldingsFromObj(interp,objv[2],holding);
-            if (retval!=TCL_OK) { 
+            if (retval!=TCL_OK) {
                 Tcl_SetResult(interp,"Argument was not a list of four holdings",
                               TCL_STATIC);
                 return TCL_ERROR;
@@ -315,7 +315,7 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_shapeclass_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
 {
     static int subCmdInit=1,
         compileSubCmd=-1,
@@ -409,13 +409,13 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
                     if (i%8==0) {
                         *(rptr++)=' ';
                     }
-                } 
-            } 
+                }
+            }
 
             strcpy(rptr,"\n}\n");
             Tcl_SetResult(interp,result,TCL_DYNAMIC);
             return TCL_OK;
-        } 
+        }
 
         if (subCmdId==handSubCmd) {
             int retval,suit,hnum[4],lengths[4];
@@ -426,7 +426,7 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
             }
 
             retval=getHandHoldingsFromObj(interp,objv[2],hnum);
-            if (retval!=TCL_OK) { 
+            if (retval!=TCL_OK) {
                 Tcl_AddErrorInfo(interp,"Argument was not a valid hand");
                 return TCL_ERROR;
             }
@@ -484,7 +484,7 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
         d=count_suit(hand,DIAMONDS);
         c=count_suit(hand,CLUBS);
     }
-  
+
     if (s+h+d+c!=13) {
         Tcl_SetResult(interp,"Shape did not have 13 cards.",TCL_STATIC);
         return TCL_ERROR;
@@ -533,8 +533,8 @@ DistFunc shapefunc_compile(interp,name,procBody)
     result=ShapeProcDefine(interp,name,procBody);
 
     nameStr=Tcl_GetString(name);
-    if (result==TCL_ERROR) { 
-        deleteDistFunc(func); 
+    if (result==TCL_ERROR) {
+        deleteDistFunc(func);
         Tcl_AppendResult(interp,"\nCould not compile function ",nameStr,"\n",NULL);
         return 0;
     }
@@ -550,7 +550,7 @@ DistFunc shapefunc_compile(interp,name,procBody)
                 clubs=13-spades-hearts-diamonds;
                 array[4]=lengthObjs[clubs];
                 result=Tcl_EvalObjv(interp,5,array,TCL_EVAL_GLOBAL);
-                if (result==TCL_ERROR) { 
+                if (result==TCL_ERROR) {
                     deleteDistFunc(func);
                     Tcl_AppendResult(interp,"\nCould not compile function ",nameStr,"\n",
                                      NULL);
@@ -583,8 +583,8 @@ DistSet shapeclass_compile(interp,name,procBody)
     result=ShapeProcDefine(interp,name,procBody);
 
     nameStr=Tcl_GetString(name);
-    if (result==TCL_ERROR) { 
-        deleteDistSet((ClientData)set); 
+    if (result==TCL_ERROR) {
+        deleteDistSet((ClientData)set);
 
         Tcl_AppendResult(interp,"\nCould not compile function ",
                          nameStr,
@@ -620,7 +620,7 @@ DistSet shapeclass_compile(interp,name,procBody)
     return set;
 }
 
-int tcl_shapefunc_lazy ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapefunc_lazy ( TCLOBJ_PARAMS )
 {
     Tcl_Obj *procBody=(Tcl_Obj *)cd;
     char *name=Tcl_GetString(objv[0]);
@@ -652,8 +652,8 @@ DistSet shapeclass_lazy_compile (interp,nameObj,procBody)
                          deleteDistSet);
     return set;
 }
-    
-int tcl_shapeclass_lazy ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+
+int tcl_shapeclass_lazy ( TCLOBJ_PARAMS )
 {
     Tcl_Obj *procBody=(Tcl_Obj *)cd;
     DistSet set=shapeclass_lazy_compile(interp,objv[0],procBody);
@@ -667,7 +667,7 @@ int tcl_shapeclass_lazy ( TCLOBJ_PARAMS ) TCLOBJ_DECL
 
 }
 
-int tcl_shapeexpr_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapeexpr_define ( TCLOBJ_PARAMS )
 {
     static Tcl_Obj *exprCmd=NULL;
 
@@ -680,7 +680,7 @@ int tcl_shapeexpr_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
         Tcl_IncrRefCount(exprCmd=Tcl_NewStringObj("expr",4));
     }
 
-    if (objc!=3) { 
+    if (objc!=3) {
         Tcl_WrongNumArgs(interp,1,objv,"<name> <expr>");
         return TCL_ERROR;
     }
@@ -698,10 +698,10 @@ int tcl_shapeexpr_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_shapefunc_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapefunc_define ( TCLOBJ_PARAMS )
 {
     char *name;
-    if (objc!=3) { 
+    if (objc!=3) {
         Tcl_WrongNumArgs(interp,1,objv,"<name> <expr>");
         return TCL_ERROR;
     }
@@ -713,10 +713,10 @@ int tcl_shapefunc_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_shapeclass_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapeclass_define ( TCLOBJ_PARAMS )
 {
     char *name;
-    if (objc!=3) { 
+    if (objc!=3) {
         Tcl_WrongNumArgs(interp,1,objv,"<name> <expr>");
         return TCL_ERROR;
     }
@@ -727,10 +727,10 @@ int tcl_shapeclass_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_shapeclass_define_binary ( TCL_PARAMS ) TCL_DECL
+int tcl_shapeclass_define_binary ( TCL_PARAMS )
 {
     DistSet set;
-    CONST84 char *s;
+    char *s;
     int i;
     if (argc!=3) { return TCL_ERROR; }
 

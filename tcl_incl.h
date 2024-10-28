@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -18,22 +18,8 @@
 #ifndef __TCL_INCL__
 #include <tcl.h>
 
-#ifndef CONST84
-#define CONST84
-#endif
-
-#ifdef __STDC__
-#define  TCL_PARAMS ClientData cd,Tcl_Interp *interp,int argc, CONST84 char *argv[]
-#define TCLOBJ_PARAMS ClientData cd,Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj * CONST objv[]
-#define  TCL_DECL
-#define  TCLOBJ_DECL
-#else
-#define TCL_PARAMS cd,interp,argc,argv
-#define TCLOBJ_PARAMS cd,interp,objc,objv
-#define TCL_DECL ClientData cd; Tcl_Interp *interp; int argc; char *argv[];
-#define  TCLOBJ_DECL ClientData cd; Tcl_Interp *interp; int objc; Tcl_Obj * CONST objv[];
-/*int free();*/
-#endif
+#define  TCL_PARAMS ClientData cd,Tcl_Interp *interp,int argc, const char *argv[]
+#define TCLOBJ_PARAMS ClientData cd,Tcl_Interp *interp,int objc,Tcl_Obj * const objv[]
 
 #define USAGE(s) argv[0]," usage:\n\t",argv[0]," ",s
 #define OBJUSAGE(s) Tcl_GetString(objv[0])," usage:\n\t",Tcl_GetString(objv[0])," ",s

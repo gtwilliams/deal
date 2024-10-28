@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -32,10 +32,10 @@
  * The underlying objects are *converted* to these new types,
  * which keeps them from being looked up, again and again.
  *
- * See 
+ * See
  *
  *    http://www.tcl.tk/man/tcl8.6/TclLib/ObjectType.htm
- * 
+ *
  * for more information about object types in Tcl.
  */
 
@@ -120,7 +120,7 @@ static int convertToCardRankRep(Tcl_Interp *interp,Tcl_Obj *card)
   }
 
   card->typePtr=&CardType;
-  
+
   card->internalRep.longValue=card_rank(string);
   return TCL_OK;
 }
@@ -209,7 +209,7 @@ static int convertToHoldingRep(Tcl_Interp *interp,Tcl_Obj *holding)
      holding->typePtr = &HoldingType;
      return TCL_OK;
   }
-  
+
   while (*cardCursor && *string) {
     if (*cardCursor==toupper(*string)) {
       hnum |= (1<<(12-cardnum));
@@ -217,7 +217,7 @@ static int convertToHoldingRep(Tcl_Interp *interp,Tcl_Obj *holding)
     }
     cardCursor++; cardnum++;
   }
-  
+
   while (*string && (*string=='x' || *string=='X')) {
     if (hnum & (1<<spots)) {
       Tcl_AddErrorInfo(interp,"too many x's in holding\n");
@@ -276,7 +276,7 @@ char *getStringForHoldingNum(int hnum,int *lenPtr)
 
 static void updateHoldingStringRep(Tcl_Obj *holding) {
   int hlength;
-  long hnum=holding->internalRep.longValue;     
+  long hnum=holding->internalRep.longValue;
   holding->bytes=getStringForHoldingNum(hnum,&hlength);
   holding->length=hlength;
 }
@@ -300,7 +300,7 @@ static long northId=KEYWORD_INVALID_ID;
 /**
  * Procedure for walking through all holdings
  */
-static int Deal_foreachHolding(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int Deal_foreachHolding(TCLOBJ_PARAMS)
 {
   int result,i;
 
@@ -336,7 +336,7 @@ static void initializeAllSuits() {
     Tcl_IncrRefCount(HandsList=Tcl_NewListObj(4,AllHands));
 }
 
-static int tcl_type_assert(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int tcl_type_assert(TCLOBJ_PARAMS)
 {
   long base=(long)cd;
   int value;
@@ -418,7 +418,7 @@ int getHandNumFromObj(Tcl_Interp *interp, Tcl_Obj *hand) {
   int handNum;
   if (hand->typePtr!=&KeywordType) {
     int res=Tcl_ConvertToType(interp,hand,&KeywordType);
-    if (res!=TCL_OK) { 
+    if (res!=TCL_OK) {
       Tcl_AddErrorInfo(interp,"Couldnt covert object to KeywordType\n");
       return NOSEAT;
     }
@@ -447,7 +447,7 @@ Tcl_Obj* getHandKeywordObj(Tcl_Interp *interp,int num) {
 int getHoldingNumFromObj(Tcl_Interp *interp, Tcl_Obj *holding) {
   if (holding->typePtr!=&HoldingType) {
     int res=Tcl_ConvertToType(interp,holding,&HoldingType);
-    if (res!=TCL_OK) { 
+    if (res!=TCL_OK) {
       Tcl_AppendResult(interp,
                        "Could not convert '",
                        Tcl_GetString(holding),
@@ -489,7 +489,7 @@ int getCardRankNumFromObj(Tcl_Interp *interp, Tcl_Obj *rank) {
   return rank->internalRep.longValue;
 }
 
-int getHandHoldingsFromObjv(Tcl_Interp *interp,Tcl_Obj * CONST *objv,int *retHoldings)
+int getHandHoldingsFromObjv(Tcl_Interp *interp,Tcl_Obj * const *objv,int *retHoldings)
 {
   int cards=0,suit;
   for (suit=0; suit<4; suit++) {
@@ -516,7 +516,7 @@ getHandHoldingsFromObj(Tcl_Interp *interp, Tcl_Obj *obj, int *retHoldings)
   int retval,length;
   Tcl_Obj **objv;
   retval=Tcl_ListObjGetElements(interp,obj,&length,&objv);
-  if (retval!=TCL_OK || length!=4) { 
+  if (retval!=TCL_OK || length!=4) {
     Tcl_SetResult(interp,
                   "Hand argument was not a list of length 4",
                   TCL_STATIC);
@@ -526,7 +526,7 @@ getHandHoldingsFromObj(Tcl_Interp *interp, Tcl_Obj *obj, int *retHoldings)
   return getHandHoldingsFromObjv(interp,objv,retHoldings);
 }
 
-Tcl_Obj * CONST *getAllSuitObjs() {
+Tcl_Obj * const *getAllSuitObjs() {
   return AllSuits;
 }
 

@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -21,7 +21,7 @@
  * This is mostly used in C routines to speed up processing
  * certain types of Tcl arguments - implicitly creating "enum"-like
  * behavior.  For example, the first time the code:
- * 
+ *
  *  hcp north
  *
  * is called, the internal representation of the argument, "north", is
@@ -52,7 +52,7 @@
  *      } else if (cmd==indexCmdID) {
  *          ... do index sub-command ...
  *      } else {
- *         ... error code ... 
+ *         ... error code ...
  *      }
  *
  */
@@ -88,7 +88,7 @@ long Keyword_setId(const char *keyword,long id,int flags) {
         Tcl_SetHashValue(entry,id);
     }
     entry=NULL;
- 
+
     /* Only the first occurence of an id gets a backwards lookup */
     entry=Tcl_CreateHashEntry(&backwardsLookup,(char *)id,&isNew);
     if (entry==NULL) { return TCL_ERROR; }
@@ -187,7 +187,7 @@ kw_setFromAnyProc(Tcl_Interp *interp,Tcl_Obj *obj) {
 #endif
 
         id=Keyword_getId(key);
-        if (id==KEYWORD_INVALID_ID) { 
+        if (id==KEYWORD_INVALID_ID) {
             Tcl_AddErrorInfo(interp,"Unknown keyword: ");
                 Tcl_AddErrorInfo(interp,key);
                 return TCL_ERROR;

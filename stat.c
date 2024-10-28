@@ -5,12 +5,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
  * (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
@@ -50,21 +50,21 @@ double sdevAverage(sd)
     return sd->sum/sd->weight;
 }
 
-void sdevAddData(sd,weight,data) 
+void sdevAddData(sd,weight,data)
      SDev *sd;
      double weight;
      double data;
 {
-    if (sd->count==0) { 
+    if (sd->count==0) {
         sd->max=data; sd->min=data;
     } else {
         if ((sd->max) < data) { (sd->max)=data; }
         if ((sd->min) > data) { (sd->min)=data; }
     }
- 
+
     sd->count++;
     sd->weight += weight;
-    sd->sum += (weight*data); 
+    sd->sum += (weight*data);
     sd->sumsquared += (weight*data*data);
 }
 
@@ -147,7 +147,7 @@ Correlation *correlationNew() {
 void corrReset(Correlation *corr) {
     corr->count=0;
     corr->weight=0.0;
-    corr->sumx=0.0; 
+    corr->sumx=0.0;
     corr->sumxx=0.0;
     corr->sumy=0.0;
     corr->sumyy=0.0;
@@ -165,7 +165,7 @@ int count(sd)
 }
 
 
-int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_sdev_command ( TCLOBJ_PARAMS )
 {
     SDev *sd=(SDev *)cd;
     static int
@@ -262,7 +262,7 @@ int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
             Tcl_Obj **list;
             if (TCL_ERROR == Tcl_ListObjGetElements(interp,objv[i],&listCount,&list)) {
                Tcl_AppendResult(interp,"Not a list");
-                return TCL_ERROR; 
+                return TCL_ERROR;
             }
 
             if (listCount!=6) {
@@ -272,7 +272,7 @@ int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
 
             if (TCL_ERROR==Tcl_getSizeIntFromObj(interp,list[0],&count)) {
                Tcl_AppendResult(interp,"Invalid serialized stat: first element not an integer");
-                return TCL_ERROR; 
+                return TCL_ERROR;
             }
 
             if (count<0) {
@@ -285,27 +285,27 @@ int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
 
             if (TCL_ERROR==Tcl_GetDoubleFromObj(interp,list[1],&weight)) {
                Tcl_AppendResult(interp,"Invalid serialized stat: second element not a double");
-                return TCL_ERROR; 
+                return TCL_ERROR;
             }
 
             if (TCL_ERROR==Tcl_GetDoubleFromObj(interp,list[2],&sum)) {
                Tcl_AppendResult(interp,"Invalid serialized stat: third element not a double");
-                return TCL_ERROR; 
+                return TCL_ERROR;
             }
 
             if (TCL_ERROR==Tcl_GetDoubleFromObj(interp,list[3],&sumsquared)) {
                Tcl_AppendResult(interp,"Invalid serialized stat: fourth element not a double");
-                return TCL_ERROR; 
+                return TCL_ERROR;
             }
 
             if (TCL_ERROR==Tcl_GetDoubleFromObj(interp,list[4],&min)) {
                Tcl_AppendResult(interp,"Invalid serialized stat: fifth element not a double");
-                return TCL_ERROR; 
+                return TCL_ERROR;
             }
 
             if (TCL_ERROR==Tcl_GetDoubleFromObj(interp,list[5],&max)) {
                Tcl_AppendResult(interp,"Invalid serialized stat: sixth element not a double");
-                return TCL_ERROR; 
+                return TCL_ERROR;
             }
 
             sdevMerge(sd,count,weight,sum,sumsquared,min,max);
@@ -328,7 +328,7 @@ int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
         Tcl_SetObjResult(interp,result);
         return TCL_OK;
     }
-  
+
     if (sd->count==0 || sd->weight==0.0) {
         Tcl_AddErrorInfo(interp,"Can not do statistical computation without data");
         return TCL_ERROR;
@@ -362,7 +362,7 @@ int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_ERROR;
 }
 
-int tcl_correlate_command (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_correlate_command (TCLOBJ_PARAMS)
 {
     static int addCommandID=-1,
         addwCommandID=-1,
@@ -527,9 +527,9 @@ int tcl_correlate_command (TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_ERROR;
 }
 
-int tcl_sdev_define ( TCL_PARAMS ) TCL_DECL
+int tcl_sdev_define ( TCL_PARAMS )
 {
-    CONST84 char *name=argv[1];
+    const char *name=argv[1];
     SDev *sd;
     argc--; argv++;
     sd=sdevNew();
@@ -537,7 +537,7 @@ int tcl_sdev_define ( TCL_PARAMS ) TCL_DECL
     return TCL_OK;
 }
 
-int tcl_correlation_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_correlation_define ( TCLOBJ_PARAMS )
 {
     char *name=Tcl_GetString(objv[1]);
     Correlation *corr;
