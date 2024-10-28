@@ -19,7 +19,7 @@
 #include <tcl.h>
 
 #ifdef __STDC__
-#define  TCL_PARAMS ClientData cd,Tcl_Interp *interp,int argc, char *argv[]
+#define  TCL_PARAMS ClientData cd,Tcl_Interp *interp,int argc, const char *argv[]
 #define TCLOBJ_PARAMS ClientData cd,Tcl_Interp *interp,int objc,Tcl_Obj * const objv[]
 #define  TCL_DECL
 #define  TCLOBJ_DECL

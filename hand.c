@@ -57,7 +57,7 @@ int My_EvalObjv(Tcl_Interp *interp,int objc,Tcl_Obj **objv,int dummy)
 }
 #endif
 
-int tcl_deal_to_whom (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_deal_to_whom (TCLOBJ_PARAMS)
 {
     int card;
 
@@ -77,7 +77,7 @@ int tcl_deal_to_whom (TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_other_hand(TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_other_hand(TCLOBJ_PARAMS)
 {
     Tcl_Obj *result;
     int hand;
@@ -111,7 +111,7 @@ int tcl_other_hand(TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_count_suit (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_count_suit (TCLOBJ_PARAMS)
 {
     static int doInit=1,
         HandCmdID=-1;
@@ -207,7 +207,7 @@ Tcl_Obj *tcl_hand_holdings(Tcl_Interp *interp,int *hArray)
  *   % north pattern
  *   4 3 3 3
  */
-static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
+static int tcl_hand_cmd( TCLOBJ_PARAMS )
 {
     static int uninitialized=1,
         IsID=-1,
@@ -443,7 +443,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS ) TCLOBJ_DECL
 
 }
 
-int tcl_stack_cards(TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_stack_cards(TCLOBJ_PARAMS)
 {
     int hand;
     int index;
@@ -472,7 +472,7 @@ int tcl_stack_cards(TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_stack_hand(TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_stack_hand(TCLOBJ_PARAMS)
 {
     int hand,tclret;
     int hnums[4];

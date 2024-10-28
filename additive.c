@@ -97,7 +97,7 @@ static void deleteAdditiveFunction(ClientData ptr)
 /*
  * This is the procedure as called from Tcl
  */
-int tcl_count_additive( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_count_additive( TCLOBJ_PARAMS )
 {
     static int subCmdInit=1,
         handSubCmd=-1,

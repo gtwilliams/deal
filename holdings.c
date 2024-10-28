@@ -743,7 +743,7 @@ evalHoldingNums(
 }
 
 static int
-IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
+IDealHoldingProcedure(TCLOBJ_PARAMS)
 {
     static int subCmdInit=1,
         holdingSubCmdID=-1,
@@ -902,7 +902,7 @@ IDealHoldingProcedure(TCLOBJ_PARAMS) TCLOBJ_DECL
 }
 
 static int
-IDeal_DefHoldingProc(TCLOBJ_PARAMS) TCLOBJ_DECL
+IDeal_DefHoldingProc(TCLOBJ_PARAMS)
 {
     static int initKeywords=1,
         doubleFlag=-1,
@@ -979,7 +979,7 @@ IDeal_DefHoldingProc(TCLOBJ_PARAMS) TCLOBJ_DECL
  * This routine implements the "holding" command, which implements
  * various subcommands for processing Deal holding objects.
  */
-static int IDeal_HoldingCmd(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int IDeal_HoldingCmd(TCLOBJ_PARAMS)
 {
     static int lengthCmd,
         disjointCmd,

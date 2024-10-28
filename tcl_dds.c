@@ -74,13 +74,13 @@ static int parse_diagram(Tcl_Interp *interp,Tcl_Obj *diagram, struct deal *aDeal
 
 }
 
-static int tcl_double_dummy_reset(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int tcl_double_dummy_reset(TCLOBJ_PARAMS)
 {
     LastTrump = -1;
     return TCL_OK;
 }
 
-static int tcl_dds(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int tcl_dds(TCLOBJ_PARAMS)
 {
     static int doInit=1,
         DiagramFlagID=-1,
@@ -302,7 +302,7 @@ static int tcl_dds(TCLOBJ_PARAMS) TCLOBJ_DECL
 }
 
 /* This code directly borrows from Alex Martelli's Python interface to dds. */
-static int tcl_double_dummy_solve(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
 {
     int goal=-1;
     int leaderGoal = -1;

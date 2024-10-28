@@ -300,7 +300,7 @@ static long northId=KEYWORD_INVALID_ID;
 /**
  * Procedure for walking through all holdings
  */
-static int Deal_foreachHolding(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int Deal_foreachHolding(TCLOBJ_PARAMS)
 {
   int result,i;
 
@@ -336,7 +336,7 @@ static void initializeAllSuits() {
     Tcl_IncrRefCount(HandsList=Tcl_NewListObj(4,AllHands));
 }
 
-static int tcl_type_assert(TCLOBJ_PARAMS) TCLOBJ_DECL
+static int tcl_type_assert(TCLOBJ_PARAMS)
 {
   long base=(long)cd;
   int value;

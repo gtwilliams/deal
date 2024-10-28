@@ -220,7 +220,6 @@ void deleteStringBox(ClientData boxdata)
 }
 
 static int tcl_string_box(TCLOBJ_PARAMS)
-     TCLOBJ_DECL
 {
     const char *command;
     StringBox box=(StringBox)cd;
@@ -366,7 +365,6 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 }
 
 int tcl_create_string_box(TCLOBJ_PARAMS)
-     TCLOBJ_DECL
 {
     int rows,columns;
     StringBox box;

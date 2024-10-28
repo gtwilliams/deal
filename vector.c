@@ -76,10 +76,10 @@ LazyVectorData newLazyVector() {
 int tcl_vector_lazy(TCLOBJ_PARAMS);
 int tcl_vector_define(TCL_PARAMS);
 
-int tcl_vector_define ( TCL_PARAMS ) TCL_DECL
+int tcl_vector_define ( TCL_PARAMS )
 {
     int i;
-    char *name=argv[1];
+    const char *name=argv[1];
     LazyVectorData vec;
     if (argc<=1) {
         Tcl_AppendResult(interp,"usage: ",argv[0],
@@ -106,7 +106,7 @@ static int vector_eval(int holding,void *data)
     return VectorTableLookup(vec,holding);
 }
 
-int tcl_vector_lazy( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_vector_lazy( TCLOBJ_PARAMS )
 {
     LazyVectorData lazyvec=(LazyVectorData)cd;
     int num=lazyvec->num;

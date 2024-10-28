@@ -165,7 +165,7 @@ int count(sd)
 }
 
 
-int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_sdev_command ( TCLOBJ_PARAMS )
 {
     SDev *sd=(SDev *)cd;
     static int
@@ -362,7 +362,7 @@ int tcl_sdev_command ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_ERROR;
 }
 
-int tcl_correlate_command (TCLOBJ_PARAMS) TCLOBJ_DECL
+int tcl_correlate_command (TCLOBJ_PARAMS)
 {
     static int addCommandID=-1,
         addwCommandID=-1,
@@ -527,9 +527,9 @@ int tcl_correlate_command (TCLOBJ_PARAMS) TCLOBJ_DECL
     return TCL_ERROR;
 }
 
-int tcl_sdev_define ( TCL_PARAMS ) TCL_DECL
+int tcl_sdev_define ( TCL_PARAMS )
 {
-    char *name=argv[1];
+    const char *name=argv[1];
     SDev *sd;
     argc--; argv++;
     sd=sdevNew();
@@ -537,7 +537,7 @@ int tcl_sdev_define ( TCL_PARAMS ) TCL_DECL
     return TCL_OK;
 }
 
-int tcl_correlation_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_correlation_define ( TCLOBJ_PARAMS )
 {
     char *name=Tcl_GetString(objv[1]);
     Correlation *corr;

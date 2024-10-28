@@ -183,7 +183,7 @@ void deleteDistSet(ClientData cd) {
     Tcl_Free((char*)set);
 }
 
-int tcl_shapefunc_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
 {
     static int handSubCmd=-1,compileSubCmd=-1, evalSubCmd=-1, shapeSubCmd, subCmdInit=1;
     int hand;
@@ -315,7 +315,7 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_shapeclass_eval ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
 {
     static int subCmdInit=1,
         compileSubCmd=-1,
@@ -620,7 +620,7 @@ DistSet shapeclass_compile(interp,name,procBody)
     return set;
 }
 
-int tcl_shapefunc_lazy ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapefunc_lazy ( TCLOBJ_PARAMS )
 {
     Tcl_Obj *procBody=(Tcl_Obj *)cd;
     char *name=Tcl_GetString(objv[0]);
@@ -653,7 +653,7 @@ DistSet shapeclass_lazy_compile (interp,nameObj,procBody)
     return set;
 }
 
-int tcl_shapeclass_lazy ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapeclass_lazy ( TCLOBJ_PARAMS )
 {
     Tcl_Obj *procBody=(Tcl_Obj *)cd;
     DistSet set=shapeclass_lazy_compile(interp,objv[0],procBody);
@@ -667,7 +667,7 @@ int tcl_shapeclass_lazy ( TCLOBJ_PARAMS ) TCLOBJ_DECL
 
 }
 
-int tcl_shapeexpr_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapeexpr_define ( TCLOBJ_PARAMS )
 {
     static Tcl_Obj *exprCmd=NULL;
 
@@ -698,7 +698,7 @@ int tcl_shapeexpr_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_shapefunc_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapefunc_define ( TCLOBJ_PARAMS )
 {
     char *name;
     if (objc!=3) {
@@ -713,7 +713,7 @@ int tcl_shapefunc_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_shapeclass_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
+int tcl_shapeclass_define ( TCLOBJ_PARAMS )
 {
     char *name;
     if (objc!=3) {
@@ -727,7 +727,7 @@ int tcl_shapeclass_define ( TCLOBJ_PARAMS ) TCLOBJ_DECL
     return TCL_OK;
 }
 
-int tcl_shapeclass_define_binary ( TCL_PARAMS ) TCL_DECL
+int tcl_shapeclass_define_binary ( TCL_PARAMS )
 {
     DistSet set;
     char *s;
