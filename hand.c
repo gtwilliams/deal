@@ -227,7 +227,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS )
 
     Tcl_Obj *handObj=NULL;
     static Tcl_Obj *stackHandCmd=NULL,*stackCardsCmd=NULL;
-    int hnums[4];
+    Tcl_Size hnums[4];
     Tcl_Size *holdingsPtr;
 
     if (uninitialized) {
@@ -374,7 +374,8 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS )
 
     usageStart += 1;
     if (argID==PatternID || argID==ShapeID) {
-        int i,j,temp,d[4];
+        int i,j;
+        Tcl_Size temp, d[4];
         Tcl_Obj *s=Tcl_NewListObj(0,NULL);
 
         if (objc>2) {

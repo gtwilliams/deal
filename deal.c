@@ -38,14 +38,14 @@ struct deck_stacker stacker;
 struct deck complete_deal;
 
 /* These are here for backward compatibility reasons */
-int *distributions[]={
+Tcl_Size *distributions[]={
     globalDist.hand[0].suit,
     globalDist.hand[1].suit,
     globalDist.hand[2].suit,
     globalDist.hand[3].suit
 };
 
-int *holdings[]={
+Tcl_Size *holdings[]={
     globalDeal.hand[0].suit,
     globalDeal.hand[1].suit,
     globalDeal.hand[2].suit,
