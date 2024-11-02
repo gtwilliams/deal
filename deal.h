@@ -90,8 +90,8 @@ int count_losers(int /* holding */, void * /* dummy */);
 
 int put_card(int, int);
 int put_hand(int, char *);
-int put_holdings(int, int*);
-int put_holding(int hand, int suit, int card);
+int put_holdings(int, Tcl_Size*);
+int put_holding(int hand, int suit, Tcl_Size card);
 
 extern int count_deals;
 extern int verbose;
