@@ -24,7 +24,7 @@
 #include "tcl.h"
 
 typedef struct _HandH {
-	int suit[4];
+	Tcl_Size suit[4];
 } RawHand;
 
 typedef struct _DealH {
