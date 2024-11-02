@@ -257,7 +257,7 @@ int tcl_sdev_command ( TCLOBJ_PARAMS )
     if (cmd==mergeCommandID && objc>=2) {
         int i;
         for (i=2; i<objc; i++) {
-            int count,listCount;
+            Tcl_Size count, listCount;
             double weight,sum,sumsquared,min,max;
             Tcl_Obj **list;
             if (TCL_ERROR == Tcl_ListObjGetElements(interp,objv[i],&listCount,&list)) {
@@ -270,7 +270,7 @@ int tcl_sdev_command ( TCLOBJ_PARAMS )
                return TCL_ERROR;
             }
 
-            if (TCL_ERROR==Tcl_getSizeIntFromObj(interp,list[0],&count)) {
+            if (TCL_ERROR==Tcl_GetSizeIntFromObj(interp,list[0],&count)) {
                Tcl_AppendResult(interp,"Invalid serialized stat: first element not an integer");
                 return TCL_ERROR;
             }

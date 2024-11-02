@@ -228,7 +228,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS )
     Tcl_Obj *handObj=NULL;
     static Tcl_Obj *stackHandCmd=NULL,*stackCardsCmd=NULL;
     int hnums[4];
-    int *holdingsPtr;
+    Tcl_Size *holdingsPtr;
 
     if (uninitialized) {
         /* Initialize once */
