@@ -824,9 +824,9 @@ IDealHoldingProcedure(TCLOBJ_PARAMS)
     }
 
     if (subCmd==handSubCmdID) {
-        int allHoldingNums[4];
-        int subsetHoldings[4];
-        int *hnum;
+        Tcl_Size allHoldingNums[4];
+        Tcl_Size subsetHoldings[4];
+        Tcl_Size *hnum;
         int countHoldings;
         Tcl_Obj * const *allSuits;
         Tcl_Obj *chosenSuits[4];

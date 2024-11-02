@@ -51,8 +51,8 @@ extern const unsigned short int counttable[];
    These exist for backward compatibility, and are
    initialized with pointers into globalDeal and globalDist.
  */
-extern int *distributions[];
-extern int *holdings[];
+extern Tcl_Size *distributions[];
+extern Tcl_Size *holdings[];
 
 
 

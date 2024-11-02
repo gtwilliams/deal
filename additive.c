@@ -153,7 +153,8 @@ int tcl_count_additive( TCLOBJ_PARAMS )
     subCmd=Keyword_getIdFromObj(interp,objv[1]);
 
     if (subCmd==handSubCmd) {
-        int total=0,suit,hnum[4];
+        int total=0,suit;
+        Tcl_Size hnum[4];
 
         if (objc!=3) {
             Tcl_WrongNumArgs(interp,2,objv,"<hand>");

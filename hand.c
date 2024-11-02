@@ -119,7 +119,7 @@ int tcl_count_suit (TCLOBJ_PARAMS)
 
     int hand,length;
     long suit;
-    int hArray[4],*hptr;
+    Tcl_Size hArray[4],*hptr;
 
     if (doInit) {
         HandCmdID=Keyword_addKey("hand");
@@ -476,7 +476,7 @@ int tcl_stack_cards(TCLOBJ_PARAMS)
 int tcl_stack_hand(TCLOBJ_PARAMS)
 {
     int hand,tclret;
-    int hnums[4];
+    Tcl_Size hnums[4];
 
     if (objc!=3&&objc!=6) {
         Tcl_WrongNumArgs(interp,1,objv,"{<spades> <hearts> <diamonds> <clubs>}");
