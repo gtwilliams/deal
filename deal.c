@@ -518,7 +518,7 @@ void get_stacked_cards(int hand,int holdings[])
     }
 }
 
-int put_holding(int hand,int suit, int holding)
+int put_holding(int hand,int suit, Tcl_Size holding)
 {
     int card;
     for (card=12; card>=0; card--) {
@@ -532,7 +532,7 @@ int put_holding(int hand,int suit, int holding)
     return TCL_OK;
 }
 
-int put_holdings(int hand,int *holdings)
+int put_holdings(int hand,Tcl_Size *holdings)
 {
     int suit;
     for (suit=0; suit<4; suit++) {
