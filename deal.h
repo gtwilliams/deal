@@ -21,7 +21,7 @@
 
 #include <stdlib.h>
 #include "deck.h"
-#include "tcl.h"
+#include <tcl.h>
 
 typedef struct _HandH {
 	Tcl_Size suit[4];

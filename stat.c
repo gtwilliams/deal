@@ -21,7 +21,7 @@
 #include "deal.h"
 #include "stat.h"
 #include "keywords.h"
-#include "tcl.h"
+#include <tcl.h>
 
 double sdev_data(double weight,double sum, double squares) {
     double diff= squares-(sum*sum)/weight;
