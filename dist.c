@@ -38,7 +38,7 @@ static Tcl_Obj* lengthObjs[14];
 static void  InitializeLengths() {
     int i;
     for (i=0; i<=13; i++) {
-        Tcl_IncrRefCount(lengthObjs[i]=Tcl_NewSizeIntObj(i));
+        Tcl_IncrRefCount(lengthObjs[i]=Tcl_NewWideIntObj(i));
     }
 }
 

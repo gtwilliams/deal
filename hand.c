@@ -420,7 +420,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS )
             }
         }
 
-        Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(count));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(count));
         return TCL_OK;
     }
 

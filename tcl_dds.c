@@ -268,7 +268,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
     CountCalls++;
 
     if (status != 1) {
-        Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(status));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(status));
         Tcl_AppendResult(interp,": dds failed due to error status from double dummy solver",NULL);
         return TCL_ERROR;
     }
@@ -297,7 +297,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
             result = (result>=goal);
         }
     }
-    Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(result));
+    Tcl_SetObjResult(interp,Tcl_NewWideIntObj(result));
     return TCL_OK;
 }
 
@@ -369,7 +369,7 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
     CountCalls++;
 
     if (status != 1) {
-        Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(status));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(status));
         Tcl_AppendResult(interp,"dds failed due to error status from double dummy solver",NULL);
         return TCL_ERROR;
     }
@@ -392,7 +392,7 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
             result = (result>=goal);
         }
     }
-    Tcl_SetObjResult(interp,Tcl_NewSizeIntObj(result));
+    Tcl_SetObjResult(interp,Tcl_NewWideIntObj(result));
     return TCL_OK;
 }
 

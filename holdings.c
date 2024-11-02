@@ -176,11 +176,11 @@ static Tcl_Obj *getIntObj(int val) {
     static Tcl_Obj *cached[8192];
     if (val<8192 && val>=0) {
         if (cached[val]==NULL) {
-            Tcl_IncrRefCount(cached[val]=Tcl_NewSizeIntObj(val));
+            Tcl_IncrRefCount(cached[val]=Tcl_NewWideIntObj(val));
         }
         return cached[val];
     } else {
-        return Tcl_NewSizeIntObj(val);
+        return Tcl_NewWideIntObj(val);
     }
 }
 
