@@ -56,8 +56,6 @@ extern char *suitname[];
 extern char *handname[];
 
 
-#endif
-
 #ifdef HPUX
 #define random rand
 #define srandom srand
@@ -66,4 +64,6 @@ extern char *handname[];
 #ifdef USE_RAND48
 double drand48();
 void srand48();
+#endif
+
 #endif
