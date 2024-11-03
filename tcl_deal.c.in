@@ -83,7 +83,8 @@ static int do_reset_commands(Tcl_Interp *interp) {
          * next resetCmds
          */
         Tcl_Obj *oldCmds=resetCmds;
-        int i,count;
+        int i;
+        Tcl_Size count;
         Tcl_Obj **code;
         int result;
 
@@ -112,7 +113,7 @@ static int do_reset_commands(Tcl_Interp *interp) {
 
 static void add_reset_cmd(Tcl_Interp *interp,Tcl_Obj *code)
 {
-    int length;
+    Tcl_Size length;
     if (resetCmds==NULL) {
         create_cache_reset();
     }
@@ -278,7 +279,7 @@ int tcl_seed_deal(TCLOBJ_PARAMS)
     if (objc!=2) {
         return TCL_ERROR;
     }
-    result=Tcl_getSizeIntFromObj(interp,objv[1],&value);
+    result=Tcl_GetSizeIntFromObj(interp,objv[1],&value);
     if (result==TCL_OK) {
 #ifdef USE_RAND48
         srand48(value);
@@ -323,7 +324,7 @@ int tcl_deal_loop(TCLOBJ_PARAMS)
         if (result==TCL_RETURN) {
             Tcl_Obj *output=Tcl_GetObjResult(interp);
             int value;
-            if (Tcl_getSizeIntFromObj(interp,output,&value)!=TCL_ERROR && value>0) {
+            if (Tcl_GetSizeIntFromObj(interp,output,&value)!=TCL_ERROR && value>0) {
                 break;
             }
         }
@@ -351,7 +352,7 @@ int tcl_deal_control(TCLOBJ_PARAMS)
     long data;
     int found,nfound;
     char *logic; /* Either "if" of "unless" */
-    int length;
+    Tcl_Size length;
 
     if (logicObj[0]==NULL) {
         logicObj[0]=Tcl_NewBooleanObj(0);
@@ -496,16 +497,6 @@ static int executeScript(Tcl_Interp *interp,
     }
     Tcl_SetVar2Ex(interp,"argv",NULL,list, TCL_GLOBAL_ONLY);
     return Tcl_Eval(interp, command);
-}
-
-/* -ansi says no strdup() */
-static const char *strdup(const char * s) {
-    char *dup;
-    if ((dup = malloc(strlen(s) + 1)) == NULL)
-	return NULL;
-
-    strcpy(dup, s);
-    return dup;
 }
 
 struct param_item {
