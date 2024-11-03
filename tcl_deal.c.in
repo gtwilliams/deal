@@ -275,7 +275,8 @@ int tcl_after_set(TCLOBJ_PARAMS)
 
 int tcl_seed_deal(TCLOBJ_PARAMS)
 {
-    int result,value;
+    int result;
+    Tcl_Size value;
     if (objc!=2) {
         return TCL_ERROR;
     }
@@ -323,7 +324,7 @@ int tcl_deal_loop(TCLOBJ_PARAMS)
         }
         if (result==TCL_RETURN) {
             Tcl_Obj *output=Tcl_GetObjResult(interp);
-            int value;
+            Tcl_Size value;
             if (Tcl_GetSizeIntFromObj(interp,output,&value)!=TCL_ERROR && value>0) {
                 break;
             }
