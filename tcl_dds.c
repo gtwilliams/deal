@@ -11,7 +11,8 @@ static int LastTrump = -1;
 static int CountCalls = 0;
 
 static int parse_diagram(Tcl_Interp *interp,Tcl_Obj *diagram, struct deal *aDeal, int *handLength) {
-    int retval,length;
+    Tcl_Size length;
+    int retval;
     int suitHoldings[4];
     int countHand[4];
     Tcl_Obj **hands;
@@ -33,7 +34,7 @@ static int parse_diagram(Tcl_Interp *interp,Tcl_Obj *diagram, struct deal *aDeal
     }
 
     for (hand=0; hand<4; hand++) {
-        int suitCount;
+        Tcl_Size suitCount;
         Tcl_Obj **suits;
         countHand[hand] = 0;
         retval = Tcl_ListObjGetElements(interp,hands[hand],&suitCount, &suits);
@@ -98,7 +99,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
     struct deal d;
     int status;
     int handLength;
-    int cardsPlayedToTrick=0;
+    Tcl_Size cardsPlayedToTrick=0;
     int totalTricksPlayed=0;
     int played[4];
     Tcl_Obj *diagram = NULL;
@@ -148,7 +149,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
                 }
                 diagram = arg;
             } else if (id == GoalFlagID ) {
-                if (TCL_ERROR == Tcl_getSizeIntFromObj(interp,arg,&goal) || (goal!=-1 && (goal<1 && goal>13))) {
+                if (TCL_ERROR == Tcl_GetSizeIntFromObj(interp,arg,&goal) || (goal!=-1 && (goal<1 && goal>13))) {
                     Tcl_AppendResult(interp,"Invalid tricks goal: ",Tcl_GetString(arg),NULL);
                     return TCL_ERROR;
                 }
@@ -335,7 +336,7 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
     }
 
     if (objc > 3) {
-        if (TCL_ERROR == Tcl_getSizeIntFromObj(interp,objv[3],&goal) || (goal!=-1 && (goal<1 && goal>13))) {
+        if (TCL_ERROR == Tcl_GetSizeIntFromObj(interp,objv[3],&goal) || (goal!=-1 && (goal<1 && goal>13))) {
             Tcl_AppendResult(interp,"Invalid tricks goal: ",Tcl_GetString(objv[3]),NULL);
             return TCL_ERROR;
         }
