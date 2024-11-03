@@ -189,7 +189,7 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
     int hand;
     char *result,*rptr;
     int i;
-    int s,h,d,c;
+    Tcl_Size s,h,d,c;
     DistFunc set=(DistFunc) cd;
 
     if (subCmdInit) {
@@ -283,10 +283,10 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
                               TCL_STATIC);
                 return TCL_ERROR;
             }
-            Tcl_getSizeIntFromObj(interp,objv2[0],&s);
-            Tcl_getSizeIntFromObj(interp,objv2[1],&h);
-            Tcl_getSizeIntFromObj(interp,objv2[2],&d);
-            Tcl_getSizeIntFromObj(interp,objv2[3],&c);
+            Tcl_GetSizeIntFromObj(interp,objv2[0],&s);
+            Tcl_GetSizeIntFromObj(interp,objv2[1],&h);
+            Tcl_GetSizeIntFromObj(interp,objv2[2],&d);
+            Tcl_GetSizeIntFromObj(interp,objv2[3],&c);
 
         } else {
             char *command=Tcl_GetString(objv[0]);

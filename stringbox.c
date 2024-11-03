@@ -240,7 +240,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
     }
 
     if ('w'==(*command) && strcmp(command,"write")==0) {
-        int row, col;
+        Tcl_Size row, col;
         if (objc!=5) {
             Tcl_AppendResult(interp, "wrong # args: should be \"",
                              Tcl_GetString(objv[0]),
@@ -299,7 +299,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
             return TCL_ERROR;
         }
 
-        if (Tcl_getSizeIntFromObj(interp,objv[3],&rowloc) != TCL_OK) {
+        if (Tcl_GetSizeIntFromObj(interp,objv[3],&rowloc) != TCL_OK) {
             if (rowloc<0) {
                 Tcl_AppendResult(interp,"Illegal row location \"",
                                  Tcl_GetString(objv[3]),"\" passed to subbox routine",NULL);
