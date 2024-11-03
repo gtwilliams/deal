@@ -328,7 +328,7 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
     int hand;
     char *result,*rptr;
     int i;
-    int s,h,d,c;
+    Tcl_Size s,h,d,c;
 
     DistSet set=(DistSet) cd;
 
