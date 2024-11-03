@@ -21,6 +21,7 @@
 
 #include <stdlib.h>
 #include "deck.h"
+#define TCL_MEM_DEBUG 1
 #include <tcl.h>
 
 typedef struct _HandH {
