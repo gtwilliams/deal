@@ -216,7 +216,7 @@ integerAggregator(
     int i;
     int total=0;
     for (i=0; i<objc; i++) {
-        int val;
+        Tcl_Size val;
         int retval;
         if (NULL==objv[i]) {
             return TCL_ERROR;
@@ -776,7 +776,8 @@ IDealHoldingProcedure(TCLOBJ_PARAMS)
                                 4,globalDeal.hand[hand].suit,
                                 getAllSuitObjs());
         } else {
-            int i,array[4];
+            int i;
+            Tcl_Size array[4];
             for (i=2; i<objc; i++) {
                 int suit=getSuitNumFromObj(interp,objv[i]);
 
@@ -872,7 +873,7 @@ IDealHoldingProcedure(TCLOBJ_PARAMS)
     }
 
     if (subCmd==holdingSubCmdID) {
-        int hnum;
+        Tcl_Size hnum;
 
         if (objc!=3) {
             Tcl_WrongNumArgs(interp,2,objv,"<holding>");
@@ -1047,7 +1048,8 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS)
     }
 
     if (cmd==decodeCmd) {
-        int result,num;
+        int result;
+        Tcl_Size num;
         Tcl_Obj *obj;
         if (objc!=3) {
             Tcl_WrongNumArgs(interp,2,objv,"<integer>");
