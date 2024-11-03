@@ -47,7 +47,7 @@
 
 
 #if (TCL_MINOR_VERSION==0)
-int My_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
+static int My_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
 {
     Tcl_Obj *list=Tcl_NewListObj(objc,objv);
 
