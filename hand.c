@@ -46,17 +46,6 @@
 #include <stdlib.h>
 
 
-#if (TCL_MINOR_VERSION==0)
-static int My_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
-{
-    Tcl_Obj *list=Tcl_NewListObj(objc,objv);
-
-    if (list==NULL) { return TCL_ERROR; }
-
-    return Tcl_GlobalEvalObj(interp,list);
-}
-#endif
-
 int tcl_deal_to_whom (TCLOBJ_PARAMS)
 {
     int card;

@@ -52,8 +52,16 @@ static Tcl_Size __dummyLength;
 #if (TCL_MINOR_VERSION==0)
 static int My_EvalObjv(Tcl_Interp *,Tcl_Size objc,Tcl_Obj **,int);
 #define Tcl_EvalObjv(interp,objc,objv,dummy) My_EvalObjv(interp,objc,objv,dummy)
-#endif
 
+static int My_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
+{
+    Tcl_Obj *list=Tcl_NewListObj(objc,objv);
+
+    if (list==NULL) { return TCL_ERROR; }
+
+    return Tcl_GlobalEvalObj(interp,list);
+}
+#endif
 
 
 #define __TCL_INCL__
