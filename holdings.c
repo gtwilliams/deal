@@ -161,7 +161,7 @@ typedef struct holdingProcData {
 } *HoldingProcedure;
 
 #if (TCL_MINOR_VERSION==0)
-static int Tcl_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
+int Tcl_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
 {
     Tcl_Obj *list=Tcl_NewListObj(objc,objv);
 

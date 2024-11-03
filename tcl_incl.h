@@ -50,7 +50,7 @@ static Tcl_Size __dummyLength;
 #endif
 
 #if (TCL_MINOR_VERSION==0)
-static int My_EvalObjv(Tcl_Interp *,Tcl_Size objc,Tcl_Obj **,int);
+int My_EvalObjv(Tcl_Interp *,Tcl_Size objc,Tcl_Obj **,int);
 #define Tcl_EvalObjv(interp,objc,objv,dummy) My_EvalObjv(interp,objc,objv,dummy)
 #endif
 

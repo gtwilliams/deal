@@ -91,7 +91,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
         LeaderFlagID=-1,
         TrickFlagID=-1;
 
-    int goal=-1;
+    Tcl_Size goal=-1;
     int playerGoal = -1;
     int hand, suit,result;
     int mode=-1;
