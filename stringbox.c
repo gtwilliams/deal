@@ -289,7 +289,8 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 
     if (*command=='s' && strcmp(command,"subbox")==0) {
         StringBox subbox;
-        Tcl_Size rows=0,columns=0,rowloc=0,columnloc=0;
+        Tcl_Size rows=0,rowloc=0,columnloc=0;
+        int columns=0;
 
         if (objc!=7 && objc!=5) {
             Tcl_AppendResult(interp, "wrong # args: should be \"",
