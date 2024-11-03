@@ -289,7 +289,8 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 
     if (*command=='s' && strcmp(command,"subbox")==0) {
         StringBox subbox;
-        Tcl_Size rows=0,columns=0,rowloc=0,columnloc=0;
+        Tcl_Size rowloc=0,columnloc=0;
+        int rows, columns;
 
         if (objc!=7 && objc!=5) {
             Tcl_AppendResult(interp, "wrong # args: should be \"",
@@ -376,13 +377,13 @@ int tcl_create_string_box(TCLOBJ_PARAMS)
         return TCL_ERROR;
     }
 
-    if ((Tcl_getSizeIntFromObj(interp,objv[2],&rows) != TCL_OK) || (rows<=0)) {
+    if ((Tcl_GetSizeIntFromObj(interp,objv[2],&rows) != TCL_OK) || (rows<=0)) {
         Tcl_AddErrorInfo(interp,
                          "\n (reading value of <rows>)");
         return TCL_ERROR;
     }
 
-    if (Tcl_getSizeIntFromObj(interp,objv[3],&columns) != TCL_OK || (columns<=0)) {
+    if (Tcl_GetSizeIntFromObj(interp,objv[3],&columns) != TCL_OK || (columns<=0)) {
         Tcl_AddErrorInfo(interp,
                          "\n (reading value of <columns>)");
         return TCL_ERROR;
