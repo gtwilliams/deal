@@ -305,7 +305,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
 /* This code directly borrows from Alex Martelli's Python interface to dds. */
 static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
 {
-    int goal=-1;
+    Tcl_Size goal=-1;
     int leaderGoal = -1;
     int hand, suit,result;
     int mode;
