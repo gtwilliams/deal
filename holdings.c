@@ -160,17 +160,6 @@ typedef struct holdingProcData {
     Tcl_Obj *slowNameObj;   /* Name of the "slow" routine defined */
 } *HoldingProcedure;
 
-#if (TCL_MINOR_VERSION==0)
-int Tcl_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
-{
-    Tcl_Obj *list=Tcl_NewListObj(objc,objv);
-
-    if (list==NULL) { return TCL_ERROR; }
-
-    return Tcl_GlobalEvalObj(interp,list);
-}
-#endif
-
 /* Replace this with something which caches values 0..13 */
 static Tcl_Obj *getIntObj(int val) {
     static Tcl_Obj *cached[8192];
