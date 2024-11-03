@@ -223,7 +223,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 {
     const char *command;
     StringBox box=(StringBox)cd;
-    int len;
+    Tcl_Size len;
     if (objc==1) {
         int length;
         Char *result = formatStringBox(box,&length);
@@ -247,8 +247,8 @@ static int tcl_string_box(TCLOBJ_PARAMS)
                              " write row column string\"",NULL);
             return TCL_ERROR;
         }
-        if  (Tcl_getSizeIntFromObj(interp,objv[2],&row)!=TCL_OK ||
-             Tcl_getSizeIntFromObj(interp,objv[3],&col)!=TCL_OK) {
+        if  (Tcl_GetSizeIntFromObj(interp,objv[2],&row)!=TCL_OK ||
+             Tcl_GetSizeIntFromObj(interp,objv[3],&col)!=TCL_OK) {
             Tcl_AppendResult(interp,"\nbad row or column arguments: row=\"",
                              Tcl_GetString(objv[2]),
                              "\", column=\"",

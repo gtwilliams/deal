@@ -311,7 +311,7 @@ static int Deal_foreachHolding(TCLOBJ_PARAMS)
 
   for (i=0; i<=8191; i++) {
     Tcl_Obj *holding=Tcl_NewHoldingObj(i);
-    Tcl_ObjSetVar2(interp,objv[1],NULL,holding,TCL_PARSE_PART1);
+    Tcl_ObjSetVar2(interp,objv[1],NULL,holding,0);
     result=Tcl_EvalObj(interp,objv[2]);
     if (result==TCL_BREAK) { break; }
     if (result==TCL_CONTINUE) { continue; }
@@ -513,7 +513,8 @@ int getHandHoldingsFromObjv(Tcl_Interp *interp,Tcl_Obj * const *objv,Tcl_Size *r
 int
 getHandHoldingsFromObj(Tcl_Interp *interp, Tcl_Obj *obj, Tcl_Size *retHoldings)
 {
-  int retval,length;
+  int retval;
+  Tcl_Size length;
   Tcl_Obj **objv;
   retval=Tcl_ListObjGetElements(interp,obj,&length,&objv);
   if (retval!=TCL_OK || length!=4) {
