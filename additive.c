@@ -70,10 +70,7 @@ typedef struct additivecounter {
 #define AddFuncCall(addfunc,holding)            \
     (addfunc)->func(holding,(addfunc)->data)
 
-static AdditiveFunction newAdditiveFunction(func,data,freefunc)
-     int (*func) (int /* holding */, void * /* data */);
-     Tcl_CmdDeleteProc *freefunc;
-     void *data;
+static AdditiveFunction newAdditiveFunction(int (*func) (int, void *), Tcl_CmdDeleteProc *data, void *freefunc)
 {
     AdditiveFunction result=(AdditiveFunction)
         Tcl_Alloc(sizeof(struct additivecounter));

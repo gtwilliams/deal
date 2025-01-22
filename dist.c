@@ -135,8 +135,7 @@ static void deleteDistFunc(ClientData data)
     Tcl_Free(data);
 }
 
-DistFunc newDistFunc(n)
-     int n;
+DistFunc newDistFunc(int n)
 {
     int s,h,d;
     int index1=0,index2=0;
@@ -153,8 +152,7 @@ DistFunc newDistFunc(n)
     return func;
 }
 
-DistSet newDistSet(n)
-     int n;
+DistSet newDistSet(int n)
 {
     int s,h,d;
     int index1=0,index2=0;
@@ -497,10 +495,7 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
 }
 
 
-static int ShapeProcDefine(interp,name,procBody)
-     Tcl_Interp *interp;
-     Tcl_Obj *name;
-     Tcl_Obj *procBody;
+static int ShapeProcDefine(Tcl_Interp *interp, Tcl_Obj *name, Tcl_Obj *procBody)
 {
     static Tcl_Obj *procCmd=NULL;
     Tcl_Obj *code[4];
@@ -516,10 +511,7 @@ static int ShapeProcDefine(interp,name,procBody)
     return Tcl_EvalObjv(interp,4,code,TCL_EVAL_GLOBAL);
 }
 
-DistFunc shapefunc_compile(interp,name,procBody)
-     Tcl_Interp *interp;
-     Tcl_Obj *name;
-     Tcl_Obj *procBody;
+DistFunc shapefunc_compile(Tcl_Interp *interp, Tcl_Obj *name, Tcl_Obj *procBody)
 {
     int result;
     DistFunc func;
@@ -569,10 +561,7 @@ DistFunc shapefunc_compile(interp,name,procBody)
     return func;
 }
 
-DistSet shapeclass_compile(interp,name,procBody)
-     Tcl_Interp *interp;
-     Tcl_Obj *name;
-     Tcl_Obj *procBody;
+DistSet shapeclass_compile(Tcl_Interp *interp, Tcl_Obj *name, Tcl_Obj *procBody)
 {
 
     int result;
@@ -637,10 +626,7 @@ int tcl_shapefunc_lazy ( TCLOBJ_PARAMS )
     return tcl_shapefunc_eval((ClientData) func,interp,objc,objv);
 }
 
-DistSet shapeclass_lazy_compile (interp,nameObj,procBody)
-     Tcl_Interp *interp;
-     Tcl_Obj *nameObj;
-     Tcl_Obj *procBody;
+DistSet shapeclass_lazy_compile (Tcl_Interp *interp, Tcl_Obj *nameObj, Tcl_Obj *procBody)
 {
     DistSet set=shapeclass_compile(interp,nameObj,procBody);
     char *name;
@@ -757,8 +743,7 @@ int tcl_shapeclass_define_binary ( TCL_PARAMS )
     return TCL_OK;
 }
 
-int Dist_Init(interp)
-     Tcl_Interp *interp;
+int Dist_Init(Tcl_Interp *interp)
 {
     InitializeLengths();
     Tcl_IncrRefCount(shapeParams=Tcl_NewStringObj("s h d c",7));

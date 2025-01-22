@@ -22,7 +22,7 @@
 
 extern Tcl_ObjType CardType, HoldingType,CardRankType;
 
-void initializeDealTypes();
+void initializeDealTypes(Tcl_Interp *);
 void initializeLengths();
 
 int getHandNumFromObj(Tcl_Interp *interp, Tcl_Obj *hand);

@@ -34,8 +34,7 @@ typedef struct string_box {
     Char **strings;
 } *StringBox;
 
-static void clearStringBox(box)
-     StringBox box;
+static void clearStringBox(StringBox box)
 {
     int rows=box->rows, columns=box->columns;
     int r,c;
@@ -46,12 +45,7 @@ static void clearStringBox(box)
     }
 }
 
-static int writeStringBox(interp,box,row,column,string)
-     Tcl_Interp *interp; /* May be null.  For error messages */
-     StringBox box;
-     int row;
-     int column;
-     Char *string;
+static int writeStringBox(Tcl_Interp *interp, StringBox box, int row, int column, Char *string)
 {
     int rowcount=box->rows, columncount=box->columns;
     Char *boxstring;
@@ -83,9 +77,7 @@ static int writeStringBox(interp,box,row,column,string)
     return TCL_OK;
 }
 
-static Char *formatStringBox(box,lengthPtr)
-     StringBox box;
-     int *lengthPtr;
+static Char *formatStringBox(StringBox box, int *lengthPtr)
 {
     int row=0,col=0;
     Char *result=(Char*)Tcl_Alloc(sizeof(Char)*(box->rows*(box->columns+1)+1));
@@ -101,9 +93,7 @@ static Char *formatStringBox(box,lengthPtr)
     return result;
 }
 
-static Char *compactStringBox(box,lengthPtr)
-     StringBox box;
-     int *lengthPtr;
+static Char *compactStringBox(StringBox box, int *lengthPtr)
 {
     int row,col;
     Char *result=(Char *)Tcl_Alloc(sizeof(Char)*((box->rows)*(box->columns+1)+1));
@@ -126,9 +116,7 @@ static Char *compactStringBox(box,lengthPtr)
 }
 
 
-static StringBox newStringBox(rows,columns)
-     int rows;
-     int columns;
+static StringBox newStringBox(int rows, int columns)
 {
     StringBoxBase parent;
     StringBox result;
@@ -157,12 +145,7 @@ static StringBox newStringBox(rows,columns)
     return result;
 }
 
-static StringBox subStringBox(interp,parentbox,rowloc,columnloc,rows,columns)
-     Tcl_Interp *interp; /* For error messages only */
-     StringBox parentbox;
-     int rowloc,columnloc;
-     int rows;
-     int columns;
+static StringBox subStringBox(Tcl_Interp *interp, StringBox parentbox, int rowloc ,int columnloc, int rows, int columns)
 {
     StringBoxBase parent;
     StringBox result;
@@ -394,8 +377,7 @@ int tcl_create_string_box(TCLOBJ_PARAMS)
     return TCL_OK;
 }
 
-int Stringbox_Init(interp)
-     Tcl_Interp *interp;
+int Stringbox_Init(Tcl_Interp *interp)
 {
 #if 0
     int code;

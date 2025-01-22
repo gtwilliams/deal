@@ -36,24 +36,19 @@ double rms_data(double weight,double sum,double squares) {
     return sqrt((squares-(sum*sum)/weight)/weight);
 }
 
-double sdev(sd)
-     SDev *sd;
+double sdev(SDev *sd)
 {
     double xx=sd->sumsquared,xy=sd->sum;
     double weight=sd->weight;
     return sdev_data(weight,xy,xx);
 }
 
-double sdevAverage(sd)
-     SDev *sd;
+double sdevAverage(SDev *sd)
 {
     return sd->sum/sd->weight;
 }
 
-void sdevAddData(sd,weight,data)
-     SDev *sd;
-     double weight;
-     double data;
+void sdevAddData(SDev *sd, double weight, double data)
 {
     if (sd->count==0) {
         sd->max=data; sd->min=data;
@@ -68,10 +63,7 @@ void sdevAddData(sd,weight,data)
     sd->sumsquared += (weight*data*data);
 }
 
-void sdevMerge(sd,count,weight,sum,sumsquared,min,max)
-    SDev *sd;
-    int count;
-    double weight, sum, sumsquared, min, max;
+void sdevMerge(SDev *sd, int count, double weight, double sum, double sumsquared, double min, double max)
 {
     if (sd->count==0 || max>sd->max) {
           sd->max = max;
@@ -106,10 +98,7 @@ SDev *sdevNew() {
     return sdev;
 }
 
-void corrAddData(corr,weight,x,y)
-     Correlation *corr;
-     double weight;
-     double x,y;
+void corrAddData(Correlation *corr,double weight, double x, double y)
 {
     corr->count++;
     corr->weight += weight;
@@ -158,8 +147,7 @@ void correlationFree(ClientData corr) {
     Tcl_Free((char *)corr);
 }
 
-int count(sd)
-     SDev *sd;
+int count(SDev *sd)
 {
     return sd->count;
 }
