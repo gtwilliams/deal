@@ -19,7 +19,7 @@
 #include "tcl_incl.h"
 extern void *tcl_create_additive (Tcl_Interp *,
 			char *name,
-			int (*)_ANSI_ARGS_((int holding,void* data)),
+			int (*)(int holding,void* data),
 			void * data, Tcl_CmdDeleteProc);
 extern int tcl_count_additive
 	(ClientData ,Tcl_Interp *, int, Tcl_Obj * const *);

@@ -22,7 +22,7 @@
 
 extern Tcl_ObjType CardType, HoldingType,CardRankType;
 
-void initializeDealTypes();
+void initializeDealTypes(Tcl_Interp *);
 void initializeLengths();
 
 int getHandNumFromObj(Tcl_Interp *interp, Tcl_Obj *hand);
@@ -37,5 +37,5 @@ int getHoldingNumFromObj(Tcl_Interp *interp, Tcl_Obj *card);
 Tcl_Obj *Tcl_NewHoldingObj(int holding);
 Tcl_Obj * const *getAllSuitObjs();
 char *getStringForHoldingNum(int holding,int *lenPtr);
-int getHandHoldingsFromObj(Tcl_Interp *interp,Tcl_Obj *obj, int *harray);
-int getHandHoldingsFromObjv(Tcl_Interp *interp,Tcl_Obj * const *objv, int *harray);
+int getHandHoldingsFromObj(Tcl_Interp *interp,Tcl_Obj *obj, Tcl_Size *harray);
+int getHandHoldingsFromObjv(Tcl_Interp *interp,Tcl_Obj * const *objv, Tcl_Size *harray);

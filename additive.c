@@ -70,10 +70,7 @@ typedef struct additivecounter {
 #define AddFuncCall(addfunc,holding)            \
     (addfunc)->func(holding,(addfunc)->data)
 
-static AdditiveFunction newAdditiveFunction(func,data,freefunc)
-     int (*func) (int /* holding */, void * /* data */);
-     Tcl_CmdDeleteProc *freefunc;
-     void *data;
+static AdditiveFunction newAdditiveFunction(int (*func) (int, void *), Tcl_CmdDeleteProc *data, void *freefunc)
 {
     AdditiveFunction result=(AdditiveFunction)
         Tcl_Alloc(sizeof(struct additivecounter));
@@ -146,14 +143,15 @@ int tcl_count_additive( TCLOBJ_PARAMS )
                 total += AddFuncCall(addfunc,globalDeal.hand[hand].suit[suit]);
             }
         }
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(total));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(total));
         return TCL_OK;
     }
 
     subCmd=Keyword_getIdFromObj(interp,objv[1]);
 
     if (subCmd==handSubCmd) {
-        int total=0,suit,hnum[4];
+        int total=0,suit;
+        Tcl_Size hnum[4];
 
         if (objc!=3) {
             Tcl_WrongNumArgs(interp,2,objv,"<hand>");
@@ -168,7 +166,7 @@ int tcl_count_additive( TCLOBJ_PARAMS )
         for (suit=0; suit<4; suit++) {
             total += AddFuncCall(addfunc,hnum[suit]);
         }
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(total));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(total));
         return TCL_OK;
     }
 
@@ -184,7 +182,7 @@ int tcl_count_additive( TCLOBJ_PARAMS )
             }
             total += AddFuncCall(addfunc,holding);
         }
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(total));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(total));
         return TCL_OK;
     }
 

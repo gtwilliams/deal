@@ -34,8 +34,7 @@ typedef struct string_box {
     Char **strings;
 } *StringBox;
 
-static void clearStringBox(box)
-     StringBox box;
+static void clearStringBox(StringBox box)
 {
     int rows=box->rows, columns=box->columns;
     int r,c;
@@ -46,12 +45,7 @@ static void clearStringBox(box)
     }
 }
 
-static int writeStringBox(interp,box,row,column,string)
-     Tcl_Interp *interp; /* May be null.  For error messages */
-     StringBox box;
-     int row;
-     int column;
-     Char *string;
+static int writeStringBox(Tcl_Interp *interp, StringBox box, int row, int column, Char *string)
 {
     int rowcount=box->rows, columncount=box->columns;
     Char *boxstring;
@@ -83,9 +77,7 @@ static int writeStringBox(interp,box,row,column,string)
     return TCL_OK;
 }
 
-static Char *formatStringBox(box,lengthPtr)
-     StringBox box;
-     int *lengthPtr;
+static Char *formatStringBox(StringBox box, int *lengthPtr)
 {
     int row=0,col=0;
     Char *result=(Char*)Tcl_Alloc(sizeof(Char)*(box->rows*(box->columns+1)+1));
@@ -101,9 +93,7 @@ static Char *formatStringBox(box,lengthPtr)
     return result;
 }
 
-static Char *compactStringBox(box,lengthPtr)
-     StringBox box;
-     int *lengthPtr;
+static Char *compactStringBox(StringBox box, int *lengthPtr)
 {
     int row,col;
     Char *result=(Char *)Tcl_Alloc(sizeof(Char)*((box->rows)*(box->columns+1)+1));
@@ -126,9 +116,7 @@ static Char *compactStringBox(box,lengthPtr)
 }
 
 
-static StringBox newStringBox(rows,columns)
-     int rows;
-     int columns;
+static StringBox newStringBox(int rows, int columns)
 {
     StringBoxBase parent;
     StringBox result;
@@ -157,12 +145,7 @@ static StringBox newStringBox(rows,columns)
     return result;
 }
 
-static StringBox subStringBox(interp,parentbox,rowloc,columnloc,rows,columns)
-     Tcl_Interp *interp; /* For error messages only */
-     StringBox parentbox;
-     int rowloc,columnloc;
-     int rows;
-     int columns;
+static StringBox subStringBox(Tcl_Interp *interp, StringBox parentbox, int rowloc ,int columnloc, int rows, int columns)
 {
     StringBoxBase parent;
     StringBox result;
@@ -223,7 +206,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 {
     const char *command;
     StringBox box=(StringBox)cd;
-    int len;
+    Tcl_Size len;
     if (objc==1) {
         int length;
         Char *result = formatStringBox(box,&length);
@@ -240,15 +223,15 @@ static int tcl_string_box(TCLOBJ_PARAMS)
     }
 
     if ('w'==(*command) && strcmp(command,"write")==0) {
-        int row, col;
+        Tcl_Size row, col;
         if (objc!=5) {
             Tcl_AppendResult(interp, "wrong # args: should be \"",
                              Tcl_GetString(objv[0]),
                              " write row column string\"",NULL);
             return TCL_ERROR;
         }
-        if  (Tcl_GetIntFromObj(interp,objv[2],&row)!=TCL_OK ||
-             Tcl_GetIntFromObj(interp,objv[3],&col)!=TCL_OK) {
+        if  (Tcl_GetSizeIntFromObj(interp,objv[2],&row)!=TCL_OK ||
+             Tcl_GetSizeIntFromObj(interp,objv[3],&col)!=TCL_OK) {
             Tcl_AppendResult(interp,"\nbad row or column arguments: row=\"",
                              Tcl_GetString(objv[2]),
                              "\", column=\"",
@@ -289,7 +272,8 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 
     if (*command=='s' && strcmp(command,"subbox")==0) {
         StringBox subbox;
-        int rows=0,columns=0,rowloc=0,columnloc=0;
+        Tcl_Size rows=0,rowloc=0,columnloc=0;
+        int columns=0;
 
         if (objc!=7 && objc!=5) {
             Tcl_AppendResult(interp, "wrong # args: should be \"",
@@ -299,7 +283,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
             return TCL_ERROR;
         }
 
-        if (Tcl_GetIntFromObj(interp,objv[3],&rowloc) != TCL_OK) {
+        if (Tcl_GetSizeIntFromObj(interp,objv[3],&rowloc) != TCL_OK) {
             if (rowloc<0) {
                 Tcl_AppendResult(interp,"Illegal row location \"",
                                  Tcl_GetString(objv[3]),"\" passed to subbox routine",NULL);
@@ -307,7 +291,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
             return TCL_ERROR;
         }
 
-        if (Tcl_GetIntFromObj(interp,objv[4],&columnloc) != TCL_OK) {
+        if (Tcl_GetSizeIntFromObj(interp,objv[4],&columnloc) != TCL_OK) {
             if (columnloc<0) {
                 Tcl_AppendResult(interp,"Illegal column location \"",
                                  Tcl_GetString(objv[4]),"\" passed to subbox routine",NULL);
@@ -315,7 +299,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
             return TCL_ERROR;
         }
         if (objc==7) {
-            if ((Tcl_GetIntFromObj(interp,objv[5],&rows) != TCL_OK)) {
+            if ((Tcl_GetSizeIntFromObj(interp,objv[5],&rows) != TCL_OK)) {
                 return TCL_ERROR;
             }
 
@@ -366,7 +350,7 @@ static int tcl_string_box(TCLOBJ_PARAMS)
 
 int tcl_create_string_box(TCLOBJ_PARAMS)
 {
-    int rows,columns;
+    Tcl_Size rows,columns;
     StringBox box;
 
     if (objc!=4) {
@@ -376,13 +360,13 @@ int tcl_create_string_box(TCLOBJ_PARAMS)
         return TCL_ERROR;
     }
 
-    if ((Tcl_GetIntFromObj(interp,objv[2],&rows) != TCL_OK) || (rows<=0)) {
+    if ((Tcl_GetSizeIntFromObj(interp,objv[2],&rows) != TCL_OK) || (rows<=0)) {
         Tcl_AddErrorInfo(interp,
                          "\n (reading value of <rows>)");
         return TCL_ERROR;
     }
 
-    if (Tcl_GetIntFromObj(interp,objv[3],&columns) != TCL_OK || (columns<=0)) {
+    if (Tcl_GetSizeIntFromObj(interp,objv[3],&columns) != TCL_OK || (columns<=0)) {
         Tcl_AddErrorInfo(interp,
                          "\n (reading value of <columns>)");
         return TCL_ERROR;
@@ -393,8 +377,7 @@ int tcl_create_string_box(TCLOBJ_PARAMS)
     return TCL_OK;
 }
 
-int Stringbox_Init(interp)
-     Tcl_Interp *interp;
+int Stringbox_Init(Tcl_Interp *interp)
 {
 #if 0
     int code;

@@ -38,14 +38,14 @@ struct deck_stacker stacker;
 struct deck complete_deal;
 
 /* These are here for backward compatibility reasons */
-int *distributions[]={
+Tcl_Size *distributions[]={
     globalDist.hand[0].suit,
     globalDist.hand[1].suit,
     globalDist.hand[2].suit,
     globalDist.hand[3].suit
 };
 
-int *holdings[]={
+Tcl_Size *holdings[]={
     globalDeal.hand[0].suit,
     globalDeal.hand[1].suit,
     globalDeal.hand[2].suit,
@@ -76,8 +76,7 @@ int reset_deck() {
     return TCL_OK;
 }
 
-void get_distribution_hand(hand)
-     int hand;
+void get_distribution_hand(int hand)
 {
     int suit;
     for (suit=0; suit<4; suit++) {
@@ -88,8 +87,7 @@ void get_distribution_hand(hand)
 
 int count_deals=0;
 
-void old_reset_deal(dealp)
-     struct deck *dealp;
+void old_reset_deal(struct deck *dealp)
 {
     int card, hand;
 
@@ -107,8 +105,7 @@ void old_reset_deal(dealp)
     }
 }
 
-void reset_deal(dealp)
-     struct deck *dealp;
+void reset_deal(struct deck *dealp)
 {
     int hand,suit;
     static struct deck initializeOnce;
@@ -149,9 +146,7 @@ static void assert_deck(dealp)
 
 /* This amounts to a swap command, with lots of record keeping added
    to keep "where" and "card" as inverses */
-void deal_put(dealp,card,whom)
-     struct deck *dealp;
-     int card,whom;
+void deal_put(struct deck *dealp, int card, int whom)
 {
     int where=dealp->where[card];  /* Where the card is, currently */
     int loc=dealp->dealt;  /* Where it will be placed */
@@ -174,8 +169,7 @@ void deal_put(dealp,card,whom)
 #endif
 }
 
-void place_fixed_cards(dealp)
-     struct deck *dealp;
+void place_fixed_cards(struct deck *dealp)
 {
     int i=0;
     while (i<stacker.dealt) {
@@ -184,8 +178,7 @@ void place_fixed_cards(dealp)
     }
 }
 
-static int deal_random(dealt)
-     int dealt;
+static int deal_random(int dealt)
 {
 #if USE_RAND48
     return dealt+(int) (drand48() *(double)(52-dealt));
@@ -194,8 +187,7 @@ static int deal_random(dealt)
 #endif
 }
 
-void deal_hand(hand)
-     int hand;
+void deal_hand(int hand)
 {
     int deck_dealt;
     deck_dealt=complete_deal.dealt;
@@ -242,8 +234,7 @@ void finish_deal() {
     }
 }
 
-int to_whom(card)
-     int card;
+int to_whom(int card)
 {
     int where;
     if (complete_deal.dealt!=52) {
@@ -415,8 +406,7 @@ void init_name_tables()
 }
 
 
-int count_controls(holding,dummy)
-     int holding; void *dummy;
+int count_controls(int holding, void *dummy)
 {
     /*
      *
@@ -428,9 +418,7 @@ int count_controls(holding,dummy)
     return ((8191&holding)>>11);
 }
 
-int count_hcp(h,dummy)
-     int h;
-     void *dummy;
+int count_hcp(int h,void *dummy)
 {
     static int hcptable[]={
         0 /*no honors*/ ,1 /*J*/  ,2 /*Q*/  ,3 /*QJ*/,
@@ -443,9 +431,7 @@ int count_hcp(h,dummy)
 
 }
 
-int count_losers(holding,dummy)
-     int holding;
-     void * dummy;  /* For additive function implementation */
+int count_losers(int holding, void *dummy)
 { /* Really counts half-losers */
     int base=counttable[holding&8191];
     int losers=0;
@@ -479,7 +465,7 @@ int count_losers(holding,dummy)
 
 
 
-int put_card(hand,card) int hand,card;
+int put_card(int hand, int card)
 {
     int loc=stacker.dealt;
     if (stacker.handcount[hand]==13) {
@@ -518,7 +504,7 @@ void get_stacked_cards(int hand,int holdings[])
     }
 }
 
-int put_holding(int hand,int suit, int holding)
+int put_holding(int hand,int suit, Tcl_Size holding)
 {
     int card;
     for (card=12; card>=0; card--) {
@@ -532,7 +518,7 @@ int put_holding(int hand,int suit, int holding)
     return TCL_OK;
 }
 
-int put_holdings(int hand,int *holdings)
+int put_holdings(int hand,Tcl_Size *holdings)
 {
     int suit;
     for (suit=0; suit<4; suit++) {
@@ -562,20 +548,17 @@ int put_hand(int hand,char *hstring)
     return TCL_OK;
 }
 
-int card_rank(string)
-     char *string;
+int card_rank(char *string)
 {
     return card_name_table[(int)string[0]];
 }
 
-int card_num (string)
-     char *string;
+int card_num (char *string)
 {
     return CARD(card_name_table[(int)string[0]],suit_name_table[(int)string[1]]);
 }
 
-void rotate_deal(rotation)
-     int rotation;
+void rotate_deal(int rotation)
 {
     int loc,card;
     int whom[52];

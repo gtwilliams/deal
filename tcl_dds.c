@@ -11,7 +11,8 @@ static int LastTrump = -1;
 static int CountCalls = 0;
 
 static int parse_diagram(Tcl_Interp *interp,Tcl_Obj *diagram, struct deal *aDeal, int *handLength) {
-    int retval,length;
+    Tcl_Size length;
+    int retval;
     int suitHoldings[4];
     int countHand[4];
     Tcl_Obj **hands;
@@ -33,7 +34,7 @@ static int parse_diagram(Tcl_Interp *interp,Tcl_Obj *diagram, struct deal *aDeal
     }
 
     for (hand=0; hand<4; hand++) {
-        int suitCount;
+        Tcl_Size suitCount;
         Tcl_Obj **suits;
         countHand[hand] = 0;
         retval = Tcl_ListObjGetElements(interp,hands[hand],&suitCount, &suits);
@@ -90,7 +91,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
         LeaderFlagID=-1,
         TrickFlagID=-1;
 
-    int goal=-1;
+    Tcl_Size goal=-1;
     int playerGoal = -1;
     int hand, suit,result;
     int mode=-1;
@@ -98,7 +99,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
     struct deal d;
     int status;
     int handLength;
-    int cardsPlayedToTrick=0;
+    Tcl_Size cardsPlayedToTrick=0;
     int totalTricksPlayed=0;
     int played[4];
     Tcl_Obj *diagram = NULL;
@@ -148,7 +149,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
                 }
                 diagram = arg;
             } else if (id == GoalFlagID ) {
-                if (TCL_ERROR == Tcl_GetIntFromObj(interp,arg,&goal) || (goal!=-1 && (goal<1 && goal>13))) {
+                if (TCL_ERROR == Tcl_GetSizeIntFromObj(interp,arg,&goal) || (goal!=-1 && (goal<1 && goal>13))) {
                     Tcl_AppendResult(interp,"Invalid tricks goal: ",Tcl_GetString(arg),NULL);
                     return TCL_ERROR;
                 }
@@ -268,7 +269,7 @@ static int tcl_dds(TCLOBJ_PARAMS)
     CountCalls++;
 
     if (status != 1) {
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(status));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(status));
         Tcl_AppendResult(interp,": dds failed due to error status from double dummy solver",NULL);
         return TCL_ERROR;
     }
@@ -297,14 +298,14 @@ static int tcl_dds(TCLOBJ_PARAMS)
             result = (result>=goal);
         }
     }
-    Tcl_SetObjResult(interp,Tcl_NewIntObj(result));
+    Tcl_SetObjResult(interp,Tcl_NewWideIntObj(result));
     return TCL_OK;
 }
 
 /* This code directly borrows from Alex Martelli's Python interface to dds. */
 static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
 {
-    int goal=-1;
+    Tcl_Size goal=-1;
     int leaderGoal = -1;
     int hand, suit,result;
     int mode;
@@ -335,7 +336,7 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
     }
 
     if (objc > 3) {
-        if (TCL_ERROR == Tcl_GetIntFromObj(interp,objv[3],&goal) || (goal!=-1 && (goal<1 && goal>13))) {
+        if (TCL_ERROR == Tcl_GetSizeIntFromObj(interp,objv[3],&goal) || (goal!=-1 && (goal<1 && goal>13))) {
             Tcl_AppendResult(interp,"Invalid tricks goal: ",Tcl_GetString(objv[3]),NULL);
             return TCL_ERROR;
         }
@@ -369,7 +370,7 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
     CountCalls++;
 
     if (status != 1) {
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(status));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(status));
         Tcl_AppendResult(interp,"dds failed due to error status from double dummy solver",NULL);
         return TCL_ERROR;
     }
@@ -392,7 +393,7 @@ static int tcl_double_dummy_solve(TCLOBJ_PARAMS)
             result = (result>=goal);
         }
     }
-    Tcl_SetObjResult(interp,Tcl_NewIntObj(result));
+    Tcl_SetObjResult(interp,Tcl_NewWideIntObj(result));
     return TCL_OK;
 }
 

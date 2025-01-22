@@ -38,7 +38,7 @@ static Tcl_Obj* lengthObjs[14];
 static void  InitializeLengths() {
     int i;
     for (i=0; i<=13; i++) {
-        Tcl_IncrRefCount(lengthObjs[i]=Tcl_NewIntObj(i));
+        Tcl_IncrRefCount(lengthObjs[i]=Tcl_NewWideIntObj(i));
     }
 }
 
@@ -135,8 +135,7 @@ static void deleteDistFunc(ClientData data)
     Tcl_Free(data);
 }
 
-DistFunc newDistFunc(n)
-     int n;
+DistFunc newDistFunc(int n)
 {
     int s,h,d;
     int index1=0,index2=0;
@@ -153,8 +152,7 @@ DistFunc newDistFunc(n)
     return func;
 }
 
-DistSet newDistSet(n)
-     int n;
+DistSet newDistSet(int n)
 {
     int s,h,d;
     int index1=0,index2=0;
@@ -189,7 +187,7 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
     int hand;
     char *result,*rptr;
     int i;
-    int s,h,d,c;
+    Tcl_Size s,h,d,c;
     DistFunc set=(DistFunc) cd;
 
     if (subCmdInit) {
@@ -216,7 +214,7 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
         int subCmd=Keyword_getIdFromObj(interp,objv[1]);
 
         if (subCmd==compileSubCmd) {
-            int len;
+            Tcl_Size len;
             char *command=Tcl_GetString(objv[0]);
             result=(char *)Tcl_Alloc(8*DIST_COUNT+strlen(command)+50);
             sprintf(result,"shapeclass.binary %s {\n",command);
@@ -241,7 +239,8 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
 
         if (subCmd==handSubCmd) {
 
-            int retval,suit,holding[4],lengths[4];
+            int retval,suit,lengths[4];
+            Tcl_Size holding[4];
 
             if (objc!=3) {
                 Tcl_WrongNumArgs(interp,2,objv,"<hand>");
@@ -264,14 +263,14 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
                 return TCL_ERROR;
             }
 
-            Tcl_GetIntFromObj(interp,objv[2],&s);
-            Tcl_GetIntFromObj(interp,objv[3],&h);
-            Tcl_GetIntFromObj(interp,objv[4],&d);
-            Tcl_GetIntFromObj(interp,objv[5],&c);
+            Tcl_GetSizeIntFromObj(interp,objv[2],&s);
+            Tcl_GetSizeIntFromObj(interp,objv[3],&h);
+            Tcl_GetSizeIntFromObj(interp,objv[4],&d);
+            Tcl_GetSizeIntFromObj(interp,objv[5],&c);
         } else if (subCmd==shapeSubCmd) {
             int retval;
             Tcl_Obj **objv2=NULL;
-            int objc2=0;
+            Tcl_Size objc2=0;
             if (objc!=3) {
                 Tcl_WrongNumArgs(interp,2,objv,"{slen hlen dlen clen}");
                 return TCL_ERROR;
@@ -282,10 +281,10 @@ int tcl_shapefunc_eval ( TCLOBJ_PARAMS )
                               TCL_STATIC);
                 return TCL_ERROR;
             }
-            Tcl_GetIntFromObj(interp,objv2[0],&s);
-            Tcl_GetIntFromObj(interp,objv2[1],&h);
-            Tcl_GetIntFromObj(interp,objv2[2],&d);
-            Tcl_GetIntFromObj(interp,objv2[3],&c);
+            Tcl_GetSizeIntFromObj(interp,objv2[0],&s);
+            Tcl_GetSizeIntFromObj(interp,objv2[1],&h);
+            Tcl_GetSizeIntFromObj(interp,objv2[2],&d);
+            Tcl_GetSizeIntFromObj(interp,objv2[3],&c);
 
         } else {
             char *command=Tcl_GetString(objv[0]);
@@ -327,7 +326,7 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
     int hand;
     char *result,*rptr;
     int i;
-    int s,h,d,c;
+    Tcl_Size s,h,d,c;
 
     DistSet set=(DistSet) cd;
 
@@ -418,7 +417,8 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
         }
 
         if (subCmdId==handSubCmd) {
-            int retval,suit,hnum[4],lengths[4];
+            int retval,suit,lengths[4];
+            Tcl_Size hnum[4];
 
             if (objc!=3) {
                 Tcl_WrongNumArgs(interp,2,objv,"<hand>");
@@ -442,15 +442,15 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
                 return TCL_ERROR;
             }
 
-            Tcl_GetIntFromObj(interp,objv[2],&s);
-            Tcl_GetIntFromObj(interp,objv[3],&h);
-            Tcl_GetIntFromObj(interp,objv[4],&d);
-            Tcl_GetIntFromObj(interp,objv[5],&c);
+            Tcl_GetSizeIntFromObj(interp,objv[2],&s);
+            Tcl_GetSizeIntFromObj(interp,objv[3],&h);
+            Tcl_GetSizeIntFromObj(interp,objv[4],&d);
+            Tcl_GetSizeIntFromObj(interp,objv[5],&c);
 
         } else if (subCmdId==shapeSubCmd) {
             int retval;
             Tcl_Obj **objv2=NULL;
-            int objc2=0;
+            Tcl_Size objc2=0;
             if (objc!=3) {
                 Tcl_WrongNumArgs(interp,2,objv,"{<slen> <hlen> <dlen> <clen>}");
                 return TCL_ERROR;
@@ -463,10 +463,10 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
                 return TCL_ERROR;
             }
 
-            Tcl_GetIntFromObj(interp,objv2[0],&s);
-            Tcl_GetIntFromObj(interp,objv2[1],&h);
-            Tcl_GetIntFromObj(interp,objv2[2],&d);
-            Tcl_GetIntFromObj(interp,objv2[3],&c);
+            Tcl_GetSizeIntFromObj(interp,objv2[0],&s);
+            Tcl_GetSizeIntFromObj(interp,objv2[1],&h);
+            Tcl_GetSizeIntFromObj(interp,objv2[2],&d);
+            Tcl_GetSizeIntFromObj(interp,objv2[3],&c);
 
         } else {
 
@@ -495,10 +495,7 @@ int tcl_shapeclass_eval ( TCLOBJ_PARAMS )
 }
 
 
-static int ShapeProcDefine(interp,name,procBody)
-     Tcl_Interp *interp;
-     Tcl_Obj *name;
-     Tcl_Obj *procBody;
+static int ShapeProcDefine(Tcl_Interp *interp, Tcl_Obj *name, Tcl_Obj *procBody)
 {
     static Tcl_Obj *procCmd=NULL;
     Tcl_Obj *code[4];
@@ -514,10 +511,7 @@ static int ShapeProcDefine(interp,name,procBody)
     return Tcl_EvalObjv(interp,4,code,TCL_EVAL_GLOBAL);
 }
 
-DistFunc shapefunc_compile(interp,name,procBody)
-     Tcl_Interp *interp;
-     Tcl_Obj *name;
-     Tcl_Obj *procBody;
+DistFunc shapefunc_compile(Tcl_Interp *interp, Tcl_Obj *name, Tcl_Obj *procBody)
 {
     int result;
     DistFunc func;
@@ -567,10 +561,7 @@ DistFunc shapefunc_compile(interp,name,procBody)
     return func;
 }
 
-DistSet shapeclass_compile(interp,name,procBody)
-     Tcl_Interp *interp;
-     Tcl_Obj *name;
-     Tcl_Obj *procBody;
+DistSet shapeclass_compile(Tcl_Interp *interp, Tcl_Obj *name, Tcl_Obj *procBody)
 {
 
     int result;
@@ -635,10 +626,7 @@ int tcl_shapefunc_lazy ( TCLOBJ_PARAMS )
     return tcl_shapefunc_eval((ClientData) func,interp,objc,objv);
 }
 
-DistSet shapeclass_lazy_compile (interp,nameObj,procBody)
-     Tcl_Interp *interp;
-     Tcl_Obj *nameObj;
-     Tcl_Obj *procBody;
+DistSet shapeclass_lazy_compile (Tcl_Interp *interp, Tcl_Obj *nameObj, Tcl_Obj *procBody)
 {
     DistSet set=shapeclass_compile(interp,nameObj,procBody);
     char *name;
@@ -730,7 +718,7 @@ int tcl_shapeclass_define ( TCLOBJ_PARAMS )
 int tcl_shapeclass_define_binary ( TCL_PARAMS )
 {
     DistSet set;
-    char *s;
+    const char *s;
     int i;
     if (argc!=3) { return TCL_ERROR; }
 
@@ -755,8 +743,7 @@ int tcl_shapeclass_define_binary ( TCL_PARAMS )
     return TCL_OK;
 }
 
-int Dist_Init(interp)
-     Tcl_Interp *interp;
+int Dist_Init(Tcl_Interp *interp)
 {
     InitializeLengths();
     Tcl_IncrRefCount(shapeParams=Tcl_NewStringObj("s h d c",7));

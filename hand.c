@@ -46,17 +46,6 @@
 #include <stdlib.h>
 
 
-#if (TCL_MINOR_VERSION==0)
-int My_EvalObjv(Tcl_Interp *interp,int objc,Tcl_Obj **objv,int dummy)
-{
-    Tcl_Obj *list=Tcl_NewListObj(objc,objv);
-
-    if (list==NULL) { return TCL_ERROR; }
-
-    return Tcl_GlobalEvalObj(interp,list);
-}
-#endif
-
 int tcl_deal_to_whom (TCLOBJ_PARAMS)
 {
     int card;
@@ -119,7 +108,7 @@ int tcl_count_suit (TCLOBJ_PARAMS)
 
     int hand,length;
     long suit;
-    int hArray[4],*hptr;
+    Tcl_Size hArray[4],*hptr;
 
     if (doInit) {
         HandCmdID=Keyword_addKey("hand");
@@ -174,7 +163,7 @@ int tcl_count_suit (TCLOBJ_PARAMS)
     return TCL_OK;
 }
 
-Tcl_Obj *tcl_hand_holdings(Tcl_Interp *interp,int *hArray)
+Tcl_Obj *tcl_hand_holdings(Tcl_Interp *interp,Tcl_Size *hArray)
 {
     Tcl_Obj *holdingObjs[4];
     Tcl_Obj *list;
@@ -227,8 +216,8 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS )
 
     Tcl_Obj *handObj=NULL;
     static Tcl_Obj *stackHandCmd=NULL,*stackCardsCmd=NULL;
-    int hnums[4];
-    int *holdingsPtr;
+    Tcl_Size hnums[4];
+    Tcl_Size *holdingsPtr;
 
     if (uninitialized) {
         /* Initialize once */
@@ -374,7 +363,8 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS )
 
     usageStart += 1;
     if (argID==PatternID || argID==ShapeID) {
-        int i,j,temp,d[4];
+        int i,j;
+        Tcl_Size temp, d[4];
         Tcl_Obj *s=Tcl_NewListObj(0,NULL);
 
         if (objc>2) {
@@ -420,7 +410,7 @@ static int tcl_hand_cmd( TCLOBJ_PARAMS )
             }
         }
 
-        Tcl_SetObjResult(interp,Tcl_NewIntObj(count));
+        Tcl_SetObjResult(interp,Tcl_NewWideIntObj(count));
         return TCL_OK;
     }
 
@@ -475,7 +465,7 @@ int tcl_stack_cards(TCLOBJ_PARAMS)
 int tcl_stack_hand(TCLOBJ_PARAMS)
 {
     int hand,tclret;
-    int hnums[4];
+    Tcl_Size hnums[4];
 
     if (objc!=3&&objc!=6) {
         Tcl_WrongNumArgs(interp,1,objv,"{<spades> <hearts> <diamonds> <clubs>}");

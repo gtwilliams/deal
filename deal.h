@@ -21,10 +21,10 @@
 
 #include <stdlib.h>
 #include "deck.h"
-#include "tcl.h"
+#include <tcl.h>
 
 typedef struct _HandH {
-	int suit[4];
+	Tcl_Size suit[4];
 } RawHand;
 
 typedef struct _DealH {
@@ -51,8 +51,8 @@ extern const unsigned short int counttable[];
    These exist for backward compatibility, and are
    initialized with pointers into globalDeal and globalDist.
  */
-extern int *distributions[];
-extern int *holdings[];
+extern Tcl_Size *distributions[];
+extern Tcl_Size *holdings[];
 
 
 
@@ -90,8 +90,8 @@ int count_losers(int /* holding */, void * /* dummy */);
 
 int put_card(int, int);
 int put_hand(int, char *);
-int put_holdings(int, int*);
-int put_holding(int hand, int suit, int card);
+int put_holdings(int, Tcl_Size*);
+int put_holding(int hand, int suit, Tcl_Size card);
 
 extern int count_deals;
 extern int verbose;

@@ -45,15 +45,23 @@ void Tcl_ObjDelete(ClientData data);
 #define DEAL31_API
 #endif
 #if (TCL_MAJOR_VERSION<8 || (TCL_MAJOR_VERSION==8 && TCL_MINOR_VERSION==0))
-static int __dummyLength;
+static Tcl_Size __dummyLength;
 #define Tcl_GetString(obj) Tcl_GetStringFromObj(obj,&__dummyLength)
 #endif
 
 #if (TCL_MINOR_VERSION==0)
-int My_EvalObjv(Tcl_Interp *,int,Tcl_Obj **,int);
+static int My_EvalObjv(Tcl_Interp *,Tcl_Size objc,Tcl_Obj **,int);
 #define Tcl_EvalObjv(interp,objc,objv,dummy) My_EvalObjv(interp,objc,objv,dummy)
-#endif
 
+static int My_EvalObjv(Tcl_Interp *interp,Tcl_Size objc,Tcl_Obj **objv,int dummy)
+{
+    Tcl_Obj *list=Tcl_NewListObj(objc,objv);
+
+    if (list==NULL) { return TCL_ERROR; }
+
+    return Tcl_GlobalEvalObj(interp,list);
+}
+#endif
 
 
 #define __TCL_INCL__

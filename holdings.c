@@ -160,27 +160,16 @@ typedef struct holdingProcData {
     Tcl_Obj *slowNameObj;   /* Name of the "slow" routine defined */
 } *HoldingProcedure;
 
-#if (TCL_MINOR_VERSION==0)
-static int Tcl_EvalObjv(Tcl_Interp *interp,int objc,Tcl_Obj **objv,int dummy)
-{
-    Tcl_Obj *list=Tcl_NewListObj(objc,objv);
-
-    if (list==NULL) { return TCL_ERROR; }
-
-    return Tcl_GlobalEvalObj(interp,list);
-}
-#endif
-
 /* Replace this with something which caches values 0..13 */
 static Tcl_Obj *getIntObj(int val) {
     static Tcl_Obj *cached[8192];
     if (val<8192 && val>=0) {
         if (cached[val]==NULL) {
-            Tcl_IncrRefCount(cached[val]=Tcl_NewIntObj(val));
+            Tcl_IncrRefCount(cached[val]=Tcl_NewWideIntObj(val));
         }
         return cached[val];
     } else {
-        return Tcl_NewIntObj(val);
+        return Tcl_NewWideIntObj(val);
     }
 }
 
@@ -216,12 +205,12 @@ integerAggregator(
     int i;
     int total=0;
     for (i=0; i<objc; i++) {
-        int val;
+        Tcl_Size val;
         int retval;
         if (NULL==objv[i]) {
             return TCL_ERROR;
         }
-        retval=Tcl_GetIntFromObj(interp,objv[i],&val);
+        retval=Tcl_GetSizeIntFromObj(interp,objv[i],&val);
         if (retval!=TCL_OK) {
             Tcl_SetResult(interp,
                           "Error in holdingProc integer aggregator: not an integer\n",
@@ -389,7 +378,7 @@ defSlowHoldingProc(
                    Tcl_Obj *code
                    )
 {
-    int length;
+    Tcl_Size length;
     Tcl_Obj *objv[4];
     int retval;
 
@@ -574,7 +563,8 @@ evalHoldingProcedure(
  * Determine a variables meaning by it's first letter(s)
  */
 static int lookupArgumentName(Tcl_Obj *varName) {
-    int length, rank;
+    Tcl_Size length;
+    int rank;
     char *string=Tcl_GetStringFromObj(varName,&length);
     switch (*string) {
     case 'a':
@@ -620,7 +610,7 @@ newHoldingProcedure(
                     )
 {
     HoldingProcedure procedure=allocateHoldingProcedure();
-    int argsLength;
+    Tcl_Size argsLength;
     int retval,index;
     int flagArguments=0;
     Tcl_Obj *varName;
@@ -689,7 +679,7 @@ evalHoldingNums(
                 Tcl_Interp *interp,
                 HoldingProcedure procedure,
                 int count,
-                int *holdings,
+                Tcl_Size *holdings,
                 Tcl_Obj * const *suits
                 )
 {
@@ -710,7 +700,7 @@ evalHoldingNums(
      * Evaluate for each individual holding
      */
     for (i=0; i<count; i++) {
-        int holding=holdings[i];
+        long int holding=holdings[i];
         if (holding<0) {
             retval = TCL_ERROR;
             goto finish;
@@ -775,7 +765,8 @@ IDealHoldingProcedure(TCLOBJ_PARAMS)
                                 4,globalDeal.hand[hand].suit,
                                 getAllSuitObjs());
         } else {
-            int i,array[4];
+            int i;
+            Tcl_Size array[4];
             for (i=2; i<objc; i++) {
                 int suit=getSuitNumFromObj(interp,objv[i]);
 
@@ -824,9 +815,9 @@ IDealHoldingProcedure(TCLOBJ_PARAMS)
     }
 
     if (subCmd==handSubCmdID) {
-        int allHoldingNums[4];
-        int subsetHoldings[4];
-        int *hnum;
+        Tcl_Size allHoldingNums[4];
+        Tcl_Size subsetHoldings[4];
+        Tcl_Size *hnum;
         int countHoldings;
         Tcl_Obj * const *allSuits;
         Tcl_Obj *chosenSuits[4];
@@ -871,7 +862,7 @@ IDealHoldingProcedure(TCLOBJ_PARAMS)
     }
 
     if (subCmd==holdingSubCmdID) {
-        int hnum;
+        Tcl_Size hnum;
 
         if (objc!=3) {
             Tcl_WrongNumArgs(interp,2,objv,"<holding>");
@@ -913,7 +904,7 @@ IDeal_DefHoldingProc(TCLOBJ_PARAMS)
     Tcl_Obj *nameObj, *argsList, *code;
     Tcl_Obj *slowNameObj;
     char *name;
-    int len;
+    Tcl_Size len;
     HoldingProcedure procedure;
     Aggregator *aggr=&integerAggr;
 
@@ -1046,13 +1037,14 @@ static int IDeal_HoldingCmd(TCLOBJ_PARAMS)
     }
 
     if (cmd==decodeCmd) {
-        int result,num;
+        int result;
+        Tcl_Size num;
         Tcl_Obj *obj;
         if (objc!=3) {
             Tcl_WrongNumArgs(interp,2,objv,"<integer>");
             return TCL_ERROR;
         }
-        result=Tcl_GetIntFromObj(interp,objv[2],&num);
+        result=Tcl_GetSizeIntFromObj(interp,objv[2],&num);
         if (result!=TCL_OK) {
             return result;
         }

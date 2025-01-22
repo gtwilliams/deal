@@ -22,9 +22,7 @@
 #include "dealtypes.h"
 #include "tcl_incl.h"
 
-Tcl_Obj *tcl_format_suit(holding,voidObj)
-int holding;
-Tcl_Obj *voidObj;
+Tcl_Obj *tcl_format_suit(Tcl_Size holding, Tcl_Obj *voidObj)
 {
     if ((holding&8191)==0 && voidObj!=NULL) {
         return voidObj;
@@ -33,9 +31,7 @@ Tcl_Obj *voidObj;
     }
 }
 
-Tcl_Obj *tcl_format_hand(hptrs,voidObj)
-int *hptrs;
-Tcl_Obj *voidObj;
+Tcl_Obj *tcl_format_hand(Tcl_Size *hptrs, Tcl_Obj *voidObj)
 {
     int suit;
     Tcl_Obj *holdingElts[4];

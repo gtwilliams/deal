@@ -136,8 +136,7 @@ int tcl_vector_lazy( TCLOBJ_PARAMS )
     return tcl_count_additive((ClientData)func,interp,objc,objv);
 }
 
-int Vector_Init(interp)
-     Tcl_Interp *interp;
+int Vector_Init(Tcl_Interp *interp)
 {
     Tcl_CreateCommand(interp,"defvector",tcl_vector_define,NULL,NULL);
     return TCL_OK;
