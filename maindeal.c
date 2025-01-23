@@ -19,7 +19,7 @@
 extern int old_main(int, char**);
 
 /* Not sure why this is here ... */
-int main(int argc, char *argv)
+int main(int argc, char **argv)
 {
     return old_main(argc,argv);
 }
